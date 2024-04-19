@@ -1,0 +1,895 @@
+# Default values for rocketmq-proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+image:
+  registry: docker.io
+  repository: apache/rocketmq
+  tag: latest
+  digest: ""
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
+  ##
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ## Example:
+  ## pullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  pullSecrets: []
+  ## Set to true if you would like to see extra information on logs
+  ## It turns BASH and/or NAMI debugging in the image
+  ##
+  debug: false
+
+## Chart name
+nameOverride: ""
+## 默认包含 helm install 时指定的 release name
+fullnameOverride: ""
+## @param commonAnnotations Common annotations to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
+##
+commonAnnotations: {}
+## @param commonLabels Common labels to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
+##
+commonLabels: {}
+
+dashboard:
+  name: "dashboard"
+  replicaCount: 1
+  ## @param dashboard.command Override default container command on RocketMQ dashboard container(s) (useful when using custom images)
+  ##
+  command: []
+  ## @param dashboard.args Override default container args on RocketMQ dashboard container(s) (useful when using custom images)
+  ##
+  args: []
+  ## @param dashboard.automountServiceAccountToken Mount Service Account token in pod
+  ##
+  automountServiceAccountToken: false
+  ## @param dashboard.hostAliases Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
+  ## @param dashboard.existingConfigmap Name of existing ConfigMap with RocketMQ dashboard configuration.
+  ## NOTE: When it's set the 'configuration' parameter is ignored
+  ##
+  existingConfigmap: ""
+  ## @param dashboard.containerPorts.mysql Container port for mysql
+  ##
+  containerPorts:
+    dashboard: 8080
+  ## @param dashboard.updateStrategy.type Update strategy type for the RocketMQ dashboard Deployment
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    type: Recreate
+  ## @param dashboard.podAnnotations Additional pod annotations for RocketMQ dashboard pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param dashboard.podAffinityPreset RocketMQ dashboard pod affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param dashboard.podAntiAffinityPreset RocketMQ dashboard pod anti-affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## RocketMQ dashboard node affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param dashboard.nodeAffinityPreset.type RocketMQ dashboard node affinity preset type. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param dashboard.nodeAffinityPreset.key RocketMQ dashboard node label key to match Ignored if `dashboard.affinity` is set.
+    ## E.g.
+    ## key: "kubernetes.io/e2e-az-name"
+    ##
+    key: ""
+    ## @param dashboard.nodeAffinityPreset.values RocketMQ dashboard node label values to match. Ignored if `dashboard.affinity` is set.
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param dashboard.affinity Affinity for RocketMQ dashboard pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param dashboard.nodeSelector Node labels for RocketMQ dashboard pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param dashboard.tolerations Tolerations for RocketMQ dashboard pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## @param dashboard.priorityClassName RocketMQ dashboard pods' priorityClassName
+  ##
+  priorityClassName: ""
+  ## @param dashboard.runtimeClassName RocketMQ dashboard pods' runtimeClassName
+  ##
+  runtimeClassName: ""
+  ## @param dashboard.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param dashboard.terminationGracePeriodSeconds In seconds, time the given to the RocketMQ dashboard pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param dashboard.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## RocketMQ dashboard Pod security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param dashboard.podSecurityContext.enabled Enable security context for RocketMQ dashboard pods
+  ## @param dashboard.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
+  ## @param dashboard.podSecurityContext.sysctls Set kernel settings using the sysctl interface
+  ## @param dashboard.podSecurityContext.supplementalGroups Set filesystem extra groups
+  ## @param dashboard.podSecurityContext.fsGroup Group ID for the mounted volumes' filesystem
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## RocketMQ dashboard container security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param dashboard.containerSecurityContext.enabled RocketMQ dashboard container securityContext
+  ## @param dashboard.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
+  ## @param dashboard.containerSecurityContext.runAsUser User ID for the RocketMQ dashboard container
+  ## @param dashboard.containerSecurityContext.runAsGroup Group ID for the RocketMQ dashboard container
+  ## @param dashboard.containerSecurityContext.runAsNonRoot Set RocketMQ dashboard container's Security Context runAsNonRoot
+  ## @param dashboard.containerSecurityContext.allowPrivilegeEscalation Set container's privilege escalation
+  ## @param dashboard.containerSecurityContext.capabilities.drop Set container's Security Context runAsNonRoot
+  ## @param dashboard.containerSecurityContext.seccompProfile.type Set Client container's Security Context seccomp profile
+  ## @param dashboard.containerSecurityContext.readOnlyRootFilesystem Set container's Security Context read-only root filesystem
+  ##
+  containerSecurityContext:
+    enabled: false
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+    readOnlyRootFilesystem: true
+  ## RocketMQ dashboard container's resource requests and limits
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param dashboard.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if dashboard.resources is set (dashboard.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: "small"
+  ## @param dashboard.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## @param dashboard.extraEnvVars Extra environment variables to be set on RocketMQ dashboard containers
+  ## E.g.
+  ## extraEnvVars:
+  ##  - name: TZ
+  ##    value: "Europe/Paris"
+  ##
+  extraEnvVars: []
+  ## @param dashboard.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for RocketMQ dashboard containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param dashboard.extraEnvVarsSecret Name of existing Secret containing extra env vars for RocketMQ dashboard containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param dashboard.extraPodSpec Optionally specify extra PodSpec for the RocketMQ dashboard pod(s)
+  ##
+  extraPodSpec: {}
+  ## @param dashboard.extraPorts Extra ports to expose
+  ##
+  extraPorts: []
+  ## @param dashboard.initContainers Add additional init containers for the RocketMQ dashboard pod(s)
+  ##
+  initContainers: []
+  ## @param dashboard.sidecars Add additional sidecar containers for the RocketMQ dashboard pod(s)
+  ##
+  sidecars: []
+  ## @param dashboard.podLabels RocketMQ dashboard pod label. If labels are same as commonLabels , this will take precedence
+  ##
+  podLabels: {}
+  ## RocketMQ dashboard Service parameters
+  ##
+  service:
+    ## @param dashboard.service.type RocketMQ dashboard K8s service type
+    ##
+    type: NodePort
+    ## @param dashboard.service.ports.dashboard RocketMQ dashboard K8s service port
+    ##
+    ports:
+      dashboard: 8080
+    ## @param dashboard.service.nodePorts.dashboard RocketMQ dashboard K8s service node port
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+    ##
+    nodePorts:
+      dashboard: "30000"
+    ## @param dashboard.service.clusterIP RocketMQ dashboard K8s service clusterIP IP
+    ## e.g:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param dashboard.service.loadBalancerIP RocketMQ dashboard loadBalancerIP if service type is `LoadBalancer`
+    ## Set the LoadBalancer service type to internal only
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+    ##
+    loadBalancerIP: ""
+    ## @param dashboard.service.externalTrafficPolicy Enable client source IP preservation
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param dashboard.service.loadBalancerSourceRanges Addresses that are allowed when RocketMQ dashboard service is LoadBalancer
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## E.g.
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param dashboard.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param dashboard.service.annotations Additional custom annotations for RocketMQ dashboard service
+    ##
+    annotations: {}
+    ## @param dashboard.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param dashboard.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
+
+  ## Configure the ingress resource that allows you to access the
+  ## Nginx installation. Set up the URL
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
+  ##
+  ingress:
+    ## @param ingress.enabled Set to true to enable ingress record generation
+    ##
+    enabled: false
+    ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+    ##
+    selfSigned: false
+    ## @param ingress.pathType Ingress path type
+    ##
+    pathType: ImplementationSpecific
+    ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
+    ##
+    apiVersion: ""
+    ## @param ingress.hostname Default host for the ingress resource
+    ##
+    hostname: nginx.local
+    ## @param ingress.path The Path to Nginx. You may need to set this to '/*' in order to use this with ALB ingress controllers.
+    ##
+    path: /
+    ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+    ## For a full list of possible ingress annotations, please see
+    ## ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md
+    ## Use this parameter to set the required annotations for cert-manager, see
+    ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    ##
+    ## e.g:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+    ##
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    ## @param ingress.ingressClassName Set the ingerssClassName on the ingress record for k8s 1.18+
+    ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+    ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+    ##
+    ingressClassName: "nginx"
+    ## @param ingress.tls Create TLS Secret
+    ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
+    ## You can use the ingress.secrets parameter to create this TLS secret or relay on cert-manager to create it
+    ##
+    tls: false
+    ## @param ingress.tlsWwwPrefix Adds www subdomain to default cert
+    ## Creates tls host with ingress.hostname: {{ print "www.%s" .Values.ingress.hostname }}
+    ## Is enabled if "nginx.ingress.kubernetes.io/from-to-www-redirect" is "true"
+    tlsWwwPrefix: false
+    ## @param ingress.extraHosts The list of additional hostnames to be covered with this ingress record.
+    ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
+    ## extraHosts:
+    ## - name: nginx.local
+    ##   path: /
+    ##
+    extraHosts: []
+    ## @param ingress.extraPaths Any additional arbitrary paths that may need to be added to the ingress under the main host.
+    ## For example: The ALB ingress controller requires a special rule for handling SSL redirection.
+    ## extraPaths:
+    ## - path: /*
+    ##   backend:
+    ##     serviceName: ssl-redirect
+    ##     servicePort: use-annotation
+    ##
+    extraPaths: []
+    ## @param ingress.extraTls The tls configuration for additional hostnames to be covered with this ingress record.
+    ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+    ## extraTls:
+    ## - hosts:
+    ##     - nginx.local
+    ##   secretName: nginx.local-tls
+    ##
+    extraTls: []
+    ## @param ingress.secrets If you're providing your own certificates, please use this to add the certificates as secrets
+    ## key and certificate should start with -----BEGIN CERTIFICATE----- or
+    ## -----BEGIN RSA PRIVATE KEY-----
+    ##
+    ## name should line up with a tlsSecret set further up
+    ## If you're using cert-manager, this is unneeded, as it will create the secret for you if it is not set
+    ##
+    ## It is also possible to create and manage the certificates outside of this helm chart
+    ## Please see README.md for more information
+    ## e.g:
+    ## - name: nginx.local-tls
+    ##   key:
+    ##   certificate:
+    ##
+    secrets: []
+    ## @param ingress.extraRules The list of additional rules to be added to this ingress record. Evaluated as a template
+    ## Useful when looking for additional customization, such as using different backend
+    ##
+    extraRules: []
+
+nameserver:
+  name: "nameserver"
+  replicaCount: 1
+  ## @param nameserver.command Override default container command on RocketMQ nameserver container(s) (useful when using custom images)
+  ##
+  command: []
+  ## @param nameserver.args Override default container args on RocketMQ nameserver container(s) (useful when using custom images)
+  ##
+  args: []
+  ## @param nameserver.automountServiceAccountToken Mount Service Account token in pod
+  ##
+  automountServiceAccountToken: false
+  ## @param nameserver.hostAliases Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
+  ## @param nameserver.configuration [string] Configure RocketMQ nameserver with a custom nameserver.conf file
+  ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/namesrv/NamesrvConfig.java
+  ##
+  #configuration: |-
+
+  ## @param nameserver.existingConfigmap Name of existing ConfigMap with RocketMQ nameserver configuration.
+  ## NOTE: When it's set the 'configuration' parameter is ignored
+  ##
+  existingConfigmap: ""
+  ## @param nameserver.containerPorts.mysql Container port for mysql
+  ##
+  containerPorts:
+    nameserver: 9876
+  ## @param nameserver.updateStrategy.type Update strategy type for the RocketMQ nameserver Deployment
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    type: Recreate
+  ## @param nameserver.podAnnotations Additional pod annotations for RocketMQ nameserver pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param nameserver.podAffinityPreset RocketMQ nameserver pod affinity preset. Ignored if `nameserver.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param nameserver.podAntiAffinityPreset RocketMQ nameserver pod anti-affinity preset. Ignored if `nameserver.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## RocketMQ nameserver node affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param nameserver.nodeAffinityPreset.type RocketMQ nameserver node affinity preset type. Ignored if `nameserver.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param nameserver.nodeAffinityPreset.key RocketMQ nameserver node label key to match Ignored if `nameserver.affinity` is set.
+    ## E.g.
+    ## key: "kubernetes.io/e2e-az-name"
+    ##
+    key: ""
+    ## @param nameserver.nodeAffinityPreset.values RocketMQ nameserver node label values to match. Ignored if `nameserver.affinity` is set.
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param nameserver.affinity Affinity for RocketMQ nameserver pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param nameserver.nodeSelector Node labels for RocketMQ nameserver pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param nameserver.tolerations Tolerations for RocketMQ nameserver pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## @param nameserver.priorityClassName RocketMQ nameserver pods' priorityClassName
+  ##
+  priorityClassName: ""
+  ## @param nameserver.runtimeClassName RocketMQ nameserver pods' runtimeClassName
+  ##
+  runtimeClassName: ""
+  ## @param nameserver.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param nameserver.terminationGracePeriodSeconds In seconds, time the given to the RocketMQ nameserver pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param nameserver.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## RocketMQ nameserver Pod security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param nameserver.podSecurityContext.enabled Enable security context for RocketMQ nameserver pods
+  ## @param nameserver.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
+  ## @param nameserver.podSecurityContext.sysctls Set kernel settings using the sysctl interface
+  ## @param nameserver.podSecurityContext.supplementalGroups Set filesystem extra groups
+  ## @param nameserver.podSecurityContext.fsGroup Group ID for the mounted volumes' filesystem
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## RocketMQ nameserver container security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param nameserver.containerSecurityContext.enabled RocketMQ nameserver container securityContext
+  ## @param nameserver.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
+  ## @param nameserver.containerSecurityContext.runAsUser User ID for the RocketMQ nameserver container
+  ## @param nameserver.containerSecurityContext.runAsGroup Group ID for the RocketMQ nameserver container
+  ## @param nameserver.containerSecurityContext.runAsNonRoot Set RocketMQ nameserver container's Security Context runAsNonRoot
+  ## @param nameserver.containerSecurityContext.allowPrivilegeEscalation Set container's privilege escalation
+  ## @param nameserver.containerSecurityContext.capabilities.drop Set container's Security Context runAsNonRoot
+  ## @param nameserver.containerSecurityContext.seccompProfile.type Set Client container's Security Context seccomp profile
+  ## @param nameserver.containerSecurityContext.readOnlyRootFilesystem Set container's Security Context read-only root filesystem
+  ##
+  containerSecurityContext:
+    enabled: false
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+    readOnlyRootFilesystem: true
+  ## RocketMQ nameserver container's resource requests and limits
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param nameserver.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if nameserver.resources is set (nameserver.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: "small"
+  ## @param nameserver.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## @param nameserver.extraEnvVars Extra environment variables to be set on RocketMQ nameserver containers
+  ## E.g.
+  ## extraEnvVars:
+  ##  - name: TZ
+  ##    value: "Europe/Paris"
+  ##
+  extraEnvVars: []
+  ## @param nameserver.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for RocketMQ nameserver containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param nameserver.extraEnvVarsSecret Name of existing Secret containing extra env vars for RocketMQ nameserver containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param nameserver.extraPodSpec Optionally specify extra PodSpec for the RocketMQ nameserver pod(s)
+  ##
+  extraPodSpec: {}
+  ## @param nameserver.extraPorts Extra ports to expose
+  ##
+  extraPorts: []
+  ## @param nameserver.initContainers Add additional init containers for the RocketMQ nameserver pod(s)
+  ##
+  initContainers: []
+  ## @param nameserver.sidecars Add additional sidecar containers for the RocketMQ nameserver pod(s)
+  ##
+  sidecars: []
+  ## @param nameserver.podLabels RocketMQ nameserver pod label. If labels are same as commonLabels , this will take precedence
+  ##
+  podLabels: {}
+  ## RocketMQ nameserver Service parameters
+  ##
+  service:
+    ## @param nameserver.service.type RocketMQ nameserver K8s service type
+    ##
+    type: ClusterIP
+    ## @param nameserver.service.ports.nameserver RocketMQ nameserver K8s service port
+    ##
+    ports:
+      nameserver: 9876
+    ## @param nameserver.service.nodePorts.nameserver RocketMQ nameserver K8s service node port
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+    ##
+    nodePorts:
+      nameserver: ""
+    ## @param nameserver.service.clusterIP RocketMQ nameserver K8s service clusterIP IP
+    ## e.g:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param nameserver.service.loadBalancerIP RocketMQ nameserver loadBalancerIP if service type is `LoadBalancer`
+    ## Set the LoadBalancer service type to internal only
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+    ##
+    loadBalancerIP: ""
+    ## @param nameserver.service.externalTrafficPolicy Enable client source IP preservation
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param nameserver.service.loadBalancerSourceRanges Addresses that are allowed when RocketMQ nameserver service is LoadBalancer
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## E.g.
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param nameserver.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param nameserver.service.annotations Additional custom annotations for RocketMQ nameserver service
+    ##
+    annotations: {}
+    ## @param nameserver.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param nameserver.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
+    ## Headless service properties
+    ##
+    headless:
+      ## @param nameserver.service.headless.annotations Additional custom annotations for headless RocketMQ nameserver service.
+      ##
+      annotations: {}
+
+
+broker:
+  storePathRootDir: "/opt/rocketmq/store"
+  name: "broker"
+  replicaCount: 1
+  ## @param broker.command Override default container command on RocketMQ broker container(s) (useful when using custom images)
+  ##
+  command: []
+  ## @param broker.args Override default container args on RocketMQ broker container(s) (useful when using custom images)
+  ##
+  args: []
+  ## @param broker.automountServiceAccountToken Mount Service Account token in pod
+  ##
+  automountServiceAccountToken: false
+  ## @param broker.hostAliases Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
+  ## @param broker.configuration [string] Configure RocketMQ broker with a custom broker.conf file
+  ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java
+  ##
+  configuration: |-
+    {{- $name := include "rocketmq.broker.fullname" . }}
+    {{- $storePathRootDir := .Values.broker.storePathRootDir }}
+    {{- $replicaCount := .Values.broker.replicaCount | int }}
+    {{- range $index := until $replicaCount }}
+    {{- $brokerName := printf "%s-%d" $name $index }}
+
+    {{ $brokerName -}}.conf: |
+      brokerName={{ $brokerName }}
+      storePathRootDir={{ $storePathRootDir }}
+      brokerClusterName=DefaultCluster
+      traceOn=true
+      autoCreateTopicEnable=false
+      autoCreateSubscriptionGroup=true
+      enableIncrementalTopicCreation=true
+      flushDiskType=ASYNC_FLUSH
+      enablePropertyFilter=true
+      aclEnable=true
+
+    plain_acl.yml: |
+      accounts:
+        - accessKey: rocketmq
+          secretKey: 12345678
+          admin: true
+    {{- end }}
+
+  ## @param broker.existingConfigmap Name of existing ConfigMap with RocketMQ broker configuration.
+  ## NOTE: When it's set the 'configuration' parameter is ignored
+  ##
+  existingConfigmap: ""
+  ## @param broker.containerPorts.mysql Container port for mysql
+  ##
+  containerPorts:
+    broker: 10911
+  ## @param broker.updateStrategy.type Update strategy type for the RocketMQ broker Deployment
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    type: RollingUpdate
+  ## @param broker.podAnnotations Additional pod annotations for RocketMQ broker pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param broker.podAffinityPreset RocketMQ broker pod affinity preset. Ignored if `broker.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param broker.podAntiAffinityPreset RocketMQ broker pod anti-affinity preset. Ignored if `broker.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## RocketMQ broker node affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param broker.nodeAffinityPreset.type RocketMQ broker node affinity preset type. Ignored if `broker.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param broker.nodeAffinityPreset.key RocketMQ broker node label key to match Ignored if `broker.affinity` is set.
+    ## E.g.
+    ## key: "kubernetes.io/e2e-az-name"
+    ##
+    key: ""
+    ## @param broker.nodeAffinityPreset.values RocketMQ broker node label values to match. Ignored if `broker.affinity` is set.
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param broker.affinity Affinity for RocketMQ broker pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param broker.nodeSelector Node labels for RocketMQ broker pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param broker.tolerations Tolerations for RocketMQ broker pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## @param broker.priorityClassName RocketMQ broker pods' priorityClassName
+  ##
+  priorityClassName: ""
+  ## @param broker.runtimeClassName RocketMQ broker pods' runtimeClassName
+  ##
+  runtimeClassName: ""
+  ## @param broker.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param broker.terminationGracePeriodSeconds In seconds, time the given to the RocketMQ broker pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param broker.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## @param broker.podManagementPolicy podManagementPolicy to manage scaling operation of MySQL broker pods
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+  ##
+  podManagementPolicy: ""
+  ## RocketMQ broker Pod security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param broker.podSecurityContext.enabled Enable security context for RocketMQ broker pods
+  ## @param broker.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
+  ## @param broker.podSecurityContext.sysctls Set kernel settings using the sysctl interface
+  ## @param broker.podSecurityContext.supplementalGroups Set filesystem extra groups
+  ## @param broker.podSecurityContext.fsGroup Group ID for the mounted volumes' filesystem
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## RocketMQ broker container security context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param broker.containerSecurityContext.enabled RocketMQ broker container securityContext
+  ## @param broker.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
+  ## @param broker.containerSecurityContext.runAsUser User ID for the RocketMQ broker container
+  ## @param broker.containerSecurityContext.runAsGroup Group ID for the RocketMQ broker container
+  ## @param broker.containerSecurityContext.runAsNonRoot Set RocketMQ broker container's Security Context runAsNonRoot
+  ## @param broker.containerSecurityContext.allowPrivilegeEscalation Set container's privilege escalation
+  ## @param broker.containerSecurityContext.capabilities.drop Set container's Security Context runAsNonRoot
+  ## @param broker.containerSecurityContext.seccompProfile.type Set Client container's Security Context seccomp profile
+  ## @param broker.containerSecurityContext.readOnlyRootFilesystem Set container's Security Context read-only root filesystem
+  ##
+  containerSecurityContext:
+    enabled: false
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+    readOnlyRootFilesystem: true
+  ## RocketMQ broker container's resource requests and limits
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param broker.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if broker.resources is set (broker.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: "none"
+  ## @param broker.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## @param broker.extraEnvVars Extra environment variables to be set on RocketMQ broker containers
+  ## E.g.
+  ## extraEnvVars:
+  ##  - name: TZ
+  ##    value: "Europe/Paris"
+  ##
+  extraEnvVars: []
+  ## @param broker.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for RocketMQ broker containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param broker.extraEnvVarsSecret Name of existing Secret containing extra env vars for RocketMQ broker containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param broker.extraPodSpec Optionally specify extra PodSpec for the RocketMQ broker pod(s)
+  ##
+  extraPodSpec: {}
+  ## @param broker.extraPorts Extra ports to expose
+  ##
+  extraPorts: []
+  ## @param broker.initContainers Add additional init containers for the RocketMQ broker pod(s)
+  ##
+  initContainers: []
+  ## @param broker.sidecars Add additional sidecar containers for the RocketMQ broker pod(s)
+  ##
+  sidecars: []
+  ## @param broker.podLabels RocketMQ broker pod label. If labels are same as commonLabels , this will take precedence
+  ##
+  podLabels: {}
+  ## RocketMQ broker Service parameters
+  ##
+  service:
+    ## @param broker.service.ports.broker RocketMQ broker K8s serviimagePullSecretsce port
+    ##
+    ports:
+      broker: 10911
+    ## Headless service properties
+    ##
+    headless:
+      ## @param nameserver.service.headless.annotations Additional custom annotations for headless RocketMQ nameserver service.
+      ##
+      annotations: {}
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##
+  persistence:
+    ## @param broker.persistence.enabled Enable persistence on MySQL broker replicas using a `PersistentVolumeClaim`. If false, use emptyDir
+    ##
+    enabled: false
+    ## @param broker.persistence.existingClaim Name of an existing `PersistentVolumeClaim` for MySQL broker replicas
+    ## NOTE: When it's set the rest of persistence parameters are ignored
+    ##
+    existingClaim: ""
+    ## @param broker.persistence.subPath The name of a volume's sub path to mount for persistence
+    ##
+    subPath: ""
+    ## @param broker.persistence.storageClass MySQL broker persistent volume storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: ""
+    ## @param broker.persistence.annotations MySQL broker persistent volume claim annotations
+    ##
+    annotations: {}
+    ## @param broker.persistence.accessModes MySQL broker persistent volume access Modes
+    ##
+    accessModes:
+    - ReadWriteOnce
+    ## @param broker.persistence.size MySQL broker persistent volume size
+    ##
+    size: 4Gi
+    ## @param broker.persistence.selector Selector to match an existing Persistent Volume
+    ## selector:
+    ##   matchLabels:
+    ##     app: my-app
+    ##
+    selector: {}
+  ## broker Persistent Volume Claim Retention Policy
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+  ##
+  persistentVolumeClaimRetentionPolicy:
+    ## @param broker.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for broker StatefulSet
+    ##
+    enabled: false
+    ## @param broker.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
+    ##
+    whenScaled: Retain
+    ## @param broker.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
+    ##
+    whenDeleted: Retain
