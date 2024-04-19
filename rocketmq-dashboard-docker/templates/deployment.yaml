@@ -1,0 +1,119 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "rocketmq.dashboard.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: dashboard
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.dashboard.replicaCount }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.dashboard.podLabels .Values.commonLabels ) "context" . ) }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 6 }}
+      app.kubernetes.io/component: dashboard
+  {{- if .Values.dashboard.updateStrategy }}
+  strategy: {{- toYaml .Values.dashboard.updateStrategy | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      annotations:
+        {{- if .Values.dashboard.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
+      labels: {{- include "common.labels.standard" ( dict "customLabels" $podLabels "context" $ ) | nindent 8 }}
+        app.kubernetes.io/component: dashboard
+    spec:
+     {{- include "rocketmq.imagePullSecrets" . | nindent 6 }}
+      automountServiceAccountToken: {{ .Values.dashboard.automountServiceAccountToken }}
+      {{- if .Values.dashboard.hostAliases }}
+      hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.hostAliases "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dashboard.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.dashboard.affinity "context" $) | nindent 8 }}
+      {{- else }}
+      affinity:
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.dashboard.podAffinityPreset "component" "dashboard" "customLabels" $podLabels "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.dashboard.podAntiAffinityPreset "component" "dashboard" "customLabels" $podLabels "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.dashboard.nodeAffinityPreset.type "key" .Values.dashboard.nodeAffinityPreset.key "values" .Values.dashboard.nodeAffinityPreset.values) | nindent 10 }}
+      {{- end }}
+      {{- if .Values.dashboard.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.dashboard.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dashboard.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dashboard.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dashboard.priorityClassName }}
+      priorityClassName: {{ .Values.dashboard.priorityClassName }}
+      {{- end }}
+      {{- if .Values.dashboard.schedulerName }}
+      schedulerName: {{ .Values.dashboard.schedulerName }}
+      {{- end }}
+      {{- if .Values.dashboard.podSecurityContext.enabled }}
+      securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.dashboard.podSecurityContext "context" $) | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: dashboard
+          image: apacherocketmq/rocketmq-dashboard:latest
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- if .Values.dashboard.containerSecurityContext.enabled }}
+          securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.dashboard.containerSecurityContext "context" $) | nindent 12 }}
+          {{- end }}
+          command: {{ .Values.dashboard.command }}
+          args: {{ .Values.dashboard.args }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ printf "%s=%s" "-Drocketmq.namesrv.addr"  (include "rocketmq.nameserver.addr" .) }}
+            {{- if .Values.dashboard.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.dashboard.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.dashboard.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.dashboard.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.dashboard.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          ports:
+            - name: dashboard
+              containerPort: {{ .Values.dashboard.containerPorts.dashboard }}
+              protocol: TCP
+            {{- if .Values.dashboard.extraPorts }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.extraPorts "context" $) | nindent 12 }}
+            {{- end }}
+          startupProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 5
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+          livenessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 5
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 5
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+          {{- if .Values.dashboard.resources }}
+          resources: {{ toYaml .Values.dashboard.resources | nindent 12 }}
+          {{- else if ne .Values.dashboard.resourcesPreset "none" }}
+          resources: {{- include "common.resources.preset" (dict "type" .Values.dashboard.resourcesPreset) | nindent 12 }}
+          {{- end }}

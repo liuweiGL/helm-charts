@@ -1,0 +1,9 @@
+apiVersion: v1
+appVersion: "1.0"
+description: A Helm chart for Kubernetes
+icon: https://gitee.com/liuwei89757/partner-charts/raw/main-source/charts/alibaba/nacos/assets/logo.png
+name: nacos
+version: 1.0.5
+maintainers:
+  - name: liuweigl
+

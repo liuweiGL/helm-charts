@@ -1,0 +1,52 @@
+{{- /*
+Copyright VMware, Inc.
+SPDX-License-Identifier: APACHE-2.0
+*/}}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rocketmq.nameserver.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: nameserver
+  {{- if or .Values.nameserver.service.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" ( dict "values" ( list .Values.nameserver.service.annotations .Values.commonAnnotations ) "context" . ) }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.nameserver.service.type }}
+  {{- if and .Values.nameserver.service.clusterIP (eq .Values.nameserver.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.nameserver.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.nameserver.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.nameserver.service.sessionAffinity }}
+  {{- end }}
+  {{- if .Values.nameserver.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- end }}
+  {{- if or (eq .Values.nameserver.service.type "LoadBalancer") (eq .Values.nameserver.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.nameserver.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if and (eq .Values.nameserver.service.type "LoadBalancer") (not (empty .Values.nameserver.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{- toYaml .Values.nameserver.service.loadBalancerSourceRanges | nindent 4}}
+  {{- end }}
+  {{- if and (eq .Values.nameserver.service.type "LoadBalancer") (not (empty .Values.nameserver.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.nameserver.service.loadBalancerIP }}
+  {{- end }}
+  ports:
+    - name: nameserver
+      port: {{ .Values.nameserver.service.ports.nameserver }}
+      protocol: TCP
+      targetPort: nameserver
+      {{- if (and (or (eq .Values.nameserver.service.type "NodePort") (eq .Values.nameserver.service.type "LoadBalancer")) .Values.nameserver.service.nodePorts.nameserver) }}
+      nodePort: {{ .Values.nameserver.service.nodePorts.nameserver }}
+      {{- else if eq .Values.nameserver.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+    {{- if .Values.nameserver.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.nameserver.podLabels .Values.commonLabels ) "context" . ) }}
+  selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: nameserver

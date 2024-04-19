@@ -1,0 +1,52 @@
+{{- /*
+Copyright VMware, Inc.
+SPDX-License-Identifier: APACHE-2.0
+*/}}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rocketmq.dashboard.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: dashboard
+  {{- if or .Values.dashboard.service.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" ( dict "values" ( list .Values.dashboard.service.annotations .Values.commonAnnotations ) "context" . ) }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.dashboard.service.type }}
+  {{- if and .Values.dashboard.service.clusterIP (eq .Values.dashboard.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.dashboard.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.dashboard.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.dashboard.service.sessionAffinity }}
+  {{- end }}
+  {{- if .Values.dashboard.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- end }}
+  {{- if or (eq .Values.dashboard.service.type "LoadBalancer") (eq .Values.dashboard.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.dashboard.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if and (eq .Values.dashboard.service.type "LoadBalancer") (not (empty .Values.dashboard.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{- toYaml .Values.dashboard.service.loadBalancerSourceRanges | nindent 4}}
+  {{- end }}
+  {{- if and (eq .Values.dashboard.service.type "LoadBalancer") (not (empty .Values.dashboard.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.dashboard.service.loadBalancerIP }}
+  {{- end }}
+  ports:
+    - name: dashboard
+      port: {{ .Values.dashboard.service.ports.dashboard }}
+      protocol: TCP
+      targetPort: dashboard
+      {{- if (and (or (eq .Values.dashboard.service.type "NodePort") (eq .Values.dashboard.service.type "LoadBalancer")) .Values.dashboard.service.nodePorts.dashboard) }}
+      nodePort: {{ .Values.dashboard.service.nodePorts.dashboard }}
+      {{- else if eq .Values.dashboard.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+    {{- if .Values.dashboard.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.dashboard.podLabels .Values.commonLabels ) "context" . ) }}
+  selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: dashboard
