@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - charts/**/*.{yaml,yml}
+    
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+permissions:
+  actions: write
+  
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout github repo
+      uses: actions/checkout@v4
+
+    - name: Setup Helm
+      uses: azure/setup-helm@v4.2.0
+
+    - name: Update Helm repo
+      run: ./scripts/update-repo.sh
+
+    - name: Commit and push changes
+      run: |
+          if ! git diff --quiet; then
+            git config --local user.email "actions@github.com"
+            git config --local user.name "GitHub Actions"
+            git add .
+            git commit -m "Update Helm repo"
+          fi
