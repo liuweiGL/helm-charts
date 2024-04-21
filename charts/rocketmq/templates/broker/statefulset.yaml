@@ -82,7 +82,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: NAMESRV_ADDR
-              value: {{ include "rocketmq.nameserver.addr" . | quote }}
+              value: {{ include "rocketmq.namesrv.addr" . | quote }}
             {{- if .Values.broker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.broker.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}

@@ -12,8 +12,8 @@ global:
   storageClass: ""
 
 image:
-  registry: docker.io
-  repository: apache/rocketmq
+  registry: registry.cn-shanghai.aliyuncs.com
+  repository: eastcoal_cn/rocketmq-doshboard
   tag: latest
   digest: ""
   ## Specify a imagePullPolicy
@@ -226,7 +226,7 @@ podLabels: {}
 service:
   ## @param dashboard.service.type RocketMQ dashboard K8s service type
   ##
-  type: NodePort
+  type: ClusterIP
   ## @param dashboard.service.ports.dashboard RocketMQ dashboard K8s service port
   ##
   ports:
@@ -235,7 +235,7 @@ service:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   nodePorts:
-    dashboard: "30000"
+    dashboard: ""
   ## @param dashboard.service.clusterIP RocketMQ dashboard K8s service clusterIP IP
   ## e.g:
   ## clusterIP: None
@@ -368,3 +368,22 @@ ingress:
   ## Useful when looking for additional customization, such as using different backend
   ##
   extraRules: []
+
+## 是否需要登录之后才能访问
+auth:
+  enabled: false
+  existingConfigmap: ""
+  configuration: |
+    # Define Admin
+    admin=admin
+
+    # Define Users
+    admin=password1
+
+## Rocketmq 服务端配置
+rocketmq:
+    namesrvAddr: rocketmq-namesrv:9876
+    accessKey: ""
+    secretKey: ""
+    existingAccessSecret: ""
+ 

@@ -3,19 +3,19 @@ Copyright VMware, Inc.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
-{{- if (include "rocketmq.nameserver.createConfigmap" .) }}
+{{- if (include "rocketmq.namesrv.createConfigmap" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "rocketmq.nameserver.configmapName" . }}
+  name: {{ include "rocketmq.namesrv.configmapName" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
-    app.kubernetes.io/component: nameserver
+    app.kubernetes.io/component: namesrv
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  nameserver.conf: |
-  {{- include "common.tplvalues.render" ( dict "value" .Values.nameserver.configuration "context" $ ) | nindent 4 }}
+  namesrv.conf: |
+  {{- include "common.tplvalues.render" ( dict "value" .Values.namesrv.configuration "context" $ ) | nindent 4 }}
   
 {{- end -}}

@@ -6,47 +6,47 @@ SPDX-License-Identifier: APACHE-2.0
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "rocketmq.nameserver.fullname" . }}
+  name: {{ include "rocketmq.namesrv.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
-    app.kubernetes.io/component: nameserver
-  {{- if or .Values.nameserver.service.annotations .Values.commonAnnotations }}
-  {{- $annotations := include "common.tplvalues.merge" ( dict "values" ( list .Values.nameserver.service.annotations .Values.commonAnnotations ) "context" . ) }}
+    app.kubernetes.io/component: namesrv
+  {{- if or .Values.namesrv.service.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" ( dict "values" ( list .Values.namesrv.service.annotations .Values.commonAnnotations ) "context" . ) }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
   {{- end }}
 spec:
-  type: {{ .Values.nameserver.service.type }}
-  {{- if and .Values.nameserver.service.clusterIP (eq .Values.nameserver.service.type "ClusterIP") }}
-  clusterIP: {{ .Values.nameserver.service.clusterIP }}
+  type: {{ .Values.namesrv.service.type }}
+  {{- if and .Values.namesrv.service.clusterIP (eq .Values.namesrv.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.namesrv.service.clusterIP }}
   {{- end }}
-  {{- if .Values.nameserver.service.sessionAffinity }}
-  sessionAffinity: {{ .Values.nameserver.service.sessionAffinity }}
+  {{- if .Values.namesrv.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.namesrv.service.sessionAffinity }}
   {{- end }}
-  {{- if .Values.nameserver.service.sessionAffinityConfig }}
-  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- if .Values.namesrv.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.service.sessionAffinityConfig "context" $) | nindent 4 }}
   {{- end }}
-  {{- if or (eq .Values.nameserver.service.type "LoadBalancer") (eq .Values.nameserver.service.type "NodePort") }}
-  externalTrafficPolicy: {{ .Values.nameserver.service.externalTrafficPolicy | quote }}
+  {{- if or (eq .Values.namesrv.service.type "LoadBalancer") (eq .Values.namesrv.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.namesrv.service.externalTrafficPolicy | quote }}
   {{- end }}
-  {{- if and (eq .Values.nameserver.service.type "LoadBalancer") (not (empty .Values.nameserver.service.loadBalancerSourceRanges)) }}
-  loadBalancerSourceRanges: {{- toYaml .Values.nameserver.service.loadBalancerSourceRanges | nindent 4}}
+  {{- if and (eq .Values.namesrv.service.type "LoadBalancer") (not (empty .Values.namesrv.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{- toYaml .Values.namesrv.service.loadBalancerSourceRanges | nindent 4}}
   {{- end }}
-  {{- if and (eq .Values.nameserver.service.type "LoadBalancer") (not (empty .Values.nameserver.service.loadBalancerIP)) }}
-  loadBalancerIP: {{ .Values.nameserver.service.loadBalancerIP }}
+  {{- if and (eq .Values.namesrv.service.type "LoadBalancer") (not (empty .Values.namesrv.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.namesrv.service.loadBalancerIP }}
   {{- end }}
   ports:
-    - name: nameserver
-      port: {{ .Values.nameserver.service.ports.nameserver }}
+    - name: namesrv
+      port: {{ .Values.namesrv.service.ports.namesrv }}
       protocol: TCP
-      targetPort: nameserver
-      {{- if (and (or (eq .Values.nameserver.service.type "NodePort") (eq .Values.nameserver.service.type "LoadBalancer")) .Values.nameserver.service.nodePorts.nameserver) }}
-      nodePort: {{ .Values.nameserver.service.nodePorts.nameserver }}
-      {{- else if eq .Values.nameserver.service.type "ClusterIP" }}
+      targetPort: namesrv
+      {{- if (and (or (eq .Values.namesrv.service.type "NodePort") (eq .Values.namesrv.service.type "LoadBalancer")) .Values.namesrv.service.nodePorts.namesrv) }}
+      nodePort: {{ .Values.namesrv.service.nodePorts.namesrv }}
+      {{- else if eq .Values.namesrv.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
-    {{- if .Values.nameserver.service.extraPorts }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.service.extraPorts "context" $) | nindent 4 }}
+    {{- if .Values.namesrv.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.service.extraPorts "context" $) | nindent 4 }}
     {{- end }}
-  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.nameserver.podLabels .Values.commonLabels ) "context" . ) }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.namesrv.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
-    app.kubernetes.io/component: nameserver
+    app.kubernetes.io/component: namesrv

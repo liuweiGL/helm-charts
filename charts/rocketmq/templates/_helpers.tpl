@@ -3,16 +3,16 @@
 {{- printf "%s-%s" (include "common.names.fullname" .) $name  | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "rocketmq.nameserver.fullname" -}}
-{{- $name := default "nameserver" .Values.nameserver.name -}}
+{{- define "rocketmq.namesrv.fullname" -}}
+{{- $name := default "namesrv" .Values.namesrv.name -}}
 {{- printf "%s-%s" (include "common.names.fullname" .) $name  | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
-Return true if a configmap object should be created for RocketMQ nameserver
+Return true if a configmap object should be created for RocketMQ namesrv
 */}}
-{{- define "rocketmq.nameserver.createConfigmap" -}}
-{{- if .Values.nameserver.existingConfigmap }}
+{{- define "rocketmq.namesrv.createConfigmap" -}}
+{{- if .Values.namesrv.existingConfigmap }}
     {{- false -}}
 {{- else -}}
     {{- true -}}
@@ -20,18 +20,18 @@ Return true if a configmap object should be created for RocketMQ nameserver
 {{- end -}}
 
 {{/*
-Return the configmap with the RocketMQ nameserver configuration
+Return the configmap with the RocketMQ namesrv configuration
 */}}
-{{- define "rocketmq.nameserver.configmapName" -}}
-{{- if .Values.nameserver.existingConfigmap -}}
-    {{- printf "%s" (tpl .Values.nameserver.existingConfigmap $) -}}
+{{- define "rocketmq.namesrv.configmapName" -}}
+{{- if .Values.namesrv.existingConfigmap -}}
+    {{- printf "%s" (tpl .Values.namesrv.existingConfigmap $) -}}
 {{- else -}}
-    {{- printf "%s" (include "rocketmq.nameserver.fullname" .) -}}
+    {{- printf "%s" (include "rocketmq.namesrv.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
-{{- define "rocketmq.nameserver.addr" -}}
-{{- printf "%s:%g"  (include "rocketmq.nameserver.fullname" .) .Values.nameserver.service.ports.nameserver }}
+{{- define "rocketmq.namesrv.addr" -}}
+{{- printf "%s:%g"  (include "rocketmq.namesrv.fullname" .) .Values.namesrv.service.ports.namesrv }}
 {{- end -}}
 
 
@@ -44,7 +44,7 @@ Return the configmap with the RocketMQ nameserver configuration
 Return true if a configmap object should be created for RocketMQ broker
 */}}
 {{- define "rocketmq.broker.createConfigmap" -}}
-{{- if .Values.nameserver.existingConfigmap }}
+{{- if .Values.namesrv.existingConfigmap }}
     {{- false -}}
 {{- else -}}
     {{- true -}}

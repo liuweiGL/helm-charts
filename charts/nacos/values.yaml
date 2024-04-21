@@ -9,9 +9,9 @@ global:
     enable: true
     type: nacos
     tokenExpireSeconds: 1800
-    identityKey: ''
-    identityValue: ''
-    token: ''
+    identityKey: ""
+    identityValue: ""
+    token: ""
 
 ############################nacos###########################
 nacos:

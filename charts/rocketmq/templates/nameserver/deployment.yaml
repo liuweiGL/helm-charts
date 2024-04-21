@@ -1,98 +1,98 @@
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
-  name: {{ include "rocketmq.nameserver.fullname" . }}
+  name: {{ include "rocketmq.namesrv.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
-    app.kubernetes.io/component: nameserver
+    app.kubernetes.io/component: namesrv
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.nameserver.replicaCount }}
-  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.nameserver.podLabels .Values.commonLabels ) "context" . ) }}
+  replicas: {{ .Values.namesrv.replicaCount }}
+  {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.namesrv.podLabels .Values.commonLabels ) "context" . ) }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 6 }}
-      app.kubernetes.io/component: nameserver
-  {{- if .Values.nameserver.updateStrategy }}
-  strategy: {{- toYaml .Values.nameserver.updateStrategy | nindent 4 }}
+      app.kubernetes.io/component: namesrv
+  {{- if .Values.namesrv.updateStrategy }}
+  strategy: {{- toYaml .Values.namesrv.updateStrategy | nindent 4 }}
   {{- end }}
   template:
     metadata:
       annotations:
-        {{- if .Values.nameserver.podAnnotations }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.podAnnotations "context" $) | nindent 8 }}
+        {{- if .Values.namesrv.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
       labels: {{- include "common.labels.standard" ( dict "customLabels" $podLabels "context" $ ) | nindent 8 }}
-        app.kubernetes.io/component: nameserver
+        app.kubernetes.io/component: namesrv
     spec:
      {{- include "rocketmq.imagePullSecrets" . | nindent 6 }}
-      automountServiceAccountToken: {{ .Values.nameserver.automountServiceAccountToken }}
-      {{- if .Values.nameserver.hostAliases }}
-      hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.hostAliases "context" $) | nindent 8 }}
+      automountServiceAccountToken: {{ .Values.namesrv.automountServiceAccountToken }}
+      {{- if .Values.namesrv.hostAliases }}
+      hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.hostAliases "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.nameserver.affinity }}
-      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.nameserver.affinity "context" $) | nindent 8 }}
+      {{- if .Values.namesrv.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.namesrv.affinity "context" $) | nindent 8 }}
       {{- else }}
       affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.nameserver.podAffinityPreset "component" "nameserver" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.nameserver.podAntiAffinityPreset "component" "nameserver" "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.nameserver.nodeAffinityPreset.type "key" .Values.nameserver.nodeAffinityPreset.key "values" .Values.nameserver.nodeAffinityPreset.values) | nindent 10 }}
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.namesrv.podAffinityPreset "component" "namesrv" "customLabels" $podLabels "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.namesrv.podAntiAffinityPreset "component" "namesrv" "customLabels" $podLabels "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.namesrv.nodeAffinityPreset.type "key" .Values.namesrv.nodeAffinityPreset.key "values" .Values.namesrv.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
-      {{- if .Values.nameserver.nodeSelector }}
-      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.nameserver.nodeSelector "context" $) | nindent 8 }}
+      {{- if .Values.namesrv.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.namesrv.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.nameserver.tolerations }}
-      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.tolerations "context" .) | nindent 8 }}
+      {{- if .Values.namesrv.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.tolerations "context" .) | nindent 8 }}
       {{- end }}
-      {{- if .Values.nameserver.topologySpreadConstraints }}
-      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- if .Values.namesrv.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.topologySpreadConstraints "context" .) | nindent 8 }}
       {{- end }}
-      {{- if .Values.nameserver.priorityClassName }}
-      priorityClassName: {{ .Values.nameserver.priorityClassName }}
+      {{- if .Values.namesrv.priorityClassName }}
+      priorityClassName: {{ .Values.namesrv.priorityClassName }}
       {{- end }}
-      {{- if .Values.nameserver.schedulerName }}
-      schedulerName: {{ .Values.nameserver.schedulerName }}
+      {{- if .Values.namesrv.schedulerName }}
+      schedulerName: {{ .Values.namesrv.schedulerName }}
       {{- end }}
-      {{- if .Values.nameserver.podSecurityContext.enabled }}
-      securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.nameserver.podSecurityContext "context" $) | nindent 8 }}
+      {{- if .Values.namesrv.podSecurityContext.enabled }}
+      securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.namesrv.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
       containers:
-        - name: nameserver
+        - name: namesrv
           image: {{ include "rocketmq.image" .  }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          {{- if .Values.nameserver.containerSecurityContext.enabled }}
-          securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.nameserver.containerSecurityContext "context" $) | nindent 12 }}
+          {{- if .Values.namesrv.containerSecurityContext.enabled }}
+          securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.namesrv.containerSecurityContext "context" $) | nindent 12 }}
           {{- end }}
-          {{- if .Values.nameserver.command }}
-          command: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.command "context" $) | nindent 12 }}
+          {{- if .Values.namesrv.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.command "context" $) | nindent 12 }}
           {{- else }}
           command: [ "/bin/sh" ]
           {{- end }}
-          {{- if .Values.nameserver.args }}
-          args: {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.args "context" $) | nindent 12 }}
+          {{- if .Values.namesrv.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "./mqnamesrv -c /etc/rocketmq/nameserver.conf" ]
+          args: [ "-c", "./mqnamesrv -c /etc/rocketmq/namesrv.conf" ]
           {{- end }}
           env:
-            {{- if .Values.nameserver.extraEnvVars }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.extraEnvVars "context" $) | nindent 12 }}
+            {{- if .Values.namesrv.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
-            {{- if .Values.nameserver.extraEnvVarsCM }}
+            {{- if .Values.namesrv.extraEnvVarsCM }}
             - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.nameserver.extraEnvVarsCM "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.namesrv.extraEnvVarsCM "context" $) }}
             {{- end }}
-            {{- if .Values.nameserver.extraEnvVarsSecret }}
+            {{- if .Values.namesrv.extraEnvVarsSecret }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.nameserver.extraEnvVarsSecret "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.namesrv.extraEnvVarsSecret "context" $) }}
             {{- end }}
           ports:
-            - name: nameserver
-              containerPort: {{ .Values.nameserver.containerPorts.nameserver }}
+            - name: namesrv
+              containerPort: {{ .Values.namesrv.containerPorts.namesrv }}
               protocol: TCP
-            {{- if .Values.nameserver.extraPorts }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.nameserver.extraPorts "context" $) | nindent 12 }}
+            {{- if .Values.namesrv.extraPorts }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.extraPorts "context" $) | nindent 12 }}
             {{- end }}
           startupProbe:
             initialDelaySeconds: 10
@@ -101,7 +101,7 @@ spec:
             failureThreshold: 5
             successThreshold: 1
             tcpSocket:
-              port: nameserver
+              port: namesrv
           livenessProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -109,7 +109,7 @@ spec:
             failureThreshold: 5
             successThreshold: 1
             tcpSocket:
-              port: nameserver
+              port: namesrv
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -117,11 +117,11 @@ spec:
             failureThreshold: 5
             successThreshold: 1
             tcpSocket:
-              port: nameserver
-          {{- if .Values.nameserver.resources }}
-          resources: {{ toYaml .Values.nameserver.resources | nindent 12 }}
-          {{- else if ne .Values.nameserver.resourcesPreset "none" }}
-          resources: {{- include "common.resources.preset" (dict "type" .Values.nameserver.resourcesPreset) | nindent 12 }}
+              port: namesrv
+          {{- if .Values.namesrv.resources }}
+          resources: {{ toYaml .Values.namesrv.resources | nindent 12 }}
+          {{- else if ne .Values.namesrv.resourcesPreset "none" }}
+          resources: {{- include "common.resources.preset" (dict "type" .Values.namesrv.resourcesPreset) | nindent 12 }}
           {{- end }}
           volumeMounts:
             - name: config
@@ -129,4 +129,4 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ include "rocketmq.nameserver.configmapName" . }}
+            name: {{ include "rocketmq.namesrv.configmapName" . }}
