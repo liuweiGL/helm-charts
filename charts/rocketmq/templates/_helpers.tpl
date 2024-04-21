@@ -1,6 +1,16 @@
-{{- define "rocketmq.dashboard.fullname" -}}
-{{- $name := default "dashboard" .Values.dashboard.name -}}
-{{- printf "%s-%s" (include "common.names.fullname" .) $name  | trunc 63 | trimSuffix "-" -}}
+
+{{/*
+Return the proper RocketMQ image name
+*/}}
+{{- define "rocketmq.image" -}}
+{{- include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+{{- end -}}
+
+{{/*
+Return the proper Docker Image Registry Secret Names
+*/}}
+{{- define "rocketmq.imagePullSecrets" -}}
+{{- include "common.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) }}
 {{- end -}}
 
 {{- define "rocketmq.namesrv.fullname" -}}
@@ -60,19 +70,4 @@ Return the configmap with the RocketMQ broker configuration
 {{- else -}}
     {{- printf "%s" (include "rocketmq.broker.fullname" .) -}}
 {{- end -}}
-{{- end -}}
-
-
-{{/*
-Return the proper RocketMQ image name
-*/}}
-{{- define "rocketmq.image" -}}
-{{- include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
-{{- end -}}
-
-{{/*
-Return the proper Docker Image Registry Secret Names
-*/}}
-{{- define "rocketmq.imagePullSecrets" -}}
-{{- include "common.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) }}
 {{- end -}}

@@ -1,0 +1,20 @@
+{{- if }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nacos-cm
+  namespace: {{ .Release.Namespace | quote }}
+data:
+  {{- with .Values.nacos.storage.db }}
+  MYSQL_SERVICE_HOST: {{.host }}
+  MYSQL_SERVICE_PORT: "{{ .port | default 3306 }}"
+  MYSQL_SERVICE_DB_NAME: {{ .name }}
+  MYSQL_SERVICE_USER: {{ .username }}
+  MYSQL_SERVICE_PASSWORD: {{ .password }}
+  MYSQL_DATABASE_NUM: {{ .num | default 1 }}
+  MYSQL_SERVICE_DB_PARAM: {{ .param | default "characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false" }}
+  {{- end }}
+{{- end }}
+
+
+
