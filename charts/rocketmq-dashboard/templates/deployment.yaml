@@ -68,22 +68,14 @@ spec:
           command: {{ .Values.command }}
           args: {{ .Values.args }}
           env:
-            {{- if (include "rocketmq.acl.secretExisted" .) }}
-            - name: rocketmq.config.accessKey
-              valueFrom:
-              secretKeyRef:
-                name: {{ include "rocketmq.acl.secretName" . }}
-                key: accessKey
-            - name: rocketmq.config.secretKey
-              valueFrom:
-              secretKeyRef:
-                name: {{ include "rocketmq.acl.secretName" . }}
-                key: secretKey
-            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
+            {{- if include rocketmq.acl.secretExisted -}}
+            - secretRef:
+                name: {{ include "rocketmq.acl.secretName" . }}
+            {{- end }}
             {{- if .Values.extraEnvVarsCM }}
             - configMapRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsCM "context" $) }}
