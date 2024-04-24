@@ -6,6 +6,9 @@ global:
   ##
   imagePullSecrets: []
   storageClass: ""
+  ## 是否启用 RocketMQ Dashboard
+  ##
+  dashboardEnabled: true
 
 image:
   registry: docker.io
@@ -36,8 +39,9 @@ commonAnnotations: {}
 ##
 commonLabels: {}
 
-dashboard:
-  enabled: true
+## dashboard 配置
+##
+rocketmq-dashboard:
   ## 是否需要登录之后才能访问
   ##
   auth:
@@ -54,7 +58,6 @@ dashboard:
     accessKey: ""
     secretKey: ""
     existingSecret: ""
-
 
 namesrv:
   name: "namesrv"

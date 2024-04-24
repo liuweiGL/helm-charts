@@ -21,6 +21,4 @@ dependencies:
   repository: file://../rocketmq-dashboard
   tags:
   - rocketmq-dashboard
-  condition: dashboard.enabled
-  import-values:
-  - dashboard
+  condition: global.dashboardEnabled
