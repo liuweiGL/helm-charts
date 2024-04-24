@@ -1,13 +1,26 @@
+annotations:
+  category: Infrastructure
 apiVersion: v2
 name: rocketmq-server
 type: application
 version: 1.0.0
 appVersion: 5.2.0
-description: A Helm chart for Kubernetes
+description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
 icon: https://rocketmq.apache.org/img/favicon-192x192.png
+home: https://rocketmq.apache.org/zh/docs/
+sources:
+- https://github.com/apache/rocketmq
 dependencies:
 - name: common
+  version: 2.x.x
   repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-common
-  version: 2.x.x
+- name: rocketmq-dashboard
+  version: 1.x.x
+  repository: file://../rocketmq-dashboard
+  tags:
+  - rocketmq-dashboard
+  condition: dashboard.enabled
+  import-values:
+  - dashboard

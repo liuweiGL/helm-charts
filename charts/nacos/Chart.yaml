@@ -1,13 +1,18 @@
+annotations:
+  category: Infrastructure
 apiVersion: v2
 name: nacos
 type: application
 version: 1.0.0
 appVersion: 2.3.2
-description: A Helm chart for Kubernetes
+description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
 icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
+home: https://nacos.io/docs/latest/what-is-nacos/
+sources:
+- https://github.com/alibaba/nacos
 dependencies:
 - name: common
+  version: 2.x.x
   repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-common
-  version: 2.x.x

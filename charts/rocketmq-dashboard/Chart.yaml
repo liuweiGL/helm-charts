@@ -1,13 +1,18 @@
+annotations:
+  category: Infrastructure
 apiVersion: v2
 name: rocketmq-dashboard
 type: application
 version: 1.0.0
 appVersion: 1.0.0
-description: A Helm chart for Kubernetes
+description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
 icon: https://rocketmq.apache.org/img/favicon-192x192.png
+home: https://rocketmq.apache.org/zh/docs/
+sources:
+- https://github.com/apache/rocketmq-dashboard
 dependencies:
 - name: common
+  version: 2.x.x
   repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-common
-  version: 2.x.x
