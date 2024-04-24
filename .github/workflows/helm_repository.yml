@@ -41,6 +41,7 @@ jobs:
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
-        git add .
+        git add repo
         git commit -m "ci: update charts"
+        git checkout -- .
         git push  -f
