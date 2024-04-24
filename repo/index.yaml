@@ -18,24 +18,6 @@ entries:
     urls:
     - nacos-1.0.0.tgz
     version: 1.0.0
-  rocketmq:
-  - apiVersion: v2
-    appVersion: 5.2.0
-    created: "2024-04-24T14:40:42.006558306Z"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: A Helm chart for Kubernetes
-    digest: c2382e9d28d0f611bbdc67a9bfceea8515088a11a80c72b619d64c96b783a437
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq
-    type: application
-    urls:
-    - rocketmq-1.0.0.tgz
-    version: 1.0.0
   rocketmq-dashboard:
   - apiVersion: v2
     appVersion: 1.0.0
