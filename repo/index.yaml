@@ -1,37 +1,48 @@
 apiVersion: v1
 entries:
   nacos:
-  - apiVersion: v2
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-24T14:55:18.138855614Z"
+    created: "2024-04-25T00:04:17.568902047+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: A Helm chart for Kubernetes
-    digest: c993871017c87e879febb1f2c80c42b6daca6e9b77e3f2d1818a8ae51a44c602
+    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+    digest: 3e939dac1683c235a1629e69684407145b849b25125e60ebeb391a21482c93d2
+    home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
+    sources:
+    - https://github.com/alibaba/nacos
     type: application
     urls:
     - nacos-1.0.0.tgz
     version: 1.0.0
   rocketmq-dashboard:
-  - apiVersion: v2
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T14:55:18.140994906Z"
+    created: "2024-04-25T00:04:17.574321796+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: A Helm chart for Kubernetes
-    digest: 742970b5c2b112d88d89d951077d78c366d8f32e49031972632ea4d1cb112e1f
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
+    digest: c8f82ba5880b729e38d0f9b69258718a9e9233462582ccef2960bfb34a2e06fa
+    home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
+    sources:
+    - https://github.com/apache/rocketmq-dashboard
     type: application
     urls:
     - rocketmq-dashboard-1.0.0.tgz
@@ -39,22 +50,32 @@ entries:
   rocketmq-server:
   - annotations:
       category: Infrastructure
-      licenses: Apache-2.0
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T14:55:18.14267668Z"
+    created: "2024-04-25T00:04:17.581510562+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: A Helm chart for Kubernetes
-    digest: f2fe3a3435b99db7caaa7a442f153ed6735c83437cd7f59b5ad249dcc2cca2d0
+    - condition: dashboard.enabled
+      import-values:
+      - dashboard
+      name: rocketmq-dashboard
+      repository: file://../rocketmq-dashboard
+      tags:
+      - rocketmq-dashboard
+      version: 1.x.x
+    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
+    digest: 610f75b44a922d2d220a334e494000edbea584972970f67ecc4a8d258e773653
+    home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
+    sources:
+    - https://github.com/apache/rocketmq
     type: application
     urls:
     - rocketmq-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-24T14:55:18.137066719Z"
+generated: "2024-04-25T00:04:17.563892949+08:00"
