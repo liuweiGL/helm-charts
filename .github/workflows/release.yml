@@ -20,11 +20,18 @@ jobs:
     steps:
     - name: Checkout github repo
       uses: actions/checkout@v4
+      with:
+        ref: release
 
-    - name: Setup Helm
+    - name: Setup helm
       uses: azure/setup-helm@v4.2.0
 
-    - name: Update Helm repo
+    - name: Setup scripts
+      run: |
+        git checkout main -- scripts
+        chmod +x scripts/*
+
+    - name: Update helm repo
       run: ./scripts/update-repo.sh
 
     - name: Commit and push changes
