@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-24T16:57:58.024106741Z"
+    created: "2024-04-25T01:01:36.289502172+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T16:57:58.02753203Z"
+    created: "2024-04-25T01:01:36.299822588+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -51,7 +51,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T16:57:58.025458612Z"
+    created: "2024-04-25T01:01:36.295586184+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -75,7 +75,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T16:57:58.033507615Z"
+    created: "2024-04-25T01:01:36.312711492+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -89,7 +89,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 90023a7b9ea0636bc98640dd01ed59bbdfa0d89083c4c49fd8740b8dde2f2e22
+    digest: 6e6cc435d22c4a904107a2979ab104242b3d0047c8b5730b92590cfe1e3db7ad
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -103,7 +103,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T16:57:58.030586577Z"
+    created: "2024-04-25T01:01:36.305598662+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -129,4 +129,4 @@ entries:
     urls:
     - rocketmq-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-24T16:57:58.022360404Z"
+generated: "2024-04-25T01:01:36.28449911+08:00"
