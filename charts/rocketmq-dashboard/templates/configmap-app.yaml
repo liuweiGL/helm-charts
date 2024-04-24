@@ -9,7 +9,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  NAMESRV_ADDRS: {{ .Values.rocketmq.namesrvAddrs }}
+  NAMESRV_ADDRS: {{ include "dashboard.rocketmq.namesrvAddrs" . }}
   IS_VIP_CHANNEL: {{ .Values.rocketmq.isVipChannel | quote }}
   TIMEOUT_MILLIS: {{ .Values.rocketmq.timeoutMillis | quote }}
   LOGIN_REQUIRED: {{ .Values.auth.enabled | quote }}

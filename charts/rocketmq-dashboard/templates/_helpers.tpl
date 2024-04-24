@@ -11,7 +11,7 @@
 {{- end -}}
 
 {{- define "dashboard.auth.createConfigMap" -}}
-    {{- if and (not .Values.auth.existingConfigMap) (and .Values.auth.configuration) -}}
+    {{- if and (not .Values.auth.existingConfigMap) .Values.auth.enabled -}}
         {{- true -}}
     {{- end -}}
 {{- end -}}
@@ -26,6 +26,12 @@
 
 {{- define "dashboard.app.configMapName" -}}
     {{- printf "%s-%s" (include "common.names.fullname" .) "app" -}}
+{{- end -}}
+
+{{- define "dashboard.rocketmq.namesrvAddrs" -}}
+    {{- if .Values.rocketmq.namesrvAddrs -}}
+         {{- join ";" .Values.rocketmq.namesrvAddrs }}
+    {{- end -}}
 {{- end -}}
 
 {{- define "rocketmq.acl.createSecret" -}}

@@ -1,5 +1,6 @@
 global:
   storageClass: "longhorn"
+  dashboardEnabled: true
 
 namesrv:
   service:
@@ -10,9 +11,26 @@ namesrv:
 broker:
   acl:
     enabled: true
-    accessKey: eastcoal
+    accessKey: rocketmq
     secretKey: UA186pHykLRoTdfX
     globalWhiteRemoteAddresses: []
+
+rocketmq-dashboard:
+  ## 是否需要登录之后才能访问
+  ##
+  auth:
+    enabled: true
+    username: eastcoal
+    password: HByxc6828!@#$
+  ## Rocketmq 服务端配置
+  ##
+  rocketmq:
+    namesrvAddrs:
+      - rocketmq-server-namesrv-headless:9876
+    isVIPChannel: true
+    timeoutMillis: 5000
+    accessKey: rocketmq
+    secretKey: UA186pHykLRoTdfX
   # args: ["-c", "sleep 5000 && ./mqbroker -c ${ROCKETMQ_HOME}/conf/$(POD_NAME).conf"]
 # livenessProbe:
 #   enabled: false

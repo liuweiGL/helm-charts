@@ -42,7 +42,7 @@ dataPath: ""
 ##
 rocketmq:
   namesrvAddrs:
-  - rocketmq-namesrv-headless:9876
+  - rocketmq-server-namesrv-headless:9876
   isVIPChannel: true
   timeoutMillis: 5000
   accessKey: ""
@@ -297,7 +297,7 @@ podLabels: {}
 service:
   ## @param dashboard.service.type RocketMQ dashboard K8s service type
   ##
-  type: ClusterIP
+  type: NodePort
   ## @param dashboard.service.ports.dashboard RocketMQ dashboard K8s service port
   ##
   ports:
