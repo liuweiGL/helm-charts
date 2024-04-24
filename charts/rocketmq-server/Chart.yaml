@@ -3,7 +3,7 @@ annotations:
 apiVersion: v2
 name: rocketmq-server
 type: application
-version: 1.0.0
+version: 1.0.1
 appVersion: 5.2.0
 description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
 icon: https://rocketmq.apache.org/img/favicon-192x192.png
