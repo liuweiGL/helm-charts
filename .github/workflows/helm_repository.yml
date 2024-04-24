@@ -6,8 +6,9 @@ on:
     branches:
     - main
     paths:
-    - charts
-    - scripts
+    - '.github/workflows/*.yml'
+    - 'charts/**'
+    - 'scripts/**'
 
 permissions:
   actions: write
