@@ -1,3 +1,4 @@
+{{- if (include "dashboard.auth.createConfigMap" .) -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,5 +12,5 @@ metadata:
 data:
   users.properties: |
     admin={{ .Values.auth.username }}
-
     {{ .Values.auth.username }}={{ .Values.auth.password }}
+{{- end -}}
