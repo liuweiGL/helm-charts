@@ -31,9 +31,9 @@ jobs:
       run: |
         chmod +x scripts/*
         ./scripts/helm_chart.sh update_charts
-        if [ ! git diff repo --quiet ]; then
-          ./scripts/helm_chart.sh update_index
-        fi
+        ./scripts/helm_chart.sh update_index
+        # if [ ! git diff repo --quiet ]; then
+        # fi
 
     - name: Update Repository
       run: |
