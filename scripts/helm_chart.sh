@@ -38,22 +38,31 @@ function update_index(){
     helm repo index $repo_dir --merge $repo_dir/index.yaml
 }
 
-if [ $# -lt 1 ]; then
-    echo "Usage: $0 <method>"
-    exit 1
-fi
 
-method="$1"
 
-case "$method" in
-    "update_charts")
-        update_charts
-        ;;
-    "update_index")
-        update_index
-        ;;
-    *)
-        echo "Unknown method: $method"
-        exit 1
-        ;;
-esac
+function main(){
+    update_charts
+    update_index
+}
+
+main
+
+# if [ $# -lt 1 ]; then
+#     echo "Usage: $0 <method>"
+#     exit 1
+# fi
+
+# method="$1"
+
+# case "$method" in
+#     "update_charts")
+#         update_charts
+#         ;;
+#     "update_index")
+#         update_index
+#         ;;
+#     *)
+#         echo "Unknown method: $method"
+#         exit 1
+#         ;;
+# esac

@@ -27,16 +27,13 @@ jobs:
     - name: Step Helm
       uses: azure/setup-helm@v4.2.0
 
-    - name: Build Charts
+    - name: Update Charts
       run: |
-        ./scripts/helm_chart.sh update_charts
-        ./scripts/helm_chart.sh update_index
-        # if [ ! git diff --quiet -- repo  ]; then
-        # fi
+        ./scripts/helm_chart.sh
+        
+        changes=$(git diff --name-only repo)
 
-    - name: Update Repository
-      run: |
-        if [ ! git diff --quiet -- repo  ]; then
+        if [ -n "$changes" ]; then
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add repo

@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-25T00:04:17.568902047+08:00"
+    created: "2024-04-25T00:45:52.449224522+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-25T00:04:17.574321796+08:00"
+    created: "2024-04-25T00:45:52.453701474+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -52,7 +52,35 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T00:04:17.581510562+08:00"
+    created: "2024-04-25T00:45:52.466844144+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: global.dashboardEnabled
+      name: rocketmq-dashboard
+      repository: file://../rocketmq-dashboard
+      tags:
+      - rocketmq-dashboard
+      version: 1.x.x
+    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
+    digest: 90023a7b9ea0636bc98640dd01ed59bbdfa0d89083c4c49fd8740b8dde2f2e22
+    home: https://rocketmq.apache.org/zh/docs/
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq-server
+    sources:
+    - https://github.com/apache/rocketmq
+    type: application
+    urls:
+    - rocketmq-server-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 5.2.0
+    created: "2024-04-25T00:45:52.45979487+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,4 +106,4 @@ entries:
     urls:
     - rocketmq-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-25T00:04:17.563892949+08:00"
+generated: "2024-04-25T00:45:52.443387434+08:00"
