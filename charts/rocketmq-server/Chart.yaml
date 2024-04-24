@@ -2,7 +2,7 @@ annotations:
   category: Infrastructure
   licenses: Apache-2.0
 apiVersion: v2
-name: rocketmq
+name: rocketmq-server
 type: application
 version: 1.0.0
 appVersion: 5.2.0
