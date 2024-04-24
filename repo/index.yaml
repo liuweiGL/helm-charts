@@ -3,7 +3,7 @@ entries:
   nacos:
   - apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-24T10:25:51.571906983Z"
+    created: "2024-04-24T14:37:46.755426878Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -21,7 +21,7 @@ entries:
   rocketmq:
   - apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T10:25:51.573451446Z"
+    created: "2024-04-24T14:37:46.757022599Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -39,7 +39,7 @@ entries:
   rocketmq-dashboard:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T10:25:51.574774257Z"
+    created: "2024-04-24T14:37:46.758298973Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -54,4 +54,25 @@ entries:
     urls:
     - rocketmq-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-24T10:25:51.570096867Z"
+  rocketmq-server:
+  - annotations:
+      category: Infrastructure
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 5.2.0
+    created: "2024-04-24T14:37:46.760565409Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: f2fe3a3435b99db7caaa7a442f153ed6735c83437cd7f59b5ad249dcc2cca2d0
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq-server
+    type: application
+    urls:
+    - rocketmq-server-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-04-24T14:37:46.753727765Z"
