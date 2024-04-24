@@ -1,0 +1,57 @@
+apiVersion: v1
+entries:
+  nacos:
+  - apiVersion: v2
+    appVersion: 2.3.2
+    created: "2024-04-24T10:25:51.571906983Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: c993871017c87e879febb1f2c80c42b6daca6e9b77e3f2d1818a8ae51a44c602
+    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
+    name: nacos
+    type: application
+    urls:
+    - nacos-1.0.0.tgz
+    version: 1.0.0
+  rocketmq:
+  - apiVersion: v2
+    appVersion: 5.2.0
+    created: "2024-04-24T10:25:51.573451446Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: c2382e9d28d0f611bbdc67a9bfceea8515088a11a80c72b619d64c96b783a437
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq
+    type: application
+    urls:
+    - rocketmq-1.0.0.tgz
+    version: 1.0.0
+  rocketmq-dashboard:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-04-24T10:25:51.574774257Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 742970b5c2b112d88d89d951077d78c366d8f32e49031972632ea4d1cb112e1f
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq-dashboard
+    type: application
+    urls:
+    - rocketmq-dashboard-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-04-24T10:25:51.570096867Z"
