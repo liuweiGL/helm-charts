@@ -32,14 +32,16 @@
 {{- end -}}
 
 
+{{- define "rocketmq.broker.home" -}}
+/opt/rocketmq
+{{- end -}}
+
 {{- define "rocketmq.broker.fullname" -}}
     {{- $name := .Values.broker.name | default "broker" -}}
     {{- printf "%s-%s" (include "common.names.fullname" .) $name  | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Return true if a configMap object should be created for RocketMQ broker
-*/}}
+
 {{- define "rocketmq.broker.createConfigMap" -}}
     {{- if .Values.namesrv.existingConfigMap }}
         {{- false -}}
@@ -57,18 +59,38 @@ Return true if a configMap object should be created for RocketMQ broker
 {{- end -}}
 
 
+{{- define "rocketmq.broker.plainAclFile" -}}
+    {{- if .Values.broker.acl.enabled -}}
+        {{- if not (empty .Values.broker.globalWhiteRemoteAddresses) -}}
+globalWhiteRemoteAddresses:
+            {{- range .Values.broker.globalWhiteRemoteAddresses -}}
+  - {{- . | indent 2 }}
+            {{- end -}}        
+        {{- end -}}
+accounts:
+  - accessKey: {{- .Values.broker.acl.accessKey | indent 2 }}
+    secretKey: {{- .Values.broker.acl.secretKey | indent 2 }}
+    admin: true
+    {{- end -}}
+{{- end -}}
 
+{{- define "rocketmq.broker.toolsFile" -}}
+    {{- if .Values.broker.acl.enabled -}}
+accessKey: {{ .Values.broker.acl.accessKey }}
+secretKey: {{ .Values.broker.acl.secretKey }}
+    {{- end -}}
+{{- end -}}
 
 {{- define "rocketmq.broker.configVolumeMounts" -}}
-    {{- $prefixPath := .path }}
     {{- with .context -}}
-    {{- $name := include "rocketmq.broker.fullname" . }}
-    {{- $replicaCount := .Values.broker.replicaCount | int }}
-    {{- range $index := until $replicaCount -}}
-        {{- $brokerName := printf "%s-%d" $name $index -}}
+        {{- $home := include "rocketmq.broker.home" . }}
+        {{- $name := include "rocketmq.broker.fullname" . }}
+        {{- $replicaCount := .Values.broker.replicaCount | int }}
+        {{- range $index := until $replicaCount -}}
+            {{- $brokerName := printf "%s-%d" $name $index -}}
 - name: config
-  mountPath:  {{ printf "%s%s.conf" $prefixPath $brokerName }}
+  mountPath:  {{ printf "%s/conf/%s.conf" $home $brokerName }}
   subPath: {{ printf "%s.conf" $brokerName }}
-    {{- end -}} 
+        {{- end -}} 
     {{- end -}}
 {{- end -}}

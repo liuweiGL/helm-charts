@@ -338,7 +338,6 @@ namesrv:
       annotations: {}
 
 broker:
-  storePathRootDir: "/opt/rocketmq/data"
   name: "broker"
   replicaCount: 1
   ## @param broker.command Override default container command on RocketMQ broker container(s) (useful when using custom images)
@@ -354,18 +353,28 @@ broker:
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
   hostAliases: []
+
+  ## @param broker.acl Configure RocketMQ broker with a custom acl file,only support administrator
+  acl:
+    enabled: false
+    accessKey: ""
+    secretKey: ""
+    whitelistIps: []
   ## @param broker.configuration [string] Configure RocketMQ broker with a custom broker.conf file
   ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java
   ##
+  storePathRootDir: "/opt/rocketmq/data"
   configuration: |-
     {{- $name := include "rocketmq.broker.fullname" . }}
-    {{- $storePathRootDir := .Values.broker.storePathRootDir }}
+    {{- $aclEnable := .Values.broker.acl.enabled -}}
+    {{- $storePathRootDir := .Values.broker.storePathRootDir -}}
     {{- $replicaCount := .Values.broker.replicaCount | int }}
     {{- range $index := until $replicaCount }}
     {{- $brokerName := printf "%s-%d" $name $index }}
     {{ $brokerName -}}.conf: |
       brokerName={{ $brokerName }}
       storePathRootDir={{ $storePathRootDir }}
+      aclEnable={{ $aclEnable }}
       brokerClusterName=DefaultCluster
       traceOn=true
       autoCreateTopicEnable=false
@@ -373,15 +382,7 @@ broker:
       enableIncrementalTopicCreation=true
       flushDiskType=ASYNC_FLUSH
       enablePropertyFilter=true
-      aclEnable=true
     {{- end }}
-
-    plain_acl.yml: |
-      accounts:
-        - accessKey: eastcoal
-          secretKey: 12345678
-          admin: true
-
 
   ## @param broker.existingConfigMap Name of existing ConfigMap with RocketMQ broker configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored

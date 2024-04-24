@@ -1,0 +1,22 @@
+global:
+  storageClass: "longhorn"
+
+namesrv:
+  service:
+    type: NodePort
+    nodePorts:
+      namesrv: 30000
+
+broker:
+  acl:
+    enabled: true
+    accessKey: eastcoal
+    secretKey: UA186pHykLRoTdfX
+    globalWhiteRemoteAddresses: []
+  # args: ["-c", "sleep 5000 && ./mqbroker -c ${ROCKETMQ_HOME}/conf/$(POD_NAME).conf"]
+# livenessProbe:
+#   enabled: false
+# readinessProbe:
+#   enabled: false
+# startupProbe:
+#   enabled: false

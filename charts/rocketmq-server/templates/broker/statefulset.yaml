@@ -60,12 +60,28 @@ spec:
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.broker.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
       initContainers:
-        - name: copy-rocketmq-workdir
+        - name: initializer
           image: {{ include "rocketmq.image" .  }}
-          command: ["sh", "-c", "cp -r ${ROCKETMQ_HOME}/* /opt/rocketmq"]
+          env:
+            - name: NEW_ROCKETMQ_HOME
+              value: {{ include "rocketmq.broker.home" . }}
+            - name: PLAIN_ACL_CONTENT
+              value: |
+                {{- include "rocketmq.broker.plainAclFile" . | nindent 16 }}
+            - name: TOOLS_CONTENT
+              value: |
+                {{- include "rocketmq.broker.toolsFile" . | nindent 16 }}
+          command: 
+            - sh
+            - -ec
+            - |
+              cp -r ${ROCKETMQ_HOME}/* ${NEW_ROCKETMQ_HOME}
+              mkdir -p ${NEW_ROCKETMQ_HOME}/conf/acl
+              printf "${PLAIN_ACL_CONTENT}" > ${NEW_ROCKETMQ_HOME}/conf/plain_acl.yml
+              printf "${TOOLS_CONTENT}" > ${NEW_ROCKETMQ_HOME}/conf/tools.yml
           volumeMounts:
             - name: empty-dir
-              mountPath: /opt/rocketmq
+              mountPath: {{ include "rocketmq.broker.home" . }}
       containers:
         - name: broker
           image: {{ include "rocketmq.image" .  }}
@@ -81,7 +97,7 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "./mqbroker -c ${ROCKETMQ_HOME}/conf/$(POD_NAME).conf" ]
+          args: [ "-c", "cd ${ROCKETMQ_HOME}/bin && ./mqbroker -c ${ROCKETMQ_HOME}/conf/${POD_NAME}.conf --enable-proxy" ]
           {{- end }}
           env:
             - name: POD_NAME
@@ -91,7 +107,7 @@ spec:
             - name: NAMESRV_ADDR
               value: {{ include "rocketmq.namesrv.addr" . | quote }}
             - name: ROCKETMQ_HOME
-              value: /opt/rocketmq
+              value: {{ include "rocketmq.broker.home" . }}
             {{- if .Values.broker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.broker.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -161,12 +177,8 @@ spec:
           {{- end }}
           volumeMounts:
             - name: empty-dir
-              mountPath: /opt/rocketmq  
-            - name: config
-              mountPath:  /opt/rocketmq/conf/plain_acl.yml
-              subPath: plain_acl.yml
-              readOnly: false
-            {{- include "rocketmq.broker.configVolumeMounts" ( dict "path" "/opt/rocketmq/conf/" "context" $ ) | nindent 12 }}          
+              mountPath: {{ include "rocketmq.broker.home" . }}
+            {{- include "rocketmq.broker.configVolumeMounts" (dict "context" $) | nindent 12 }}
             - name: data
               mountPath: {{ .Values.broker.storePathRootDir }}
       volumes:

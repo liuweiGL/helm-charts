@@ -6,24 +6,24 @@ auth:
     admin=eastcoal
 
     # Define Users
-    eastcoal=UA186pHykLRoTdfX
+    eastcoal=123456
 
 ## Rocketmq 服务端配置
 rocketmq:
   namesrvAddrs: rocketmq-namesrv-headless:9876
   accessKey: eastcoal
-  secretKey: 12345678
+  secretKey: UA186pHykLRoTdfX
 
 service:
   type: NodePort
   nodePorts:
     dashboard: 30010
 
-image:
-  pullPolicy: Always
+# image:
+#   pullPolicy: Always
 
-livenessProbe:
-  enabled: false
+# livenessProbe:
+#   enabled: false
 
-startupProbe:
-  enabled: false
+# startupProbe:
+#   enabled: false
