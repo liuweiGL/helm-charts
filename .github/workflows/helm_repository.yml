@@ -29,19 +29,17 @@ jobs:
 
     - name: Build Charts
       run: |
-        chmod +x scripts/*
         ./scripts/helm_chart.sh update_charts
         ./scripts/helm_chart.sh update_index
-        # if [ ! git diff repo --quiet ]; then
+        # if [ ! git diff --quiet -- repo  ]; then
         # fi
 
     - name: Update Repository
       run: |
-        if [ ! git diff repo --quiet ]; then
+        if [ ! git diff --quiet -- repo  ]; then
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add repo
           git commit -m "ci: update charts"
-          git checkout -- .
           git push  -f
         fi
