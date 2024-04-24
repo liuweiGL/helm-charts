@@ -3,7 +3,7 @@ entries:
   nacos:
   - apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-24T14:38:16.7979469Z"
+    created: "2024-04-24T14:38:31.628327345Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -21,7 +21,7 @@ entries:
   rocketmq:
   - apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T14:38:16.799544386Z"
+    created: "2024-04-24T14:38:31.630002375Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -39,7 +39,7 @@ entries:
   rocketmq-dashboard:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T14:38:16.80091673Z"
+    created: "2024-04-24T14:38:31.631372136Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -60,7 +60,7 @@ entries:
       licenses: Apache-2.0
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T14:38:16.803760894Z"
+    created: "2024-04-24T14:38:31.633272067Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -75,4 +75,4 @@ entries:
     urls:
     - rocketmq-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-24T14:38:16.796165161Z"
+generated: "2024-04-24T14:38:31.626264863Z"
