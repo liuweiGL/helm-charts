@@ -8,37 +8,33 @@ on:
     paths:
     - charts/**/*.{yaml,yml}
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
 permissions:
   actions: write
 
 jobs:
-  release:
+  update:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout github repo
+    - name: Step environment
       uses: actions/checkout@v4
       with:
-        ref: release
+        token: ${{ secrets.TOKEN }}
+        clean: true
+        ref: main
 
-    - name: Setup helm
+    - name: Step Helm
       uses: azure/setup-helm@v4.2.0
 
-    - name: Build charts
+    - name: Build Charts
       run: |
-        git pull origin main
-        git checkout main -- charts scripts
         chmod +x scripts/*
-        ./scripts/update-repo.sh
+        ./scripts/update_repo.sh
 
-    - name: Commit and push changes
+    - name: Update Charts
       run: |
-        if ! git diff --quiet; then
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add repo
-          git commit -m "ci: update charts"
-          git push
-        fi
+        cd repo
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add .
+        git commit -m "ci: update charts"
+        git push  -f
