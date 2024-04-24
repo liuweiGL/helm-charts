@@ -9,7 +9,7 @@ global:
 
 image:
   registry: registry.cn-shanghai.aliyuncs.com
-  repository: eastcoal_cn/rocketmq-doshboard
+  repository: eastcoal_cn/rocketmq-dashboard
   tag: latest
   digest: ""
   ## Specify a imagePullPolicy
@@ -24,10 +24,30 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
+
+
+## 是否需要登录之后才能访问
+auth:
+  enabled: true
+  existingConfigMap: ""
+  ## 数据存储位置，必须使用绝对路径
+  dataPath: ""
+  configuration: |
+    # Define Admin
+    admin=admin
+
+    # Define Users
+    admin=password1
+
+## Rocketmq 服务端配置
+rocketmq:
+  namesrvAddrs:
+  - rocketmq-namesrv-headless:9876
+  isVIPChannel: true
+  timeoutMillis: 5000
+  accessKey: ""
+  secretKey: ""
+  existingSecret: ""
 
 ## Chart name
 nameOverride: ""
@@ -54,10 +74,9 @@ automountServiceAccountToken: false
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
 hostAliases: []
-## @param dashboard.existingConfigmap Name of existing ConfigMap with RocketMQ dashboard configuration.
-## NOTE: When it's set the 'configuration' parameter is ignored
+## @param dashboard.existingConfigMap Name of existing ConfigMap with RocketMQ dashboard configuration.
 ##
-existingConfigmap: ""
+existingConfigMap: ""
 ## @param dashboard.containerPorts.mysql Container port for mysql
 ##
 containerPorts:
@@ -174,10 +193,10 @@ containerSecurityContext:
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
 ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-## @param dashboard.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if dashboard.resources is set (dashboard.resources is recommended for production).
+## @param dashboard.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if dashboard.resources is set (dashboard.resources is recommended for production).
 ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
 ##
-resourcesPreset: "small"
+resourcesPreset: "nano"
 ## @param dashboard.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
 ## Example:
 ## resources:
@@ -189,6 +208,63 @@ resourcesPreset: "small"
 ##     memory: 1024Mi
 ##
 resources: {}
+## Configure extra options for liveness probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param livenessProbe.enabled Enable livenessProbe
+## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+## @param livenessProbe.periodSeconds Period seconds for livenessProbe
+## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+## @param livenessProbe.successThreshold Success threshold for livenessProbe
+##
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+## Configure extra options for startupProbe probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: true
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 60
+## @param customLivenessProbe Override default liveness probe
+##
+customLivenessProbe: {}
+## @param customStartupProbe Override default startup probe
+##
+customStartupProbe: {}
+## @param lifecycleHooks for the Nacos container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+## @param primary.extraVolumes Optionally specify extra list of additional volumes to the MySQL Primary pod(s)
+##
+extraVolumes: []
+## @param primary.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the MySQL Primary container(s)
+##
+extraVolumeMounts: []
+## @param initContainers Add additional init containers to the Nacos pods
+## e.g:
+## initContainers:
+##   - name: your-image-name
+##     image: your-image
+##     imagePullPolicy: Always
+##     ports:
+##       - name: portname
+##         containerPort: 1234
+##
 ## @param dashboard.extraEnvVars Extra environment variables to be set on RocketMQ dashboard containers
 ## E.g.
 ## extraEnvVars:
@@ -306,7 +382,7 @@ ingress:
   ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: zerossl-http
   ## @param ingress.ingressClassName Set the ingerssClassName on the ingress record for k8s 1.18+
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
@@ -364,22 +440,3 @@ ingress:
   ## Useful when looking for additional customization, such as using different backend
   ##
   extraRules: []
-
-## 是否需要登录之后才能访问
-auth:
-  enabled: false
-  existingConfigmap: ""
-  configuration: |
-    # Define Admin
-    admin=admin
-
-    # Define Users
-    admin=password1
-
-## Rocketmq 服务端配置
-rocketmq:
-    namesrvAddr: rocketmq-namesrv:9876
-    accessKey: ""
-    secretKey: ""
-    existingAccessSecret: ""
- 

@@ -1,4 +1,4 @@
-apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
 kind: StatefulSet
 metadata:
   name: {{ include "rocketmq.broker.fullname" . }}
@@ -28,7 +28,7 @@ spec:
       labels: {{- include "common.labels.standard" ( dict "customLabels" $podLabels "context" $ ) | nindent 8 }}
         app.kubernetes.io/component: broker
     spec:
-     {{- include "rocketmq.imagePullSecrets" . | nindent 6 }}
+      {{- include "rocketmq.imagePullSecrets" . | nindent 6 }}
       automountServiceAccountToken: {{ .Values.broker.automountServiceAccountToken }}
       {{- if .Values.broker.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.broker.hostAliases "context" $) | nindent 8 }}
@@ -59,6 +59,13 @@ spec:
       {{- if .Values.broker.podSecurityContext.enabled }}
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.broker.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
+      initContainers:
+        - name: copy-rocketmq-workdir
+          image: {{ include "rocketmq.image" .  }}
+          command: ["sh", "-c", "cp -r ${ROCKETMQ_HOME}/* /opt/rocketmq"]
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /opt/rocketmq
       containers:
         - name: broker
           image: {{ include "rocketmq.image" .  }}
@@ -74,7 +81,7 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "./mqbroker -c /etc/rocketmq/$(POD_NAME).conf" ]
+          args: [ "-c", "./mqbroker -c ${ROCKETMQ_HOME}/conf/$(POD_NAME).conf" ]
           {{- end }}
           env:
             - name: POD_NAME
@@ -83,6 +90,8 @@ spec:
                   fieldPath: metadata.name
             - name: NAMESRV_ADDR
               value: {{ include "rocketmq.namesrv.addr" . | quote }}
+            - name: ROCKETMQ_HOME
+              value: /opt/rocketmq
             {{- if .Values.broker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.broker.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -111,44 +120,61 @@ spec:
             {{- if .Values.broker.extraPorts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.broker.extraPorts "context" $) | nindent 12 }}
             {{- end }}
-          startupProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
+          {{- if .Values.broker.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.broker.customLivenessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.broker.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.livenessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: broker   
+            initialDelaySeconds: {{ .Values.broker.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.broker.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.broker.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.broker.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.broker.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.broker.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.broker.customReadinessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.broker.readinessProbe.enabled }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.readinessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: broker   
+            initialDelaySeconds: {{ .Values.broker.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.broker.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.broker.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.broker.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.broker.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.broker.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.broker.customStartupProbe "context" $) | nindent 12 }}
+          {{- else if .Values.broker.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.startupProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
               port: broker
-          livenessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
-            tcpSocket:
-              port: broker
-          readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
-            tcpSocket:
-              port: broker
+            initialDelaySeconds: {{ .Values.broker.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.broker.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.broker.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.broker.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.broker.startupProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.broker.resources }}
           resources: {{ toYaml .Values.broker.resources | nindent 12 }}
-          {{- else if ne .Values.broker.resourcesPreset "none" }}
-          resources: {{- include "common.resources.preset" (dict "type" .Values.broker.resourcesPreset) | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - name: empty-dir
+              mountPath: /opt/rocketmq  
             - name: config
-              mountPath: /etc/rocketmq/
+              mountPath:  /opt/rocketmq/conf/plain_acl.yml
+              subPath: plain_acl.yml
+              readOnly: false
+            {{- include "rocketmq.broker.configVolumeMounts" ( dict "path" "/opt/rocketmq/conf/" "context" $ ) | nindent 12 }}          
             - name: data
-              mountPath: /opt/rocketmq/store
+              mountPath: {{ .Values.broker.storePathRootDir }}
       volumes:
+        - name: empty-dir
+          emptyDir: {}
         - name: config
           configMap:
-            name: {{ include "rocketmq.broker.configmapName" . }}
+            name: {{ include "rocketmq.broker.configMapName" . }}
   {{- if not .Values.broker.persistence.enabled }}
         - name: data
           emptyDir: {}

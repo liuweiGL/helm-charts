@@ -1,0 +1,29 @@
+## 是否需要登录之后才能访问
+auth:
+  enabled: true
+  configuration: |
+    # Define Admin
+    admin=eastcoal
+
+    # Define Users
+    eastcoal=UA186pHykLRoTdfX
+
+## Rocketmq 服务端配置
+rocketmq:
+  namesrvAddrs: rocketmq-namesrv-headless:9876
+  accessKey: eastcoal
+  secretKey: 12345678
+
+service:
+  type: NodePort
+  nodePorts:
+    dashboard: 30010
+
+image:
+  pullPolicy: Always
+
+livenessProbe:
+  enabled: false
+
+startupProbe:
+  enabled: false

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nacos.configMapNames.auth" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: nacos
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  NACOS_AUTH_ENABLE: {{ .Values.auth.enabled | default true | quote }}
+  NACOS_AUTH_SYSTEM_TYPE: {{ .Values.auth.type | default "nacos" }}
+  NACOS_AUTH_TOKEN: {{ .Values.auth.token.value }}
+  NACOS_AUTH_TOKEN_EXPIRE_SECONDS: {{ .Values.auth.token.expire | default 1800 | quote }}
+  NACOS_AUTH_CACHE_ENABLE: {{ .Values.auth.token.cacheEnabled | default false | quote }}
+  NACOS_AUTH_IDENTITY_KEY: {{ .Values.auth.server.identityKey | quote }}
+  NACOS_AUTH_IDENTITY_VALUE: {{ .Values.auth.server.identityValue | quote }}

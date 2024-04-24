@@ -21,7 +21,7 @@ global:
       ## @param global.compatibility.openshift.adaptSecurityContext Adapt the securityContext sections of the deployment to make them compatible with Openshift restricted-v2 SCC: remove runAsUser, runAsGroup and fsGroup and let the platform use their allowed default IDs. Possible values: auto (apply if the detected running cluster is Openshift), force (perform the adaptation always), disabled (do not perform adaptation)
       ##
       adaptSecurityContext: auto
-## @section Common parameters
+      ## @section Common parameters
 
 ## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
 ##
@@ -38,17 +38,10 @@ commonLabels: {}
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
 commonAnnotations: {}
-## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
-##
-kubeVersion: ""
-## @param clusterDomain Default Kubernetes cluster domain
-##
-clusterDomain: cluster.local
-## @section Nacos parameters
 
 ## Nacos image version
 ## @param image.registry [default: REGISTRY_NAME] Nacos image registry
-## @param image.repository [default: REPOSITORY_NAME/minio] Nacos image repository
+## @param image.repository [default: REPOSITORY_NAME/nacos-server] Nacos image repository
 ## @skip image.tag Nacos image tag (immutable tags are recommended)
 ## @param image.digest Nacos image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## @param image.pullPolicy Image pull policy
@@ -73,13 +66,14 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-  ## Set to true if you would like to see extra information on logs
-  ##
-  debug: false
 ## @param mode Nacos server mode (`standalone` or `cluster`)
 ## ref: https://nacos.io/zh-cn/docs/deployment.html
 ##
 mode: standalone
+
+## @param debug Nacos enable debug mode
+debug: false
+
 ## Nacos authentication parameters
 ## ref: https://nacos.io/zh-cn/docs/next/v2/guide/user/auth
 ##
@@ -94,9 +88,6 @@ auth:
   ## @param auth.password Password for Nacos user
   ##
   # password: ""
-  ## @param auth.existingSecret Use existing secret for credentials details (`auth.username` and `auth.password` will be ignored and picked up from this secret).
-  ##
-  #existingSecret: ""
 
   ## @param auth.type Authentication plugin type
   ## ref: https://nacos.io/zh-cn/docs/next/v2/plugin/auth-plugin
@@ -105,16 +96,33 @@ auth:
 
   ## @param auth.token 微服务进行调用时的 token 认证
   ##
-  token: 
+  token:
     value: ""
     expireSeconds: 1800
-    cacheEnable: false
+    cacheEnabled: false
 
   ## @param auth.server 注册集群时的认证凭据
   ##
   server:
     identityKey: ""
     identityValue: ""
+
+  ## @param auth.existingConfigMap Use existing secret for credentials details
+  ##
+  existingConfigMap: ""
+
+## @param storage Nacos storage configuration
+##
+storage:
+  type: mysql
+  db:
+    host: localhost
+    port: 3306
+    database: nacos
+    username: ""
+    password: ""
+    param: ""
+
 
 ## @param extraEnvVars Extra environment variables to be set on Nacos container
 ## e.g:
@@ -277,8 +285,7 @@ hostAliases: []
 ## @param containerPorts.console Nacos container port to open for Nacos Console
 ##
 containerPorts:
-  api: 9000
-  console: 9001
+  nacos: 8848
 ## Nacos pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable pod Security Context
@@ -390,7 +397,7 @@ runtimeClassName: ""
 ## @param resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if resources is set (resources is recommended for production).
 ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
 ##
-resourcesPreset: "micro"
+resourcesPreset: "none"
 ## @param resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
 ## Example:
 ## resources:
@@ -418,22 +425,6 @@ livenessProbe:
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 5
-## Configure extra options for readiness probe
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
-## @param readinessProbe.enabled Enable readinessProbe
-## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
-## @param readinessProbe.periodSeconds Period seconds for readinessProbe
-## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
-## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
-## @param readinessProbe.successThreshold Success threshold for readinessProbe
-##
-readinessProbe:
-  enabled: true
-  initialDelaySeconds: 5
-  periodSeconds: 5
-  timeoutSeconds: 1
-  successThreshold: 1
-  failureThreshold: 5
 ## Configure extra options for startupProbe probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param startupProbe.enabled Enable startupProbe
@@ -444,7 +435,7 @@ readinessProbe:
 ## @param startupProbe.successThreshold Success threshold for startupProbe
 ##
 startupProbe:
-  enabled: false
+  enabled: true
   initialDelaySeconds: 0
   periodSeconds: 10
   timeoutSeconds: 5
@@ -453,9 +444,6 @@ startupProbe:
 ## @param customLivenessProbe Override default liveness probe
 ##
 customLivenessProbe: {}
-## @param customReadinessProbe Override default readiness probe
-##
-customReadinessProbe: {}
 ## @param customStartupProbe Override default startup probe
 ##
 customStartupProbe: {}
@@ -464,8 +452,58 @@ customStartupProbe: {}
 lifecycleHooks: {}
 ## @param extraVolumes Optionally specify extra list of additional volumes for Nacos pods
 ##
+persistence:
+  ## @param primary.persistence.enabled Enable persistence on MySQL primary replicas using a `PersistentVolumeClaim`. If false, use emptyDir
+  ##
+  enabled: false
+  ## @param primary.persistence.existingClaim Name of an existing `PersistentVolumeClaim` for MySQL primary replicas
+  ## NOTE: When it's set the rest of persistence parameters are ignored
+  ##
+  existingClaim: ""
+  ## @param primary.persistence.subPath The name of a volume's sub path to mount for persistence
+  ##
+  subPath: ""
+  ## @param primary.persistence.storageClass MySQL primary persistent volume storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClass: ""
+  ## @param primary.persistence.annotations MySQL primary persistent volume claim annotations
+  ##
+  annotations: {}
+  ## @param primary.persistence.accessModes MySQL primary persistent volume access Modes
+  ##
+  accessModes:
+  - ReadWriteOnce
+  ## @param primary.persistence.size MySQL primary persistent volume size
+  ##
+  size: 4Gi
+  ## @param primary.persistence.selector Selector to match an existing Persistent Volume
+  ## selector:
+  ##   matchLabels:
+  ##     app: my-app
+  ##
+  selector: {}
+  ## Primary Persistent Volume Claim Retention Policy
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+##
+persistentVolumeClaimRetentionPolicy:
+  ## @param primary.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for Primary StatefulSet
+  ##
+  enabled: false
+  ## @param primary.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
+  ##
+  whenScaled: Retain
+  ## @param primary.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
+  ##
+  whenDeleted: Retain
+## @param primary.extraVolumes Optionally specify extra list of additional volumes to the MySQL Primary pod(s)
+##
 extraVolumes: []
-## @param extraVolumeMounts Optionally specify extra list of additional volumeMounts for Nacos container(s)
+## @param primary.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the MySQL Primary container(s)
 ##
 extraVolumeMounts: []
 ## @param initContainers Add additional init containers to the Nacos pods
@@ -498,8 +536,7 @@ service:
   ## @param service.type Nacos service type
   ##
   type: ClusterIP
-  ## @param service.ports.api Nacos API service port
-  ## @param service.ports.console Nacos Console service port
+  ## @param service.ports.nacos Nacos service port
   ##
   ports:
     nacos: 8848
@@ -571,7 +608,7 @@ ingress:
   ## @param ingress.servicePort Service port to be used
   ## Default is http. Alternative is https.
   ##
-  servicePort: nacos-server
+  servicePort: nacos
   ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md
@@ -599,7 +636,7 @@ ingress:
   ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
   ## e.g:
   ## extraHosts:
-  ##   - name: minio.local
+  ##   - name: nacos.local
   ##     path: /
   ##
   extraHosts: []
@@ -617,8 +654,8 @@ ingress:
   ## e.g:
   ## extraTls:
   ## - hosts:
-  ##     - minio.local
-  ##   secretName: minio.local-tls
+  ##     - nacos.local
+  ##   secretName: ancos.local-tls
   ##
   extraTls: []
   ## @param ingress.secrets If you're providing your own certificates, please use this to add the certificates as secrets
@@ -632,7 +669,7 @@ ingress:
   ##
   ## Example
   ## secrets:
-  ##   - name: minio.local-tls
+  ##   - name: nacos.local-tls
   ##     key: ""
   ##     certificate: ""
   ##
@@ -651,119 +688,3 @@ ingress:
   ##             name: http
   ##
   extraRules: []
-## Configure the ingress resource that allows you to access the
-## Nacos API. Set up the URL
-## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
-##
-##
-## @section Persistence parameters
-
-## Enable persistence using Persistent Volume Claims
-## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-##
-persistence:
-  ## @param persistence.enabled Enable Nacos data persistence using PVC. If false, use emptyDir
-  ##
-  enabled: true
-  ## @param persistence.storageClass PVC Storage Class for Nacos data volume
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  storageClass: ""
-  ## @param persistence.mountPath Data volume mount path
-  ##
-  mountPath: /opt/nacos/data
-  ## @param persistence.accessModes PVC Access Modes for Nacos data volume
-  ##
-  accessModes:
-    - ReadWriteOnce
-  ## @param persistence.size PVC Storage Request for Nacos data volume
-  ##
-  size: 8Gi
-  ## @param persistence.annotations Annotations for the PVC
-  ##
-  annotations: {}
-  ## @param persistence.existingClaim Name of an existing PVC to use (only in `standalone` mode)
-  ##
-  existingClaim: ""
-## @section Volume Permissions parameters
-
-## Init containers parameters:
-## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
-##
-volumePermissions:
-  ## @param volumePermissions.enabled Enable init container that changes the owner and group of the persistent volume(s) mountpoint to `runAsUser:fsGroup`
-  ##
-  enabled: false
-  ## @param volumePermissions.image.registry [default: REGISTRY_NAME] Init container volume-permissions image registry
-  ## @param volumePermissions.image.repository [default: REPOSITORY_NAME/os-shell] Init container volume-permissions image repository
-  ## @skip volumePermissions.image.tag Init container volume-permissions image tag (immutable tags are recommended)
-  ## @param volumePermissions.image.digest Init container volume-permissions image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
-  ## @param volumePermissions.image.pullPolicy Init container volume-permissions image pull policy
-  ## @param volumePermissions.image.pullSecrets Specify docker-registry secret names as an array
-  ##
-  image:
-    registry: docker.io
-    repository: bitnami/os-shell
-    tag: 12-debian-12-r18
-    digest: ""
-    pullPolicy: IfNotPresent
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    ##
-    pullSecrets: []
-  ## Init container' resource requests and limits
-  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-  ## We usually recommend not to specify default resources and to leave this as a conscious
-  ## choice for the user. This also increases chances charts run on environments with little
-  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
-  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  ## @param volumePermissions.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if volumePermissions.resources is set (volumePermissions.resources is recommended for production).
-  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
-  ##
-  resourcesPreset: "micro"
-  ## @param volumePermissions.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
-  ## Example:
-  ## resources:
-  ##   requests:
-  ##     cpu: 2
-  ##     memory: 512Mi
-  ##   limits:
-  ##     cpu: 3
-  ##     memory: 1024Mi
-  ##
-  resources: {}
-  ## Init container' Security Context
-  ## Note: the chown of the data folder is done to containerSecurityContext.runAsUser
-  ## and not the below volumePermissions.containerSecurityContext.runAsUser
-  ## @param volumePermissions.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
-  ## @param volumePermissions.containerSecurityContext.runAsUser User ID for the init container
-  ##
-  containerSecurityContext:
-    seLinuxOptions: {}
-    runAsUser: 0
-## @section RBAC parameters
-
-## Specifies whether a ServiceAccount should be created
-##
-serviceAccount:
-  ## @param serviceAccount.create Enable the creation of a ServiceAccount for Nacos pods
-  ##
-  create: true
-  ## @param serviceAccount.name Name of the created ServiceAccount
-  ## If not set and create is true, a name is generated using the common.names.fullname template
-  ##
-  name: ""
-  ## @param serviceAccount.automountServiceAccountToken Enable/disable auto mounting of the service account token
-  ##
-  automountServiceAccountToken: false
-  ## @param serviceAccount.annotations Custom annotations for Nacos ServiceAccount
-  ##
-  annotations: {}

@@ -1,13 +1,8 @@
-{{- /*
-Copyright VMware, Inc.
-SPDX-License-Identifier: APACHE-2.0
-*/}}
-
-{{- if (include "rocketmq.namesrv.createConfigmap" .) }}
+{{- if (include "rocketmq.namesrv.createConfigMap" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "rocketmq.namesrv.configmapName" . }}
+  name: {{ include "rocketmq.namesrv.configMapName" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: namesrv

@@ -24,19 +24,15 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
 
 ## Chart name
 nameOverride: ""
 ## 默认包含 helm install 时指定的 release name
 fullnameOverride: ""
-## @param commonAnnotations Common annotations to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
+## @param commonAnnotations Common annotations to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
 ##
 commonAnnotations: {}
-## @param commonLabels Common labels to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
+## @param commonLabels Common labels to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
 ##
 commonLabels: {}
 
@@ -61,10 +57,10 @@ namesrv:
   ##
   #configuration: |-
 
-  ## @param namesrv.existingConfigmap Name of existing ConfigMap with RocketMQ namesrv configuration.
+  ## @param namesrv.existingConfigMap Name of existing ConfigMap with RocketMQ namesrv configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored
   ##
-  existingConfigmap: ""
+  existingConfigMap: ""
   ## @param namesrv.containerPorts.mysql Container port for mysql
   ##
   containerPorts:
@@ -181,7 +177,7 @@ namesrv:
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
   ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  ## @param namesrv.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if namesrv.resources is set (namesrv.resources is recommended for production).
+  ## @param namesrv.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if namesrv.resources is set (namesrv.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
   resourcesPreset: "small"
@@ -196,6 +192,63 @@ namesrv:
   ##     memory: 1024Mi
   ##
   resources: {}
+  ## Configure extra options for liveness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.livenessProbe.enabled Enable livenessProbe
+  ## @param primary.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param primary.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param primary.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param primary.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param primary.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+  ## Configure extra options for readiness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.readinessProbe.enabled Enable readinessProbe
+  ## @param primary.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param primary.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param primary.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param primary.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+  ## Configure extra options for startupProbe probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.startupProbe.enabled Enable startupProbe
+  ## @param primary.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param primary.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param primary.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param primary.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param primary.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 10
+    successThreshold: 1
+  ## @param primary.customLivenessProbe Override default liveness probe for MySQL primary containers
+  ##
+  customLivenessProbe: {}
+  ## @param primary.customReadinessProbe Override default readiness probe for MySQL primary containers
+  ##
+  customReadinessProbe: {}
+  ## @param primary.customStartupProbe Override default startup probe for MySQL primary containers
+  ##
+  customStartupProbe: {}
   ## @param namesrv.extraEnvVars Extra environment variables to be set on RocketMQ namesrv containers
   ## E.g.
   ## extraEnvVars:
@@ -284,9 +337,8 @@ namesrv:
       ##
       annotations: {}
 
-
 broker:
-  storePathRootDir: "/opt/rocketmq/store"
+  storePathRootDir: "/opt/rocketmq/data"
   name: "broker"
   replicaCount: 1
   ## @param broker.command Override default container command on RocketMQ broker container(s) (useful when using custom images)
@@ -311,7 +363,6 @@ broker:
     {{- $replicaCount := .Values.broker.replicaCount | int }}
     {{- range $index := until $replicaCount }}
     {{- $brokerName := printf "%s-%d" $name $index }}
-
     {{ $brokerName -}}.conf: |
       brokerName={{ $brokerName }}
       storePathRootDir={{ $storePathRootDir }}
@@ -323,18 +374,19 @@ broker:
       flushDiskType=ASYNC_FLUSH
       enablePropertyFilter=true
       aclEnable=true
+    {{- end }}
 
     plain_acl.yml: |
       accounts:
-        - accessKey: rocketmq
+        - accessKey: eastcoal
           secretKey: 12345678
           admin: true
-    {{- end }}
 
-  ## @param broker.existingConfigmap Name of existing ConfigMap with RocketMQ broker configuration.
+
+  ## @param broker.existingConfigMap Name of existing ConfigMap with RocketMQ broker configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored
   ##
-  existingConfigmap: ""
+  existingConfigMap: ""
   ## @param broker.containerPorts.mysql Container port for mysql
   ##
   containerPorts:
@@ -344,6 +396,59 @@ broker:
   ##
   updateStrategy:
     type: RollingUpdate
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##
+  persistence:
+    ## @param broker.persistence.enabled Enable persistence on RocketMQ broker replicas using a `PersistentVolumeClaim`. If false, use emptyDir
+    ##
+    enabled: true
+    ## @param broker.persistence.existingClaim Name of an existing `PersistentVolumeClaim` for RocketMQ broker replicas
+    ## NOTE: When it's set the rest of persistence parameters are ignored
+    ##
+    existingClaim: ""
+    ## @param broker.persistence.subPath The name of a volume's sub path to mount for persistence
+    ##
+    subPath: ""
+    ## @param broker.persistence.storageClass RocketMQ broker persistent volume storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: ""
+    ## @param broker.persistence.annotations RocketMQ broker persistent volume claim annotations
+    ##
+    annotations: {}
+    ## @param broker.persistence.accessModes RocketMQ broker persistent volume access Modes
+    ##
+    accessModes:
+    - ReadWriteOnce
+    ## @param broker.persistence.size RocketMQ broker persistent volume size
+    ##
+    size: 4Gi
+    ## @param broker.persistence.selector Selector to match an existing Persistent Volume
+    ## selector:
+    ##   matchLabels:
+    ##     app: my-app
+    ##
+    selector: {}
+  ## broker Persistent Volume Claim Retention Policy
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+  ##
+  persistentVolumeClaimRetentionPolicy:
+    ## @param broker.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for broker StatefulSet
+    ##
+    enabled: false
+    ## @param broker.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
+    ##
+    whenScaled: Retain
+    ## @param broker.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
+    ##
+    whenDeleted: Retain
+
   ## @param broker.podAnnotations Additional pod annotations for RocketMQ broker pods
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
@@ -407,7 +512,7 @@ broker:
   ## The value is evaluated as a template
   ##
   topologySpreadConstraints: []
-  ## @param broker.podManagementPolicy podManagementPolicy to manage scaling operation of MySQL broker pods
+  ## @param broker.podManagementPolicy podManagementPolicy to manage scaling operation of RocketMQ broker pods
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
   ##
   podManagementPolicy: ""
@@ -449,16 +554,6 @@ broker:
     seccompProfile:
       type: "RuntimeDefault"
     readOnlyRootFilesystem: true
-  ## RocketMQ broker container's resource requests and limits
-  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-  ## We usually recommend not to specify default resources and to leave this as a conscious
-  ## choice for the user. This also increases chances charts run on environments with little
-  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
-  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  ## @param broker.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if broker.resources is set (broker.resources is recommended for production).
-  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
-  ##
-  resourcesPreset: "none"
   ## @param broker.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
   ## resources:
@@ -470,6 +565,63 @@ broker:
   ##     memory: 1024Mi
   ##
   resources: {}
+  ## Configure extra options for liveness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.livenessProbe.enabled Enable livenessProbe
+  ## @param primary.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param primary.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param primary.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param primary.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param primary.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+  ## Configure extra options for readiness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.readinessProbe.enabled Enable readinessProbe
+  ## @param primary.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param primary.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param primary.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param primary.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
+  ## Configure extra options for startupProbe probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param primary.startupProbe.enabled Enable startupProbe
+  ## @param primary.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param primary.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param primary.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param primary.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param primary.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 10
+    successThreshold: 1
+  ## @param primary.customLivenessProbe Override default liveness probe for MySQL primary containers
+  ##
+  customLivenessProbe: {}
+  ## @param primary.customReadinessProbe Override default readiness probe for MySQL primary containers
+  ##
+  customReadinessProbe: {}
+  ## @param primary.customStartupProbe Override default startup probe for MySQL primary containers
+  ##
+  customStartupProbe: {}
   ## @param broker.extraEnvVars Extra environment variables to be set on RocketMQ broker containers
   ## E.g.
   ## extraEnvVars:
@@ -511,54 +663,4 @@ broker:
       ## @param namesrv.service.headless.annotations Additional custom annotations for headless RocketMQ namesrv service.
       ##
       annotations: {}
-  ## Enable persistence using Persistent Volume Claims
-  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-  ##
-  persistence:
-    ## @param broker.persistence.enabled Enable persistence on MySQL broker replicas using a `PersistentVolumeClaim`. If false, use emptyDir
-    ##
-    enabled: false
-    ## @param broker.persistence.existingClaim Name of an existing `PersistentVolumeClaim` for MySQL broker replicas
-    ## NOTE: When it's set the rest of persistence parameters are ignored
-    ##
-    existingClaim: ""
-    ## @param broker.persistence.subPath The name of a volume's sub path to mount for persistence
-    ##
-    subPath: ""
-    ## @param broker.persistence.storageClass MySQL broker persistent volume storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    storageClass: ""
-    ## @param broker.persistence.annotations MySQL broker persistent volume claim annotations
-    ##
-    annotations: {}
-    ## @param broker.persistence.accessModes MySQL broker persistent volume access Modes
-    ##
-    accessModes:
-    - ReadWriteOnce
-    ## @param broker.persistence.size MySQL broker persistent volume size
-    ##
-    size: 4Gi
-    ## @param broker.persistence.selector Selector to match an existing Persistent Volume
-    ## selector:
-    ##   matchLabels:
-    ##     app: my-app
-    ##
-    selector: {}
-  ## broker Persistent Volume Claim Retention Policy
-  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
-  ##
-  persistentVolumeClaimRetentionPolicy:
-    ## @param broker.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for broker StatefulSet
-    ##
-    enabled: false
-    ## @param broker.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
-    ##
-    whenScaled: Retain
-    ## @param broker.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
-    ##
-    whenDeleted: Retain
+

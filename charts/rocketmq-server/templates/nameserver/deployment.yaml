@@ -94,30 +94,42 @@ spec:
             {{- if .Values.namesrv.extraPorts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.extraPorts "context" $) | nindent 12 }}
             {{- end }}
-          startupProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
+          {{- if .Values.namesrv.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.customLivenessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.namesrv.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.namesrv.livenessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: namesrv   
+            initialDelaySeconds: {{ .Values.namesrv.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.namesrv.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.namesrv.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.namesrv.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.namesrv.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.namesrv.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.customReadinessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.namesrv.readinessProbe.enabled }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.namesrv.readinessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: namesrv   
+            initialDelaySeconds: {{ .Values.namesrv.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.namesrv.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.namesrv.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.namesrv.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.namesrv.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.namesrv.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.namesrv.customStartupProbe "context" $) | nindent 12 }}
+          {{- else if .Values.namesrv.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.namesrv.startupProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
               port: namesrv
-          livenessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
-            tcpSocket:
-              port: namesrv
-          readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 5
-            successThreshold: 1
-            tcpSocket:
-              port: namesrv
+            initialDelaySeconds: {{ .Values.namesrv.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.namesrv.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.namesrv.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.namesrv.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.namesrv.startupProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.namesrv.resources }}
           resources: {{ toYaml .Values.namesrv.resources | nindent 12 }}
           {{- else if ne .Values.namesrv.resourcesPreset "none" }}
@@ -129,4 +141,4 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ include "rocketmq.namesrv.configmapName" . }}
+            name: {{ include "rocketmq.namesrv.configMapName" . }}

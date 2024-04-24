@@ -2,6 +2,26 @@
     {{- include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
-{{- define "nacos.createMysqlConfigmap" -}}
-    {{- if and (not ) ( eq .Values.nacos.storage.type "mysql" ) -}}
+{{- define "nacos.imagePullSecrets" -}}
+    {{ include "common.images.pullSecrets" (dict (list .Values.image) "global" .Values.global) }}
+{{- end -}}
+
+{{- define "nacos.mode" -}}
+    {{ .Values.mode | default "standalone" }}
+{{- end -}}
+
+{{- define "nacos.configMapNames.auth" -}}
+    {{ printf "%s-%s" (include "common.names.fullname" .) "auth" }}
+{{- end -}}
+
+{{- define "nacos.configMapNames.db" -}}
+    {{ printf "%s-%s" (include "common.names.fullname" .) "db" }}
+{{- end -}}
+
+{{- define "nacos.configMapNames.jvm" -}}
+    {{ printf "%s-%s" (include "common.names.fullname" .) "jvm" }}
+{{- end -}}
+
+{{- define "nacos.configMapNames.app" -}}
+    {{ printf "%s-%s" (include "common.names.fullname" .) "app" }}
 {{- end -}}

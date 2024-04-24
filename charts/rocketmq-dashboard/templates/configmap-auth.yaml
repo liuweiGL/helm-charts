@@ -1,16 +1,15 @@
+{{- if (include "dashboard.auth.createConfigMap" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "nacos.configMapNames.jvm" . }}
+  name: {{ include "dashboard.auth.configMapName" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
-    app.kubernetes.io/component: nacos
+    app.kubernetes.io/component: dashboard
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  JVM_XMS: ""
-  JVM_XMX: ""
-  JVM_XMN: ""
-  JVM_MS: ""
-  JVM_MMS: ""
+  users.properties: |
+  {{- include "common.tplvalues.render" ( dict "value" .Values.auth.configuration "context" $ ) | nindent 4 }}
+{{- end -}}

@@ -1,8 +1,3 @@
-{{- /*
-Copyright VMware, Inc.
-SPDX-License-Identifier: APACHE-2.0
-*/}}
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -28,19 +23,11 @@ spec:
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   {{- end }}
   ports:
-    - name: minio-api
-      port: {{ .Values.service.ports.api }}
-      targetPort: minio-api
-      {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.api)) }}
-      nodePort: {{ .Values.service.nodePorts.api }}
-      {{- else if eq .Values.service.type "ClusterIP" }}
-      nodePort: null
-      {{- end }}
-    - name: minio-console
-      port: {{ .Values.service.ports.console }}
-      targetPort: minio-console
-      {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.console)) }}
-      nodePort: {{ .Values.service.nodePorts.console }}
+    - name: nacos
+      port: {{ .Values.service.ports.nacos }}
+      targetPort: nacos
+      {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.nacos)) }}
+      nodePort: {{ .Values.service.nodePorts.nacos }}
       {{- else if eq .Values.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
