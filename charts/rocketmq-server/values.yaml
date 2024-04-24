@@ -359,7 +359,7 @@ broker:
     enabled: false
     accessKey: ""
     secretKey: ""
-    whitelistIps: []
+    globalWhiteRemoteAddresses: []
   ## @param broker.configuration [string] Configure RocketMQ broker with a custom broker.conf file
   ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java
   ##
