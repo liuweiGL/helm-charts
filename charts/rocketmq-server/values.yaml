@@ -36,6 +36,26 @@ commonAnnotations: {}
 ##
 commonLabels: {}
 
+dashboard:
+  enabled: true
+  ## 是否需要登录之后才能访问
+  ##
+  auth:
+    enabled: true
+    username: ""
+    password: ""
+  ## Rocketmq 服务端配置
+  ##
+  rocketmq:
+    namesrvAddrs:
+    - rocketmq-namesrv-headless:9876
+    isVIPChannel: true
+    timeoutMillis: 5000
+    accessKey: ""
+    secretKey: ""
+    existingSecret: ""
+
+
 namesrv:
   name: "namesrv"
   replicaCount: 1
