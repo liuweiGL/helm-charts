@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-25T00:45:52.449224522+08:00"
+    created: "2024-04-24T16:50:15.433754753Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-25T00:45:52.453701474+08:00"
+    created: "2024-04-24T16:50:15.436214301Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T00:45:52.466844144+08:00"
+    created: "2024-04-24T16:50:15.442232966Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -80,7 +80,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T00:45:52.45979487+08:00"
+    created: "2024-04-24T16:50:15.439262Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -106,4 +106,4 @@ entries:
     urls:
     - rocketmq-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-25T00:45:52.443387434+08:00"
+generated: "2024-04-24T16:50:15.431673364Z"
