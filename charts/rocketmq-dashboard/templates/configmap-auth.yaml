@@ -1,4 +1,3 @@
-{{- if (include "dashboard.auth.createConfigMap" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,5 +10,6 @@ metadata:
   {{- end }}
 data:
   users.properties: |
-  {{- include "common.tplvalues.render" ( dict "value" .Values.auth.configuration "context" $ ) | nindent 4 }}
-{{- end -}}
+    admin={{ .Values.auth.username }}
+
+    {{ .Values.auth.username }}={{ .Values.auth.password }}

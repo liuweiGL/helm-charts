@@ -27,19 +27,18 @@ image:
 
 
 ## 是否需要登录之后才能访问
+##
 auth:
   enabled: true
-  existingConfigMap: ""
-  ## 数据存储位置，必须使用绝对路径
-  dataPath: ""
-  configuration: |
-    # Define Admin
-    admin=admin
+  username: ""
+  password: ""
 
-    # Define Users
-    admin=password1
+## 数据存储位置，必须使用绝对路径
+##
+dataPath: ""
 
 ## Rocketmq 服务端配置
+##
 rocketmq:
   namesrvAddrs:
   - rocketmq-namesrv-headless:9876
@@ -50,8 +49,10 @@ rocketmq:
   existingSecret: ""
 
 ## Chart name
+##
 nameOverride: ""
 ## 默认包含 helm install 时指定的 release name
+##
 fullnameOverride: ""
 ## @param commonAnnotations Common annotations to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
 ##
@@ -74,9 +75,6 @@ automountServiceAccountToken: false
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
 hostAliases: []
-## @param dashboard.existingConfigMap Name of existing ConfigMap with RocketMQ dashboard configuration.
-##
-existingConfigMap: ""
 ## @param dashboard.containerPorts.mysql Container port for mysql
 ##
 containerPorts:

@@ -13,4 +13,4 @@ data:
   IS_VIP_CHANNEL: {{ .Values.rocketmq.isVipChannel | quote }}
   TIMEOUT_MILLIS: {{ .Values.rocketmq.timeoutMillis | quote }}
   LOGIN_REQUIRED: {{ .Values.auth.enabled | quote }}
-  DATA_PATH: {{ include "dashboard.auth.dataPath" . }}
+  DATA_PATH: {{ include "dashboard.dataPath" . }}

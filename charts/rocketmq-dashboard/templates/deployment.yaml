@@ -124,7 +124,7 @@ spec:
           {{- end }}
           volumeMounts:
             - name: auth
-              mountPath: {{ printf "%s/%s" (include "dashboard.auth.dataPath" .) "users.properties" }}
+              mountPath: {{ printf "%s/%s" (include "dashboard.dataPath" .) "users.properties" }}
               subPath: users.properties
               readOnly: false
             {{- if .Values.extraVolumeMounts }}
