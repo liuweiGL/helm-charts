@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-25T10:03:48.920552112+08:00"
+    created: "2024-04-25T10:28:53.475065175+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +13,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: aa707fcf32412c387117675c977803b1005f5765ad8c431011f5dae07c7f7914
+    digest: 53e973da47346ff3482b12d4dc641f50b09c51259efc7087f18656adce70b58b
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-25T10:03:48.923763199+08:00"
+    created: "2024-04-25T10:28:53.478996825+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -37,7 +37,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: eb5ca65ba6d670fe1a8b1cefb5327734ad406ac5d9ad5fa66335be8ff88a40ae
+    digest: c2c2f9b31d66fb3e352415269ad9b3dab1e20636c751bbc18a59c5270f8150b8
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T10:03:48.928854509+08:00"
+    created: "2024-04-25T10:28:53.485132271+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -66,7 +66,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 22ec10cf1d9ed9bf42144967259a035e3cbd31ce44dcd000635917820ba7b00a
+    digest: 94a45d674a12634274ef71a60ec160fe3fdf66da4a88e5ba27f636c43a087bf4
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -76,4 +76,4 @@ entries:
     urls:
     - rocketmq-server-1.0.1.tgz
     version: 1.0.1
-generated: "2024-04-25T10:03:48.916949749+08:00"
+generated: "2024-04-25T10:28:53.47111893+08:00"
