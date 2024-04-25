@@ -10,8 +10,8 @@ auth:
 
 ## Rocketmq 服务端配置
 rocketmq:
-  namesrvAddrs: 
-    - rocketmq-server-namesrv-headless:9876
+  namesrvAddrs:
+  - rocketmq-server-namesrv-headless:9876
   accessKey: eastcoal
   secretKey: UA186pHykLRoTdfX
 
@@ -19,6 +19,9 @@ service:
   type: NodePort
   nodePorts:
     dashboard: 30010
+
+ingress:
+  enabled: true
 
 # image:
 #   pullPolicy: Always
