@@ -2,13 +2,13 @@ name: Helm Repository
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - main
-    paths:
-    - '.github/workflows/*.yml'
-    - 'charts/**'
-    - 'scripts/**'
+  # push:
+  #   branches:
+  #   - main
+  #   paths:
+  #   - '.github/workflows/*.yml'
+  #   - 'charts/**'
+  #   - 'scripts/**'
 
 permissions:
   actions: write
@@ -30,7 +30,7 @@ jobs:
     - name: Update Charts
       run: |
         ./scripts/helm_chart.sh
-        
+
         changes=$(git diff --name-only repo)
 
         if [ -n "$changes" ]; then
