@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-24T18:23:32.145145795Z"
+    created: "2024-04-25T09:40:52.858680353+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +13,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 3e939dac1683c235a1629e69684407145b849b25125e60ebeb391a21482c93d2
+    digest: aa707fcf32412c387117675c977803b1005f5765ad8c431011f5dae07c7f7914
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-24T18:23:32.147901645Z"
+    created: "2024-04-25T09:40:52.863180182+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -37,7 +37,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: 1a9deb29647a21ebe33c4ee11b56f4f04358935f0d1bbafded8c70555490c734
+    digest: b9781f67bf6c44f1022dc2a06610e714b3310c2ebbf46f618152561f6685f1c8
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -47,35 +47,12 @@ entries:
     urls:
     - rocketmq-dashboard-1.0.1.tgz
     version: 1.0.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2024-04-24T18:23:32.146511737Z"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: c8f82ba5880b729e38d0f9b69258718a9e9233462582ccef2960bfb34a2e06fa
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-dashboard
-    sources:
-    - https://github.com/apache/rocketmq-dashboard
-    type: application
-    urls:
-    - rocketmq-dashboard-1.0.0.tgz
-    version: 1.0.0
   rocketmq-server:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-24T18:23:32.154620447Z"
+    created: "2024-04-25T09:40:52.870318562+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -89,7 +66,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 7058e7b454ffbe1d117f75735d37ee79491189aeb4baad34900e6fc56437e11c
+    digest: 272e59b728c9f761165647986ca3cadc8097468c77dad03d408cf1623b7fb452
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -99,34 +76,4 @@ entries:
     urls:
     - rocketmq-server-1.0.1.tgz
     version: 1.0.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2024-04-24T18:23:32.151603168Z"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: dashboard.enabled
-      import-values:
-      - dashboard
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 610f75b44a922d2d220a334e494000edbea584972970f67ecc4a8d258e773653
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.0.0.tgz
-    version: 1.0.0
-generated: "2024-04-24T18:23:32.143287211Z"
+generated: "2024-04-25T09:40:52.852866034+08:00"
