@@ -28,6 +28,7 @@ function update_charts(){
             if [[ -f "$repo_dir/$chart_pkg_name" ]]; then
                 echo "Package $chart_pkg_name is existed, skip"
             else
+                helm dep update $item
                 helm package $item -d $repo_dir
             fi
         fi
