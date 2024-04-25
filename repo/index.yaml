@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-25T09:43:19.76232071+08:00"
+    created: "2024-04-25T09:54:32.315147552+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-25T09:43:19.765969657+08:00"
+    created: "2024-04-25T09:54:32.318941912+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -37,7 +37,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: b9781f67bf6c44f1022dc2a06610e714b3310c2ebbf46f618152561f6685f1c8
+    digest: fd27bc7f7b3121779acc834f22706b772b0d337fc593bc0986984c80d41daf40
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T09:43:19.772307856+08:00"
+    created: "2024-04-25T09:54:32.324832872+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -66,7 +66,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 358da4ed1f48360086def026f1ed803183aec7f105e5b4c1c43dccec1d2d9b31
+    digest: a277f8b9b6daf52f8329c079aabfc3376a5e2a7c27b48ac4a1e67f2d44fd7493
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -76,4 +76,4 @@ entries:
     urls:
     - rocketmq-server-1.0.1.tgz
     version: 1.0.1
-generated: "2024-04-25T09:43:19.758198373+08:00"
+generated: "2024-04-25T09:54:32.311025392+08:00"
