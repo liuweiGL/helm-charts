@@ -1,0 +1,18 @@
+annotations:
+  category: Tool
+apiVersion: v2
+name: self-service-password
+type: application
+version: 1.0.0
+appVersion: 1.5.4
+description: LDAP Tool Box Self Service Password is a web application for end users. It allows them to change or reset their password if they lost it
+icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
+home: https://self-service-password.readthedocs.io/en/stable/
+sources:
+- https://github.com/ltb-project/self-service-password
+dependencies:
+- name: common
+  version: 2.x.x
+  repository: oci://registry-1.docker.io/bitnamicharts
+  tags:
+  - bitnami-common
