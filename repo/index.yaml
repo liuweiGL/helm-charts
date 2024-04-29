@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-25T10:28:53.475065175+08:00"
+    created: "2024-04-30T02:58:05.924474559+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-25T10:28:53.478996825+08:00"
+    created: "2024-04-30T02:58:05.929339458+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-25T10:28:53.485132271+08:00"
+    created: "2024-04-30T02:58:05.936747816+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -76,4 +76,28 @@ entries:
     urls:
     - rocketmq-server-1.0.1.tgz
     version: 1.0.1
-generated: "2024-04-25T10:28:53.47111893+08:00"
+  self-service-password:
+  - annotations:
+      category: Tool
+    apiVersion: v2
+    appVersion: 1.5.4
+    created: "2024-04-30T02:58:05.941912694+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: LDAP Tool Box Self Service Password is a web application for end
+      users. It allows them to change or reset their password if they lost it
+    digest: 064cedb2b621f46659694495b3d4205f27ca4ae390f6acb9fdfeadc871416363
+    home: https://self-service-password.readthedocs.io/en/stable/
+    icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
+    name: self-service-password
+    sources:
+    - https://github.com/ltb-project/self-service-password
+    type: application
+    urls:
+    - self-service-password-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-04-30T02:58:05.919430371+08:00"
