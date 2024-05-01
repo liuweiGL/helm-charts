@@ -22,7 +22,6 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
       labels: {{- include "common.labels.standard" ( dict "customLabels" $podLabels "context" $ ) | nindent 8 }}
-        app.kubernetes.io/component: dashboard
     spec:
       {{- include "nacos.imagePullSecrets" . | nindent 6 }}
       {{- if .Values.schedulerName }}
