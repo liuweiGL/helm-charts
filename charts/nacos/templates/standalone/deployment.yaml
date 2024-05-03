@@ -155,7 +155,11 @@ spec:
             - name: empty-dir
               mountPath: /tmp
             - name: empty-dir
-              mountPath: /home/nacos
+              mountPath: /home/nacos/logs
+            - name: empty-dir
+              mountPath: /home/nacos/data
+            - name: empty-dir
+              mountPath: /home/nacos/work
             {{- if .Values.extraVolumeMounts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
             {{- end }}
