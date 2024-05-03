@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-04-30T02:58:05.924474559+08:00"
+    created: "2024-05-03T23:16:41.493236279+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +13,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 53e973da47346ff3482b12d4dc641f50b09c51259efc7087f18656adce70b58b
+    digest: 8b25f541a87f5cda05125d9aa58c99851cce5a1f29972262cca7d69e1e03c6b9
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-04-30T02:58:05.929339458+08:00"
+    created: "2024-05-03T23:16:41.497660332+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -37,7 +37,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: c2c2f9b31d66fb3e352415269ad9b3dab1e20636c751bbc18a59c5270f8150b8
+    digest: 0a5035ae7096f251a9e116ff40f2ad896050652502c89e74f6675f3baa9e0071
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-04-30T02:58:05.936747816+08:00"
+    created: "2024-05-03T23:16:41.505002568+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -66,7 +66,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 94a45d674a12634274ef71a60ec160fe3fdf66da4a88e5ba27f636c43a087bf4
+    digest: eb56bc1e79dd1bf7c9965dcb7f5d89f1e2e53c6288daec5283f9a301760f5c89
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -81,7 +81,7 @@ entries:
       category: Tool
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-04-30T02:58:05.941912694+08:00"
+    created: "2024-05-03T23:16:41.510202325+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -90,7 +90,7 @@ entries:
       version: 2.x.x
     description: LDAP Tool Box Self Service Password is a web application for end
       users. It allows them to change or reset their password if they lost it
-    digest: 064cedb2b621f46659694495b3d4205f27ca4ae390f6acb9fdfeadc871416363
+    digest: f645a45bf05efb4a5f21cfd53f6a3b16a82df781f946442f73f8ce17bb564a1f
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
     name: self-service-password
@@ -100,4 +100,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-30T02:58:05.919430371+08:00"
+generated: "2024-05-03T23:16:41.488253064+08:00"
