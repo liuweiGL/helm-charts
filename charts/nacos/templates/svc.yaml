@@ -25,7 +25,7 @@ spec:
   ports:
     - name: nacos
       port: {{ .Values.service.ports.nacos }}
-      targetPort: nacos
+      targetPort: http
       {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.nacos)) }}
       nodePort: {{ .Values.service.nodePorts.nacos }}
       {{- else if eq .Values.service.type "ClusterIP" }}
