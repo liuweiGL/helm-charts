@@ -9,6 +9,5 @@ metadata:
   {{- end }}
 data:
   MODE: {{ include "nacos.mode" . }}
-  NACOS_DEBUG: {{ .Values.nacos.debug | default false | quote }}
   NACOS_SERVER_PORT: {{ .Values.service.ports.nacos | quote }}
   SPRING_DATASOURCE_PLATFORM: {{ ternary "mysql" "" (eq .Values.storage.type "mysql") }}

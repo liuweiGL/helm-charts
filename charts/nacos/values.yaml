@@ -75,8 +75,6 @@ mode: standalone
 ## ref: https://nacos.io/zh-cn/docs/next/v2/guide/user/auth
 ##
 auth:
-  ## @param debug Nacos enable debug mode
-  debug: false
   ## @param auth.enable Enable Nacos authentication
   ## docker 镜像暂不支持配置用户名个跟密码，开启后使用默认的 nacos/nacos 登录
   ##
