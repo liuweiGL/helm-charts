@@ -438,12 +438,22 @@ startupProbe:
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 60
-## @param customLivenessProbe Override default liveness probe
+## Nacos containers' readiness probe.
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+## @param readinessProbe.enabled Enable readinessProbe
+## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+## @param readinessProbe.periodSeconds Period seconds for readinessProbe
+## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+## @param readinessProbe.successThreshold Success threshold for readinessProbe
 ##
-customLivenessProbe: {}
-## @param customStartupProbe Override default startup probe
-##
-customStartupProbe: {}
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  timeoutSeconds: 3
+  periodSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
 ## @param lifecycleHooks for the Nacos container(s) to automate configuration before or after startup
 ##
 lifecycleHooks: {}
