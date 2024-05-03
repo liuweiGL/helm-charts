@@ -5,7 +5,29 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-05-03T23:16:41.493236279+08:00"
+    created: "2024-05-04T03:27:18.2774844+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+    digest: 03d23601c4d1f062ff1a3d6a25ee13cc31f4b6d180ddd143fc5c3413ddf6696f
+    home: https://nacos.io/docs/latest/what-is-nacos/
+    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
+    name: nacos
+    sources:
+    - https://github.com/alibaba/nacos
+    type: application
+    urls:
+    - nacos-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 2.3.2
+    created: "2024-05-04T03:27:18.27218961+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +50,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-05-03T23:16:41.497660332+08:00"
+    created: "2024-05-04T03:27:18.285947095+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -52,7 +74,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-05-03T23:16:41.505002568+08:00"
+    created: "2024-05-04T03:27:18.295458266+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -81,7 +103,7 @@ entries:
       category: Tool
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-05-03T23:16:41.510202325+08:00"
+    created: "2024-05-04T03:27:18.303716697+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -100,4 +122,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-03T23:16:41.488253064+08:00"
+generated: "2024-05-04T03:27:18.263350554+08:00"
