@@ -5,7 +5,29 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-05-04T03:27:18.2774844+08:00"
+    created: "2024-05-04T03:45:23.143868073+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+    digest: c0994ba126a7a746d1786eeb881ebdae60884c71b86045a20b9c2633ce43ee07
+    home: https://nacos.io/docs/latest/what-is-nacos/
+    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
+    name: nacos
+    sources:
+    - https://github.com/alibaba/nacos
+    type: application
+    urls:
+    - nacos-1.0.2.tgz
+    version: 1.0.2
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 2.3.2
+    created: "2024-05-04T03:45:23.138915101+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -27,7 +49,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-05-04T03:27:18.27218961+08:00"
+    created: "2024-05-04T03:45:23.134100773+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -50,7 +72,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-05-04T03:27:18.285947095+08:00"
+    created: "2024-05-04T03:45:23.148281074+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -74,7 +96,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-05-04T03:27:18.295458266+08:00"
+    created: "2024-05-04T03:45:23.156181821+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -103,7 +125,7 @@ entries:
       category: Tool
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-05-04T03:27:18.303716697+08:00"
+    created: "2024-05-04T03:45:23.160884547+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -122,4 +144,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-04T03:27:18.263350554+08:00"
+generated: "2024-05-04T03:45:23.12912557+08:00"
