@@ -13,8 +13,17 @@ spec:
   clusterIP: None
   publishNotReadyAddresses: true
   ports:
-    - name: nacos
-      port: {{ .Values.service.ports.nacos }}
-      targetPort: nacos
+    - name: http
+      port: {{ .Values.service.ports.http }}
+      targetPort: http
+    - name: client-rpc
+      port: {{ add .Values.service.ports.http 1000 }}
+      targetPort: client-rpc
+    - name: raft-rpc
+      port: {{ add .Values.service.ports.http 1001 }}
+      targetPort: raft-rpc
+    - name: jraft-rpc
+      port: {{ sub .Values.service.ports.http 1000 }}
+      targetPort: jraft-rpc
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}

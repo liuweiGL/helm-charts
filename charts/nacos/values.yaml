@@ -282,7 +282,7 @@ hostAliases: []
 ## @param containerPorts.console Nacos container port to open for Nacos Console
 ##
 containerPorts:
-  nacos: 8848
+  http: 8848
 ## Nacos pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable pod Security Context
@@ -536,13 +536,13 @@ service:
   ## @param service.ports.nacos Nacos service port
   ##
   ports:
-    nacos: 8848
+    http: 8848
   ## @param service.nodePorts.api Specify the Nacos API nodePort value for the LoadBalancer and NodePort service types
   ## @param service.nodePorts.console Specify the Nacos Console nodePort value for the LoadBalancer and NodePort service types
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   nodePorts:
-    nacos: ""
+    http: ""
   ## @param service.clusterIP Service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -605,7 +605,7 @@ ingress:
   ## @param ingress.servicePort Service port to be used
   ## Default is http. Alternative is https.
   ##
-  servicePort: nacos
+  servicePort: http
   ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md

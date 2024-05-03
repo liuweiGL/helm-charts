@@ -99,14 +99,14 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.containerPorts.nacos }}
+              containerPort: {{ .Values.containerPorts.http }}
               protocol: TCP
-            - containerPort: {{ add .Values.containerPorts.nacos 1000}}
-              name: client-rpc
-            - containerPort: {{ add .Values.containerPorts.nacos 1001 }}
-              name: raft-rpc
-            - containerPort: {{ sub .Values.containerPorts.nacos 1000 }}
-              name: jraft-rpc
+            - name: client-rpc
+              containerPort: {{ add .Values.containerPorts.http 1000}}
+            - name: raft-rpc
+              containerPort: {{ add .Values.containerPorts.http 1001 }}
+            - name: jraft-rpc
+              containerPort: {{ sub .Values.containerPorts.http 1000 }}
           {{- if .Values.customStartupProbe }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customStartupProbe "context" $) | nindent 12 }}
           {{- else if .Values.startupProbe.enabled }}
