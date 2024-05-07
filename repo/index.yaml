@@ -1,11 +1,37 @@
 apiVersion: v1
 entries:
+  mosquitto:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 2.0.18
+    created: "2024-05-08T02:01:49.970518917+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker
+      that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
+      lightweight and is suitable for use on all devices from low power single board
+      computers to full servers
+    digest: 99cc4644305fd8826089d6c61fef2d3f4d8798c9b7469973bbcaf312c775e690
+    home: https://mosquitto.org/
+    icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
+    name: mosquitto
+    sources:
+    - https://github.com/eclipse/mosquitto
+    type: application
+    urls:
+    - mosquitto-1.0.0.tgz
+    version: 1.0.0
   nacos:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-05-04T04:49:10.804794949+08:00"
+    created: "2024-05-08T02:01:49.974991686+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +39,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 92dc6ac443ef9d2650b574a106cc0e1973fec62e747ee811f1580f43c8af3588
+    digest: 9cba48b3dd8c8120c90f2e4a5afc93185cca7530766cabaa51cc4e9097595ae3
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -23,78 +49,12 @@ entries:
     urls:
     - nacos-1.0.3.tgz
     version: 1.0.3
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.3.2
-    created: "2024-05-04T04:49:10.79957269+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: c0994ba126a7a746d1786eeb881ebdae60884c71b86045a20b9c2633ce43ee07
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.0.2.tgz
-    version: 1.0.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.3.2
-    created: "2024-05-04T04:49:10.794355538+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 03d23601c4d1f062ff1a3d6a25ee13cc31f4b6d180ddd143fc5c3413ddf6696f
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.3.2
-    created: "2024-05-04T04:49:10.789269025+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 8b25f541a87f5cda05125d9aa58c99851cce5a1f29972262cca7d69e1e03c6b9
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.0.0.tgz
-    version: 1.0.0
   rocketmq-dashboard:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-05-04T04:49:10.809052082+08:00"
+    created: "2024-05-08T02:01:49.980467597+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -103,7 +63,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: 0a5035ae7096f251a9e116ff40f2ad896050652502c89e74f6675f3baa9e0071
+    digest: 3b619bebe748d0663dbaf29d30f44454a467a30333222f61ca7cbadae4938fc6
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -118,7 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-05-04T04:49:10.815997798+08:00"
+    created: "2024-05-08T02:01:49.986561985+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -132,7 +92,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: eb56bc1e79dd1bf7c9965dcb7f5d89f1e2e53c6288daec5283f9a301760f5c89
+    digest: 7a0a7aff18602deb2cb8fbd4b21798f64add946e21a8f6bc4fa387e5c9f19f5e
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -144,10 +104,10 @@ entries:
     version: 1.0.1
   self-service-password:
   - annotations:
-      category: Tool
+      category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-05-04T04:49:10.821176037+08:00"
+    created: "2024-05-08T02:01:49.990872808+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -156,7 +116,7 @@ entries:
       version: 2.x.x
     description: LDAP Tool Box Self Service Password is a web application for end
       users. It allows them to change or reset their password if they lost it
-    digest: f645a45bf05efb4a5f21cfd53f6a3b16a82df781f946442f73f8ce17bb564a1f
+    digest: 03c4c0ab8803a1176480405acbecb5cb1effdbf34004434054ae41cd38f75736
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
     name: self-service-password
@@ -166,4 +126,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-04T04:49:10.783688229+08:00"
+generated: "2024-05-08T02:01:49.96627585+08:00"

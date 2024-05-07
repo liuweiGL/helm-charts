@@ -1,7 +1,7 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
-name: netmaker
+name: netmaker-server
 type: application
 version: 1.0.0
 appVersion: 0.24.0
@@ -16,3 +16,15 @@ dependencies:
   repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-common
+- name: postgresql
+  version: 15.x.x
+  repository: oci://registry-1.docker.io/bitnamicharts
+  tags:
+  - bitnami-postgresql
+  condition: global.postgresqlEnabled
+- name: mosquitto
+  version: 1.x.x
+  repository: file://../mosquitto
+  tags:
+  - mosquitto
+  condition: global.mosquittoEnabled
