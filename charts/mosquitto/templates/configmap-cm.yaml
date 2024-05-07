@@ -1,16 +1,12 @@
-{{- if (include "self-service-password.createConfigMap" .) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "self-service-password.configMapName" . }}
+  name: {{ include "mosquitto.cmConfigMapName" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  config.inc.local.php: |
-    {{- "<?php" | nindent 4 }}
+  mosquitto.conf: |
     {{- include "common.tplvalues.render" ( dict "value" .Values.configuration "context" $ ) | nindent 4 }}
-    {{- "?>" | nindent 4 }}
-{{- end -}}

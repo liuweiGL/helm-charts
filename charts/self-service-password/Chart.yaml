@@ -1,5 +1,5 @@
 annotations:
-  category: Tool
+  category: Infrastructure
 apiVersion: v2
 name: self-service-password
 type: application
