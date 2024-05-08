@@ -264,7 +264,7 @@ namesrv:
   livenessProbe:
     enabled: true
     initialDelaySeconds: 5
-    periodSeconds: 10
+    periodSeconds: 30
     timeoutSeconds: 1
     failureThreshold: 3
     successThreshold: 1
@@ -278,7 +278,7 @@ namesrv:
   ## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
   ##
   readinessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 5
     periodSeconds: 10
     timeoutSeconds: 1
@@ -295,7 +295,7 @@ namesrv:
   ##
   startupProbe:
     enabled: true
-    initialDelaySeconds: 15
+    initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
     failureThreshold: 10

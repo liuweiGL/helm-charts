@@ -10,10 +10,6 @@
     {{ printf "%s-%s" (include "common.names.fullname" .) "pvc"}}
 {{- end -}}
 
-{{- define "mosquitto.cmConfigMapName" -}}
-    {{ printf "%s-%s" (include "common.names.fullname" .) "cm"}}
-{{- end -}}
-
 {{- define "mosquitto.createAuthSecret" -}}
     {{- if and .Values.auth.enabled (not .Values.auth.existingSecret) }}
         {{- true -}}

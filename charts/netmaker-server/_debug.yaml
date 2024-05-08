@@ -1,0 +1,10 @@
+global:
+  postgresqlEnabled: true
+
+core:
+  baseDomain: netmaker.shjinyi.net
+
+mosquitto:
+  service:
+    nodePorts:
+      mqtt: 30044

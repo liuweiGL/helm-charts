@@ -70,7 +70,7 @@ configuration: |
   allow_anonymous true
   {{- end }}
 
-  connection_messages true
+  connection_messages false
 
   {{- if .Values.tls.enabled }}
   cafile /mosquitto/config/certs/ca.crt
@@ -162,8 +162,8 @@ containerPorts:
 ##
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 30
-  periodSeconds: 30
+  initialDelaySeconds: 10
+  periodSeconds: 300
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 5
@@ -175,7 +175,7 @@ livenessProbe:
 ## @param mosquitto.readinessProbe.successThreshold Success threshold for readinessProbe
 ##
 readinessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 10
   periodSeconds: 5
   timeoutSeconds: 5
@@ -189,7 +189,7 @@ readinessProbe:
 ## @param mosquitto.startupProbe.successThreshold Success threshold for startupProbe
 ##
 startupProbe:
-  enabled: false
+  enabled: true
   initialDelaySeconds: 10
   periodSeconds: 5
   timeoutSeconds: 5
@@ -230,7 +230,7 @@ resources: {}
 ## @param mosquitto.podSecurityContext.fsGroup Set fsGroup in mosquitto pods' Security Context
 ##
 podSecurityContext:
-  enabled: true
+  enabled: false
   fsGroupChangePolicy: Always
   sysctls: []
   supplementalGroups: []
@@ -248,7 +248,7 @@ podSecurityContext:
 ## @param mosquitto.containerSecurityContext.seccompProfile.type Set seccomp profile in mosquitto container
 ##
 containerSecurityContext:
-  enabled: true
+  enabled: false
   seLinuxOptions: {}
   runAsUser: 1001
   runAsGroup: 1001

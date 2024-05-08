@@ -1,61 +1,142 @@
-{{/*
-Copyright VMware, Inc.
-SPDX-License-Identifier: APACHE-2.0
-*/}}
-
-{{/*
-Return the proper %%MAIN_OBJECT_BLOCK%% image name
-*/}}
-{{- define "%%TEMPLATE_NAME%%.image" -}}
-{{ include "common.images.image" (dict "imageRoot" .Values.%%MAIN_OBJECT_BLOCK%%.image "global" .Values.global) }}
+{{- define "netmaker.server.image" -}}
+    {{- include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
-{{/*
-Return the proper image name (for the init container volume-permissions image)
-*/}}
-{{- define "%%TEMPLATE_NAME%%.volumePermissions.image" -}}
-{{- include "common.images.image" ( dict "imageRoot" .Values.volumePermissions.image "global" .Values.global ) -}}
+{{- define "netmaker.server.imagePullSecrets" -}}
+    {{- include "common.images.renderPullSecrets" (dict "images" (list .Values.image) "context" $) -}}
 {{- end -}}
 
-{{/*
-Return the proper Docker Image Registry Secret Names
-*/}}
-{{- define "%%TEMPLATE_NAME%%.imagePullSecrets" -}}
-{{- include "common.images.renderPullSecrets" (dict "images" (list .Values.%%MAIN_OBJECT_BLOCK%%.image .Values.%%SECONDARY_OBJECT_BLOCK%%.image .Values.volumePermissions.image) "context" $) -}}
+{{- define "netmaker.server.envConfigMapName" -}}
+    {{ printf "%s-env" (include "common.names.fullname" .) }}
 {{- end -}}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "%%TEMPLATE_NAME%%.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
+{{- define "netmaker.server.hostname" -}}
+    {{- printf "%s.%s" .Values.core.domainPrefix.api .Values.core.baseDomain }}
 {{- end -}}
 
-{{/*
-Return true if cert-manager required annotations for TLS signed certificates are set in the Ingress annotations
-Ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
-*/}}
-{{- define "%%TEMPLATE_NAME%%.ingress.certManagerRequest" -}}
-{{ if or (hasKey . "cert-manager.io/cluster-issuer") (hasKey . "cert-manager.io/issuer") }}
-    {{- true -}}
-{{- end -}}
+{{- define "netmaker.mosquitto.hostname" -}}
+    {{- printf "%s.%s" .Values.core.domainPrefix.mosquitto .Values.core.baseDomain }}
 {{- end -}}
 
-{{/*
-Compile all warnings into a single message.
-*/}}
-{{- define "%%TEMPLATE_NAME%%.validateValues" -}}
-{{- $messages := list -}}
-{{- $messages := append $messages (include "%%TEMPLATE_NAME%%.validateValues.foo" .) -}}
-{{- $messages := append $messages (include "%%TEMPLATE_NAME%%.validateValues.bar" .) -}}
-{{- $messages := without $messages "" -}}
-{{- $message := join "\n" $messages -}}
-
-{{- if $message -}}
-{{-   printf "\nVALUES VALIDATION:\n%s" $message -}}
+{{- define "netmaker.dashboard.hostname" -}}
+    {{- printf "%s.%s" .Values.core.domainPrefix.dashboard .Values.core.baseDomain }}
 {{- end -}}
+
+{{- define "netmaker.dashboard.fullname" -}}
+    {{- if index .Values "netmaker-dashboard" "fullnameOverride" }}
+        {{- index .Values "netmaker-dashboard" "fullnameOverride" }}
+    {{- else -}}
+       {{- printf "%s-%s" (include "common.names.fullname" .) (default "netmaker-dashboard" (index .Values "netmaker-dashboard" "fullname")) }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "netmaker.mosquitto.fullname" -}}
+    {{- if .Values.mosquitto.fullnameOverride }}
+        {{- .Values.mosquitto.fullnameOverride }}
+    {{- else -}}
+       {{- printf "%s-%s" (include "common.names.fullname" .) (default "mosquitto" .Values.mosquitto.nameOverride) }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "netmaker.postgresql.fullname" -}}
+    {{- if .Values.postgresql.fullnameOverride }}
+        {{- .Values.postgresql.fullnameOverride }}
+    {{- else -}}
+        {{- printf "%s-%s" (include "common.names.fullname" .) (default "postgresql" .Values.postgresql.nameOverride) }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "netmaker.server.dns" -}}
+    {{- printf "%s.%s.svc.cluster.local" (include "common.names.fullname" .) (include "common.names.namespace" .) }}
+{{- end -}}
+
+{{- define "netmaker.dashboard.dns" -}}
+    {{- printf "%s.%s.svc.cluster.local" (include "netmaker.dashboard.fullname" .) (include "common.names.namespace" .) }}
+{{- end -}}
+
+{{- define "netmaker.mosquitto.dns" -}}
+    {{- printf "%s.%s.svc.cluster.local" (include "netmaker.mosquitto.fullname" .) (include "common.names.namespace" .) }}
+{{- end -}}
+
+{{- define "netmaker.postgresql.dns" -}}
+    {{- printf "%s.%s.svc.cluster.local" (include "netmaker.postgresql.fullname" .) (include "common.names.namespace" .) }}
+{{- end -}}
+
+{{- define "netmaker.server.host" -}}
+    {{- if .Values.ingress.enabled -}}
+        {{- printf "%s:%s" (include "netmaker.server.hostname" .) (.Values.ingress.tls | ternary "443" "80") }}
+    {{- else if eq .Values.service.type "NodePort" -}}
+        {{ printf "%s:%s" (include "netmaker.server.hostname" .) .Values.service.nodePorts.http }}
+    {{- else -}}
+        {{- printf "%s:%s" (include "netmaker.server.dns" .)  .Values.service.ports.http }}
+    {{- end -}}
+{{- end -}}
+
+{{- define "netmaker.dashboard.address" -}}
+    {{- $ingress := index .Values "netmaker-dashboard" "ingress" }}
+    {{- $service := index .Values "netmaker-dashboard" "service" }}
+    {{- if $ingress.enabled -}}
+        {{- printf "%s://%s"  ($ingress.tls | ternary "https" "http") (include "netmaker.dashboard.hostname" .) }}
+    {{- else if eq .Values.service.type "NodePort" -}}
+        {{- printf "http://%s:%s" (include "netmaker.dashboard.hostname" .) $service.nodePorts.http }}
+    {{- else -}}
+        {{- printf "http://%s:%s" (include "netmaker.dashboard.dns" .)  $service.ports.http }}
+    {{- end -}}
+{{- end -}}
+
+
+{{- define "netmaker.server.database" -}}
+    {{- if .Values.global.postgresqlEnabled -}}
+DATABASE: "postgres"
+SQL_HOST: {{ include "netmaker.postgresql.dns" . }}
+SQL_PORT: {{ (default 5432 .Values.postgresql.primary.service.ports.postgresql) | quote}}
+SQL_DB: {{  .Values.postgresql.auth.database | quote }}
+SQL_USER: {{ .Values.postgresql.auth.username | quote }}
+SQL_PASS: {{ .Values.postgresql.auth.password | quote }}
+    {{- else -}}
+DATABASE: {{ .Values.externalDatabase.type | quote }}
+SQL_HOST: {{ .Values.externalDatabase.host | quote }}
+SQL_PORT: {{ .Values.externalDatabase.port | quote }}
+SQL_DB: {{  .Values.externalDatabase.database | quote }}
+SQL_USER: {{ .Values.externalDatabase.username | quote }}
+SQL_PASS: {{ .Values.externalDatabase.password | quote }}
+    {{- end -}}
+{{- end -}}
+
+
+{{- define "netmaker.server.configuration" -}}
+    {{- $url := include "netmaker.server.host" . }}
+    {{- $parts := split ":"  $url }}
+    {{- $hostname := $parts._0 }}
+    {{- $port := $parts._1 }}
+SERVER_NAME: {{ required "A valid .Values.baseDomain entry required!" .Values.core.baseDomain | quote }}
+SERVER_API_CONN_STRING: {{ $url | quote }}
+SERVER_HTTP_HOST: {{ $hostname | quote }}
+API_PORT: {{ $port | quote }}
+FRONTEND_URL: {{ include "netmaker.dashboard.address" . | quote }}
+
+# 客户端使用的 mq 地址
+BROKER_ENDPOINT: "mqtt://{{ include "netmaker.mosquitto.hostname" . }}:{{ .Values.mosquitto.service.nodePorts.mqtt }}"
+# 服务端使用的 mq 地址
+SERVER_BROKER_ENDPOINT: "mqtt://{{ include "netmaker.mosquitto.dns" . }}:{{ default 1883 .Values.mosquitto.service.ports.mqtt }}"
+MQ_USERNAME: {{ .Values.mosquitto.auth.username | quote }}
+MQ_PASSWORD: {{ .Values.mosquitto.auth.password | quote }}
+MASTER_KEY: {{ default (randAlphaNum 16)  .Values.core.masterKey | quote }}
+
+DNS_MODE: "off"
+DISPLAY_KEYS: "off"
+CORS_ALLOWED_ORIGIN: "*"
+
+JWT_VALIDITY_DURATION: {{ .Values.core.jwtDuration | quote }}
+RAC_AUTO_DISABLE: {{ .Values.core.racAutoDisable | quote }}
+CACHING_ENABLED: "false"
+AUTH_PROVIDER: {{ .Values.core.authProvider | quote }}
+CLIENT_ID: {{ .Values.core.oAuthClientID | quote }}
+CLIENT_SECRET: {{ .Values.core.oAuthClientSecret | quote }}
+AZURE_TENANT: {{ .Values.core.azureTenant | quote }}
+OIDC_ISSUER: {{ .Values.core.oidcIssuer | quote }}
+VERBOSITY: {{ .Values.image.debug | ternary "1" "0" | quote }}
+
+LICENSE_KEY: {{ .Values.core.ee.licensekey | quote }}
+NETMAKER_TENANT_ID: {{ .Values.core.ee.tenantId | quote }}
 {{- end -}}

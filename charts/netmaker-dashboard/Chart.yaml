@@ -1,0 +1,18 @@
+annotations:
+  category: Infrastructure
+apiVersion: v2
+name: netmaker-dashboard
+type: application
+version: 1.0.0
+appVersion: 0.24.0
+description: Netmaker makes networks with WireGuard. Netmaker automates fast, secure, and distributed virtual networks
+icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
+home: https://www.netmaker.io/
+sources:
+- https://github.com/gravitl/netmaker-ui2
+dependencies:
+- name: common
+  version: 2.x.x
+  repository: oci://registry-1.docker.io/bitnamicharts
+  tags:
+  - bitnami-common

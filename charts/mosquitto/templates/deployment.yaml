@@ -58,6 +58,29 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- end }}
       initContainers:
+        - name: create-authorization-file
+          image: {{ template "mosquitto.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          containerSecurityContext:
+            enabled: true
+            runAsUser: 0
+            runAsGroup: 0
+            privileged: true
+          env:
+            - name: USERNAME
+              value: {{ .Values.auth.username | quote }}
+            - name: PASSWORD
+              value: {{ .Values.auth.password | quote }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "$USERNAME:$PASSWORD" > /mosquitto/config/passwd
+              chmod 0700 /mosquitto/config/passwd
+              mosquitto_passwd -U /mosquitto/config/passwd
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /mosquitto/config
         {{- if .Values.initContainers }}
           {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
         {{- end }}
@@ -111,33 +134,33 @@ spec:
           {{- else if .Values.livenessProbe.enabled }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.livenessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: {{ .Values.containerPorts.mqtt }}
+              port: mqtt
           {{- end }}
           {{- if .Values.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
           {{- else if .Values.readinessProbe.enabled }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: {{ .Values.containerPorts.mqtt }}
+              port: mqtt
           {{- end }}
           {{- if .Values.customStartupProbe }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customStartupProbe "context" $) | nindent 12 }}
           {{- else if .Values.startupProbe.enabled }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: {{ .Values.containerPorts.mqtt }}
+              port: mqtt
           {{- end }}
           {{- end }}
           {{- if .Values.lifecycleHooks }}
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - name: empty-dir
+              mountPath: /mosquitto/config/passwd
+              subPath: passwd
             - name: config
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
-            - name: auth
-              mountPath: /mosquitto/config/passwd
-              subPath: passwd
             - name: tls
               mountPath: /mosquitto/config/certs
             - name: data
@@ -149,14 +172,11 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
+        - name: empty-dir
+          emptyDir: {}
         - name: config
           configMap:
-            name: {{ include "mosquitto.cmConfigMapName" . }}
-        - name: auth
-          secret:
-            optional: true
-            defaultMode: 0700
-            secretName: {{ include "mosquitto.authSecretName" . }}
+            name: {{ include "common.names.fullname" . }}
         - name: tls
           secret:
             optional: true

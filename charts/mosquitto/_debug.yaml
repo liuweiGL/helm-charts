@@ -4,7 +4,7 @@ global:
 auth:
   enabled: true
   username: test
-  password: $7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw==
+  password: 123456
 
 containerPorts:
   mqtt: 1883

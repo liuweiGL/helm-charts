@@ -28,3 +28,8 @@ dependencies:
   tags:
   - mosquitto
   condition: global.mosquittoEnabled
+- name: netmaker-dashboard
+  version: 1.x.x
+  repository: file://../netmaker-dashboard
+  tags:
+  - netmaker-dashboard
