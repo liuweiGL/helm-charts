@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2024-05-08T02:01:49.970518917+08:00"
+    created: "2024-05-09T13:44:09.623767399+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -31,7 +31,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-05-08T02:01:49.974991686+08:00"
+    created: "2024-05-09T13:44:09.628316176+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -49,12 +49,77 @@ entries:
     urls:
     - nacos-1.0.3.tgz
     version: 1.0.3
+  netmaker-dashboard:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 0.24.0
+    created: "2024-05-09T13:44:09.632217642+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
+    digest: 27df5f5b4e511e59dc49457718f433a53e9d1b9ba390c26f18c0b7578912f2e7
+    home: https://www.netmaker.io/
+    icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
+    name: netmaker-dashboard
+    sources:
+    - https://github.com/gravitl/netmaker-ui2
+    type: application
+    urls:
+    - netmaker-dashboard-1.0.0.tgz
+    version: 1.0.0
+  netmaker-server:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 0.24.0
+    created: "2024-05-09T13:44:09.645523439+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: global.postgresqlEnabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-postgresql
+      version: 15.x.x
+    - condition: global.mosquittoEnabled
+      name: mosquitto
+      repository: file://../mosquitto
+      tags:
+      - mosquitto
+      version: 1.x.x
+    - name: netmaker-dashboard
+      repository: file://../netmaker-dashboard
+      tags:
+      - netmaker-dashboard
+      version: 1.x.x
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
+    digest: 3889f7ab9a243d08462835636e2bb1b04b75295c063aec2cb9ef7e9688ab6a89
+    home: https://www.netmaker.io/
+    icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
+    name: netmaker-server
+    sources:
+    - https://github.com/gravitl/netmaker
+    type: application
+    urls:
+    - netmaker-server-1.0.0.tgz
+    version: 1.0.0
   rocketmq-dashboard:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-05-08T02:01:49.980467597+08:00"
+    created: "2024-05-09T13:44:09.649381468+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +143,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-05-08T02:01:49.986561985+08:00"
+    created: "2024-05-09T13:44:09.655310984+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -107,7 +172,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-05-08T02:01:49.990872808+08:00"
+    created: "2024-05-09T13:44:09.661256729+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -126,4 +191,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-08T02:01:49.96627585+08:00"
+generated: "2024-05-09T13:44:09.619081217+08:00"
