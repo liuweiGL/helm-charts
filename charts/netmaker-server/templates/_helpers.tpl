@@ -11,15 +11,15 @@
 {{- end -}}
 
 {{- define "netmaker.server.hostname" -}}
-    {{- printf "%s.%s" .Values.core.domainPrefix.api .Values.core.baseDomain }}
+    {{- .Values.core.apiDomain }}
 {{- end -}}
 
 {{- define "netmaker.mosquitto.hostname" -}}
-    {{- printf "%s.%s" .Values.core.domainPrefix.mosquitto .Values.core.baseDomain }}
+    {{- .Values.core.mqDomain }}
 {{- end -}}
 
 {{- define "netmaker.dashboard.hostname" -}}
-    {{- printf "%s.%s" .Values.core.domainPrefix.dashboard .Values.core.baseDomain }}
+    {{- index .Values "netmaker-dashboard" "ingress.hostname" }}
 {{- end -}}
 
 {{- define "netmaker.dashboard.fullname" -}}
@@ -46,30 +46,16 @@
     {{- end -}}
 {{- end -}}
 
-{{- define "netmaker.server.dns" -}}
-    {{- printf "%s.%s.svc.cluster.local" (include "common.names.fullname" .) (include "common.names.namespace" .) }}
-{{- end -}}
-
 {{- define "netmaker.dashboard.dns" -}}
     {{- printf "%s.%s.svc.cluster.local" (include "netmaker.dashboard.fullname" .) (include "common.names.namespace" .) }}
 {{- end -}}
 
 {{- define "netmaker.mosquitto.dns" -}}
-    {{- printf "%s.%s.svc.cluster.local" (include "netmaker.mosquitto.fullname" .) (include "common.names.namespace" .) }}
+    {{- printf "%s-mqtt.%s.svc.cluster.local" (include "netmaker.mosquitto.fullname" .) (include "common.names.namespace" .) }}
 {{- end -}}
 
 {{- define "netmaker.postgresql.dns" -}}
     {{- printf "%s.%s.svc.cluster.local" (include "netmaker.postgresql.fullname" .) (include "common.names.namespace" .) }}
-{{- end -}}
-
-{{- define "netmaker.server.host" -}}
-    {{- if .Values.ingress.enabled -}}
-        {{- printf "%s:%s" (include "netmaker.server.hostname" .) (.Values.ingress.tls | ternary "443" "80") }}
-    {{- else if eq .Values.service.type "NodePort" -}}
-        {{ printf "%s:%s" (include "netmaker.server.hostname" .) .Values.service.nodePorts.http }}
-    {{- else -}}
-        {{- printf "%s:%s" (include "netmaker.server.dns" .)  .Values.service.ports.http }}
-    {{- end -}}
 {{- end -}}
 
 {{- define "netmaker.dashboard.address" -}}
@@ -105,14 +91,10 @@ SQL_PASS: {{ .Values.externalDatabase.password | quote }}
 
 
 {{- define "netmaker.server.configuration" -}}
-    {{- $url := include "netmaker.server.host" . }}
-    {{- $parts := split ":"  $url }}
-    {{- $hostname := $parts._0 }}
-    {{- $port := $parts._1 }}
 SERVER_NAME: {{ required "A valid .Values.baseDomain entry required!" .Values.core.baseDomain | quote }}
-SERVER_API_CONN_STRING: {{ $url | quote }}
-SERVER_HTTP_HOST: {{ $hostname | quote }}
-API_PORT: {{ $port | quote }}
+SERVER_API_CONN_STRING: {{ printf "%s:%s" (include "netmaker.server.hostname" .) "443" | quote }}
+SERVER_HTTP_HOST: {{ include "netmaker.server.hostname" . | quote }}
+API_PORT: {{ .Values.containerPorts.http | quote }}
 FRONTEND_URL: {{ include "netmaker.dashboard.address" . | quote }}
 
 # 客户端使用的 mq 地址
@@ -139,4 +121,6 @@ VERBOSITY: {{ .Values.image.debug | ternary "1" "0" | quote }}
 
 LICENSE_KEY: {{ .Values.core.ee.licensekey | quote }}
 NETMAKER_TENANT_ID: {{ .Values.core.ee.tenantId | quote }}
+
+{{ include "netmaker.server.database" . }}
 {{- end -}}

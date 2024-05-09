@@ -80,7 +80,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: gravitl/netmaker
-  tag: latest
+  tag: v0.24.0
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -115,9 +115,9 @@ containerPorts:
 ##
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 5
+  initialDelaySeconds: 20
   periodSeconds: 60
-  timeoutSeconds: 5
+  timeoutSeconds: 10
   successThreshold: 1
   failureThreshold: 5
 ## @param netmaker.readinessProbe.enabled Enable readinessProbe on netmaker containers
@@ -129,8 +129,8 @@ livenessProbe:
 ##
 readinessProbe:
   enabled: false
-  initialDelaySeconds: 5
-  periodSeconds: 5
+  initialDelaySeconds: 20
+  periodSeconds: 10
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 5
@@ -143,8 +143,8 @@ readinessProbe:
 ##
 startupProbe:
   enabled: true
-  initialDelaySeconds: 5
-  periodSeconds: 5
+  initialDelaySeconds: 20
+  periodSeconds: 10
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 5
@@ -368,10 +368,8 @@ initContainers: []
 
 core:
   baseDomain: netmaker.example.com
-  domainPrefix:
-    api: "api"
-    mosquitto: "mqtt"
-    dashboard: "dashboard"
+  apiDomain: api.netmaker.example.com
+  mqDomain: broker.netmaker.example.com
   jwtDuration: ""
   racAutoDisable: ""
   AUTH_PROVIDER: ""
@@ -448,9 +446,6 @@ ingress:
   ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
   ##
   apiVersion: ""
-  ## @param ingress.hostname Default host for the ingress record
-  ## {{ include 'netmaker.server.hostname' . }}
-  hostname: "example.com"
   ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
@@ -545,9 +540,10 @@ ingress:
 ##
 netmaker-dashboard:
   fullnameOverride: netmaker-dashboard
-  backendUrl: "{{ include 'netmaker.server.address' $ }}"
+  backendUrl: https://api.netmaker.example.com
   ingress:
     enabled: true
+    hostname: dashboard.netmaker.example.com
 
 ## netmaker Mosquitto parameters
 ##
@@ -571,9 +567,9 @@ externalDatabase:
   type: postgres
   host: ""
   port: 5432
+  database: netmaker
   username: ""
   password: ""
-  database: netmaker
 
 ## netmaker Postgresql parameters
 ## 

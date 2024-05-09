@@ -58,14 +58,9 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- end }}
       initContainers:
-        - name: create-authorization-file
+        - name: prepare-workspace
           image: {{ template "mosquitto.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          containerSecurityContext:
-            enabled: true
-            runAsUser: 0
-            runAsGroup: 0
-            privileged: true
           env:
             - name: USERNAME
               value: {{ .Values.auth.username | quote }}
@@ -78,9 +73,12 @@ spec:
               echo "$USERNAME:$PASSWORD" > /mosquitto/config/passwd
               chmod 0700 /mosquitto/config/passwd
               mosquitto_passwd -U /mosquitto/config/passwd
+              touch /mosquitto/log/mosquitto.log
           volumeMounts:
             - name: empty-dir
               mountPath: /mosquitto/config
+            - name: empty-dir
+              mountPath: /mosquitto/log
         {{- if .Values.initContainers }}
           {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
         {{- end }}
@@ -158,6 +156,9 @@ spec:
             - name: empty-dir
               mountPath: /mosquitto/config/passwd
               subPath: passwd
+            - name: empty-dir
+              mountPath: /mosquitto/log/mosquitto.log
+              subPath: mosquitto.log
             - name: config
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf

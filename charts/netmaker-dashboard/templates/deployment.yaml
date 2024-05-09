@@ -57,14 +57,6 @@ spec:
       {{- if .Values.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- end }}
-      initContainers:
-        - name: make-workdir-wirtable
-          image: {{ include "netmaker.dashboard.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["sh", "-c", "cp -r /usr/share/nginx/html/* /tmp"]
-          volumeMounts:
-            - name: empty-dir
-              mountPath: /tmp
       containers:
         - name: netmaker-dashboard
           image: {{ include "netmaker.dashboard.image" . }}
@@ -136,11 +128,6 @@ spec:
           {{- if .Values.lifecycleHooks }}
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
-          volumeMounts:
-            - name: empty-dir
-              mountPath: /usr/share/nginx/html
-            - name: empty-dir
-              mountPath: /var/cache/nginx
           {{- if .Values.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -148,8 +135,6 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
-        - name: empty-dir
-          emptyDir: {}
         {{- if .Values.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
