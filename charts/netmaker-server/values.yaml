@@ -553,7 +553,7 @@ mosquitto:
   auth:
     enabled: true
     username: netmaker
-    password: kYea2MVwsv3Gid6p
+    password: ""
   service:
     type: NodePort
     ports:
@@ -568,7 +568,7 @@ externalDatabase:
   host: ""
   port: 5432
   database: netmaker
-  username: ""
+  username: netmaker
   password: ""
 
 ## netmaker Postgresql parameters
