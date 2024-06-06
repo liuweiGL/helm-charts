@@ -16,10 +16,6 @@ broker:
     accessKey: rocketmq
     secretKey: UA186pHykLRoTdfX
     globalWhiteRemoteAddresses: []
-  service:
-    type: NodePort
-    nodePorts:
-      broker: 30900
 
 rocketmq-dashboard:
   ## 是否需要登录之后才能访问

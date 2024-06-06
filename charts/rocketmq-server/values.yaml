@@ -704,61 +704,7 @@ broker:
   ## RocketMQ broker Service parameters
   ##
   service:
-    ## @param namesrv.service.type RocketMQ namesrv K8s service type
-    ##
-    type: ClusterIP
-    ## @param namesrv.service.ports.namesrv RocketMQ namesrv K8s service port
-    ##
-    ports:
-      broker: 10911
-      ha: 10912
-      fast: 10909
-    ## @param namesrv.service.nodePorts.namesrv RocketMQ namesrv K8s service node port
-    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
-    ##
-    nodePorts:
-      broker: ""
-    ## @param namesrv.service.clusterIP RocketMQ namesrv K8s service clusterIP IP
-    ## e.g:
-    ## clusterIP: None
-    ##
-    clusterIP: ""
-    ## @param namesrv.service.loadBalancerIP RocketMQ namesrv loadBalancerIP if service type is `LoadBalancer`
-    ## Set the LoadBalancer service type to internal only
-    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
-    ##
-    loadBalancerIP: ""
-    ## @param namesrv.service.externalTrafficPolicy Enable client source IP preservation
-    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
-    ##
-    externalTrafficPolicy: Cluster
-    ## @param namesrv.service.loadBalancerSourceRanges Addresses that are allowed when RocketMQ namesrv service is LoadBalancer
-    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
-    ## E.g.
-    ## loadBalancerSourceRanges:
-    ##   - 10.10.10.0/24
-    ##
-    loadBalancerSourceRanges: []
-    ## @param namesrv.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
-    ##
-    extraPorts: []
-    ## @param namesrv.service.annotations Additional custom annotations for RocketMQ namesrv service
-    ##
-    annotations: {}
-    ## @param namesrv.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
-    ## If "ClientIP", consecutive client requests will be directed to the same Pod
-    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-    ##
-    sessionAffinity: None
-    ## @param namesrv.service.sessionAffinityConfig Additional settings for the sessionAffinity
-    ## sessionAffinityConfig:
-    ##   clientIP:
-    ##     timeoutSeconds: 300
-    ##
-    sessionAffinityConfig: {}
-    ## Headless service properties
-    ##
     headless:
-      ## @param namesrv.service.headless.annotations Additional custom annotations for headless RocketMQ namesrv service.
+      ## @param broker.service.headless.annotations Additional custom annotations for headless RocketMQ broker service.
       ##
       annotations: {}

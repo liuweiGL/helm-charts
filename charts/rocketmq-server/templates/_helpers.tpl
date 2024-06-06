@@ -82,8 +82,8 @@ secretKey: {{ .Values.broker.acl.secretKey }}
 {{- end -}}
 
 {{- define "rocketmq.broker.listenPort" -}}
-    {{- if eq .Values.broker.service.type "NodePort" }}
-        {{- .Values.broker.service.nodePorts.broker -}}
+    {{- if eq .Values.namesrv.service.type "NodePort" }}
+        {{- add .Values.namesrv.service.nodePorts.namesrv 1 }}
     {{- else -}}
         {{- 10911 -}}
     {{- end -}}

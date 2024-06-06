@@ -15,13 +15,13 @@ spec:
   publishNotReadyAddresses: true
   ports:
     - name: broker
-      port: {{ .Values.broker.service.ports.broker }}
+      port: {{ include "rocketmq.broker.listenPort" . }}
       targetPort: broker
     - name: ha
-      port: {{ .Values.broker.service.ports.ha }}
+      port: {{ include "rocketmq.broker.haListenPort" . }}
       targetPort: broker
     - name: fast
-      port: {{ .Values.broker.service.ports.fast }}
+      port: {{ include "rocketmq.broker.fastListenPort" . }}
       targetPort: broker
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.broker.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
