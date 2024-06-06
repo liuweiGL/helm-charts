@@ -60,7 +60,7 @@ spec:
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.broker.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
       initContainers:
-        - name: initializer
+        - name: initialize-acl
           image: {{ include "rocketmq.image" .  }}
           env:
             - name: NEW_ROCKETMQ_HOME
@@ -82,6 +82,34 @@ spec:
           volumeMounts:
             - name: empty-dir
               mountPath: {{ include "rocketmq.broker.home" . }}
+        - name: initialize-broker-conf
+          image: {{ include "rocketmq.image" .  }}
+          env:
+            - name: NEW_ROCKETMQ_HOME
+              value: {{ include "rocketmq.broker.home" . }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: LISTEN_PORT
+              value: {{ include "rocketmq.broker.listenPort" . | quote }}
+          command: 
+            - sh
+            - -ec
+            - |
+              cat /tmp/rocketmq/conf/broker.conf > ${NEW_ROCKETMQ_HOME}/conf/broker.conf
+              echo "brokerName=${POD_NAME}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
+              echo "brokerIP1=${NODE_IP}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
+              echo "listenPort=${LISTEN_PORT}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
+          volumeMounts:
+            - name: empty-dir
+              mountPath: {{ include "rocketmq.broker.home" . }}
+            - name: config
+              mountPath: /tmp/rocketmq/conf
       containers:
         - name: broker
           image: {{ include "rocketmq.image" .  }}
@@ -97,13 +125,9 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "cd ${ROCKETMQ_HOME}/bin && ./mqbroker -c ${ROCKETMQ_HOME}/conf/${POD_NAME}.conf --enable-proxy" ]
+          args: [ "-c", "cd ${ROCKETMQ_HOME}/bin && ./mqbroker -c ${ROCKETMQ_HOME}/conf/broker.conf  --enable-proxy" ]
           {{- end }}
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
             - name: NAMESRV_ADDR
               value: {{ include "rocketmq.namesrv.addr" . | quote }}
             - name: ROCKETMQ_HOME
@@ -122,13 +146,13 @@ spec:
             {{- end }}
           ports:
             - name: broker
-              containerPort: {{ .Values.broker.containerPorts.broker }}
-              protocol: TCP
-            - name: fa
-              containerPort: 10909
+              containerPort: {{ include "rocketmq.broker.listenPort" . }}
               protocol: TCP
             - name: ha
-              containerPort: 10912
+              containerPort: {{ include "rocketmq.broker.haListenPort" . }}
+              protocol: TCP
+            - name: fast
+              containerPort: {{ include "rocketmq.broker.fastListenPort" . }}
               protocol: TCP
             - name: proxy
               containerPort: 8081
@@ -178,7 +202,6 @@ spec:
           volumeMounts:
             - name: empty-dir
               mountPath: {{ include "rocketmq.broker.home" . }}
-            {{- include "rocketmq.broker.configVolumeMounts" (dict "context" $) | nindent 12 }}
             - name: data
               mountPath: {{ .Values.broker.storePathRootDir }}
       volumes:

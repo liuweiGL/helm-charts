@@ -17,6 +17,12 @@ spec:
     - name: broker
       port: {{ .Values.broker.service.ports.broker }}
       targetPort: broker
+    - name: ha
+      port: {{ .Values.broker.service.ports.ha }}
+      targetPort: broker
+    - name: fast
+      port: {{ .Values.broker.service.ports.fast }}
+      targetPort: broker
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.broker.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: broker

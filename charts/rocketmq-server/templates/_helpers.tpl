@@ -81,16 +81,18 @@ secretKey: {{ .Values.broker.acl.secretKey }}
     {{- end -}}
 {{- end -}}
 
-{{- define "rocketmq.broker.configVolumeMounts" -}}
-    {{- with .context -}}
-        {{- $home := include "rocketmq.broker.home" . }}
-        {{- $name := include "rocketmq.broker.fullname" . }}
-        {{- $replicaCount := .Values.broker.replicaCount | int }}
-        {{- range $index := until $replicaCount -}}
-            {{- $brokerName := printf "%s-%d" $name $index -}}
-- name: config
-  mountPath:  {{ printf "%s/conf/%s.conf" $home $brokerName }}
-  subPath: {{ printf "%s.conf" $brokerName }}
-        {{- end -}} 
+{{- define "rocketmq.broker.listenPort" -}}
+    {{- if eq .Values.broker.service.type "NodePort" }}
+        {{- .Values.broker.service.nodePorts.broker -}}
+    {{- else -}}
+        {{- 10911 -}}
     {{- end -}}
+{{- end -}}
+
+{{- define "rocketmq.broker.haListenPort" -}}
+    {{-  add (include "rocketmq.broker.listenPort" .) 1 }}
+{{- end -}}
+
+{{- define "rocketmq.broker.fastListenPort" -}}
+    {{- sub (include "rocketmq.broker.listenPort" .) 2 }}
 {{- end -}}

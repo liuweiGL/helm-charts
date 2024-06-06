@@ -31,7 +31,7 @@ image:
 ## Chart name
 nameOverride: ""
 ## 默认包含 helm install 时指定的 release name
-fullnameOverride: ""
+fullnameOverride: "rocketmq-server"
 ## @param commonAnnotations Common annotations to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
 ##
 commonAnnotations: {}
@@ -425,14 +425,9 @@ broker:
   ##
   storePathRootDir: "/opt/rocketmq/data"
   configuration: |-
-    {{- $name := include "rocketmq.broker.fullname" . }}
     {{- $aclEnable := .Values.broker.acl.enabled -}}
     {{- $storePathRootDir := .Values.broker.storePathRootDir -}}
-    {{- $replicaCount := .Values.broker.replicaCount | int }}
-    {{- range $index := until $replicaCount }}
-    {{- $brokerName := printf "%s-%d" $name $index }}
-    {{ $brokerName -}}.conf: |
-      brokerName={{ $brokerName }}
+    broker.conf: |
       storePathRootDir={{ $storePathRootDir }}
       aclEnable={{ $aclEnable }}
       brokerClusterName=DefaultCluster
@@ -442,16 +437,11 @@ broker:
       enableIncrementalTopicCreation=true
       flushDiskType=ASYNC_FLUSH
       enablePropertyFilter=true
-    {{- end }}
 
   ## @param broker.existingConfigMap Name of existing ConfigMap with RocketMQ broker configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored
   ##
   existingConfigMap: ""
-  ## @param broker.containerPorts.mysql Container port for mysql
-  ##
-  containerPorts:
-    broker: 10911
   ## @param broker.updateStrategy.type Update strategy type for the RocketMQ broker Deployment
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -714,14 +704,61 @@ broker:
   ## RocketMQ broker Service parameters
   ##
   service:
-    ## @param broker.service.ports.broker RocketMQ broker K8s serviimagePullSecretsce port
+    ## @param namesrv.service.type RocketMQ namesrv K8s service type
+    ##
+    type: ClusterIP
+    ## @param namesrv.service.ports.namesrv RocketMQ namesrv K8s service port
     ##
     ports:
       broker: 10911
+      ha: 10912
+      fast: 10909
+    ## @param namesrv.service.nodePorts.namesrv RocketMQ namesrv K8s service node port
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+    ##
+    nodePorts:
+      broker: ""
+    ## @param namesrv.service.clusterIP RocketMQ namesrv K8s service clusterIP IP
+    ## e.g:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param namesrv.service.loadBalancerIP RocketMQ namesrv loadBalancerIP if service type is `LoadBalancer`
+    ## Set the LoadBalancer service type to internal only
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+    ##
+    loadBalancerIP: ""
+    ## @param namesrv.service.externalTrafficPolicy Enable client source IP preservation
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param namesrv.service.loadBalancerSourceRanges Addresses that are allowed when RocketMQ namesrv service is LoadBalancer
+    ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## E.g.
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param namesrv.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param namesrv.service.annotations Additional custom annotations for RocketMQ namesrv service
+    ##
+    annotations: {}
+    ## @param namesrv.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param namesrv.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
     ## Headless service properties
     ##
     headless:
       ## @param namesrv.service.headless.annotations Additional custom annotations for headless RocketMQ namesrv service.
       ##
       annotations: {}
-

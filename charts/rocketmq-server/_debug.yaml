@@ -1,3 +1,5 @@
+fullnameOverride: rocketmq-server
+
 global:
   storageClass: "longhorn"
   dashboardEnabled: true
@@ -6,7 +8,7 @@ namesrv:
   service:
     type: NodePort
     nodePorts:
-      namesrv: 30000
+      namesrv: 30300
 
 broker:
   acl:
@@ -14,6 +16,10 @@ broker:
     accessKey: rocketmq
     secretKey: UA186pHykLRoTdfX
     globalWhiteRemoteAddresses: []
+  service:
+    type: NodePort
+    nodePorts:
+      broker: 30900
 
 rocketmq-dashboard:
   ## 是否需要登录之后才能访问
@@ -25,16 +31,16 @@ rocketmq-dashboard:
   ## Rocketmq 服务端配置
   ##
   rocketmq:
-    namesrvAddrs:
-      - rocketmq-server-namesrv-headless:9876
     isVIPChannel: true
     timeoutMillis: 5000
     accessKey: rocketmq
     secretKey: UA186pHykLRoTdfX
-  # args: ["-c", "sleep 5000 && ./mqbroker -c ${ROCKETMQ_HOME}/conf/$(POD_NAME).conf"]
-# livenessProbe:
-#   enabled: false
-# readinessProbe:
-#   enabled: false
-# startupProbe:
-#   enabled: false
+  service:
+    ## @param dashboard.service.type RocketMQ dashboard K8s service type
+    ##
+    type: NodePort
+    ## @param dashboard.service.nodePorts.dashboard RocketMQ dashboard K8s service node port
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+    ##
+    nodePorts:
+      dashboard: 30050
