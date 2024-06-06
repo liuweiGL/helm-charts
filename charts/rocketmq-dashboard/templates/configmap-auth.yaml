@@ -10,6 +10,5 @@ metadata:
   {{- end }}
 data:
   users.properties: |
-    admin={{ .Values.auth.username }}
-    {{ .Values.auth.username }}={{ .Values.auth.password }}
+    {{ .Values.auth.username }}={{ .Values.auth.password }},1
 {{- end -}}
