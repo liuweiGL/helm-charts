@@ -5,11 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.921490806+08:00"
-=======
-    created: "2024-05-10T00:51:05.709256005+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.905648052+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -20,7 +16,7 @@ entries:
       that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
       lightweight and is suitable for use on all devices from low power single board
       computers to full servers
-    digest: 99cc4644305fd8826089d6c61fef2d3f4d8798c9b7469973bbcaf312c775e690
+    digest: 4d765d3ca7c712649e357d1b1961f8f5c8cd2c2465fdcb61a5424bc8e65fdb38
     home: https://mosquitto.org/
     icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
     name: mosquitto
@@ -35,11 +31,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.930686073+08:00"
-=======
-    created: "2024-05-10T00:51:05.713932871+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.910263755+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -47,7 +39,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 9cba48b3dd8c8120c90f2e4a5afc93185cca7530766cabaa51cc4e9097595ae3
+    digest: 937bab4c5e00fd23775e5ab89adfc1460bb25f23401c868b17c5ddf9eaea4be1
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -62,11 +54,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.939990363+08:00"
-=======
-    created: "2024-05-10T00:51:05.7188016+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.914910339+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -75,7 +63,7 @@ entries:
       version: 2.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: 27df5f5b4e511e59dc49457718f433a53e9d1b9ba390c26f18c0b7578912f2e7
+    digest: c65db16a82649b0c599b4710a8e2a27907de2a8ac37ff53925e1d2e9b92082df
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-dashboard
@@ -90,11 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.956055961+08:00"
-=======
-    created: "2024-05-10T00:51:05.732635614+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.926262703+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -120,11 +104,7 @@ entries:
       version: 1.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-<<<<<<< HEAD
-    digest: e1c078f9f5e39b90576dbb20428bbadc5043f68b868a6f0c9c45eb7eae0f4a23
-=======
-    digest: 12d49573f01f7ae878884645b5abb340972091d4f727c840b4c2fedf29b806b7
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    digest: e92269e225df9dcc6a44bd780ce2aa33b96b4a9c3ff6c776c70865bb41b196e4
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-server
@@ -139,8 +119,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.966354867+08:00"
+    created: "2024-06-06T10:52:35.930876722+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -149,7 +128,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: 88db8f170ad8769a6239c8168298acd2f509137b47e80fae0b72f0d7deefd077
+    digest: 0ecd9278fd43764e63580de8d64d667924c4d5ab73bbba118390cca43ee2f60c
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -159,42 +138,12 @@ entries:
     urls:
     - rocketmq-dashboard-1.0.2.tgz
     version: 1.0.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2024-06-06T10:49:38.962389864+08:00"
-=======
-    created: "2024-05-10T00:51:05.736952536+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: 3b619bebe748d0663dbaf29d30f44454a467a30333222f61ca7cbadae4938fc6
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-dashboard
-    sources:
-    - https://github.com/apache/rocketmq-dashboard
-    type: application
-    urls:
-    - rocketmq-dashboard-1.0.1.tgz
-    version: 1.0.1
   rocketmq-server:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.975437131+08:00"
-=======
-    created: "2024-05-10T00:51:05.74307511+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.936346994+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -208,7 +157,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 7a0a7aff18602deb2cb8fbd4b21798f64add946e21a8f6bc4fa387e5c9f19f5e
+    digest: c672eedebbc26818820ca783447a1c9cfbd042ed9d01d1d8b2b4df38dd9e85f0
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -223,11 +172,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-<<<<<<< HEAD
-    created: "2024-06-06T10:49:38.982787389+08:00"
-=======
-    created: "2024-05-10T00:51:05.748801374+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+    created: "2024-06-06T10:52:35.940620792+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -236,7 +181,7 @@ entries:
       version: 2.x.x
     description: LDAP Tool Box Self Service Password is a web application for end
       users. It allows them to change or reset their password if they lost it
-    digest: 03c4c0ab8803a1176480405acbecb5cb1effdbf34004434054ae41cd38f75736
+    digest: d041fb9290bb0db3cec5631ee1344264afb8d1b393d34bac910df7cf1a952a45
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
     name: self-service-password
@@ -246,8 +191,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-<<<<<<< HEAD
-generated: "2024-06-06T10:49:38.909708261+08:00"
-=======
-generated: "2024-05-10T00:51:05.704036018+08:00"
->>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
+generated: "2024-06-06T10:52:35.900476799+08:00"

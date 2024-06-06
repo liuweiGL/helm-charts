@@ -1,15 +1,15 @@
 dependencies:
 - name: common
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.19.2
+  version: 2.20.0
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 15.2.9
+  version: 15.5.2
 - name: mosquitto
   repository: file://../mosquitto
   version: 1.0.0
 - name: netmaker-dashboard
   repository: file://../netmaker-dashboard
   version: 1.0.0
-digest: sha256:029375e01c0254af2fd54f6c88811836d2c28fcd4dca211a75218abbc9035fa7
-generated: "2024-05-08T14:30:33.236115781+08:00"
+digest: sha256:77819ad441fb91bc0c27259977385c4491bbc7310818633d27db979452fb0f8b
+generated: "2024-06-06T10:52:17.528832402+08:00"

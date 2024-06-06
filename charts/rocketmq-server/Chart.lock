@@ -1,9 +1,9 @@
 dependencies:
 - name: common
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.19.2
+  version: 2.20.0
 - name: rocketmq-dashboard
   repository: file://../rocketmq-dashboard
-  version: 1.0.1
-digest: sha256:0ec42b5aadb95019b2f269172b4d4b9493b59a53291143f247d76ba156a45c1a
-generated: "2024-05-03T23:16:31.240643821+08:00"
+  version: 1.0.2
+digest: sha256:5025c8a51a8611cd1f227a9e42fe30b5d1d54bab6b8b32241747ab86e21a7ade
+generated: "2024-06-06T10:52:29.170329799+08:00"
