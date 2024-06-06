@@ -5,7 +5,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.921490806+08:00"
+=======
+    created: "2024-05-10T00:51:05.709256005+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -31,7 +35,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.930686073+08:00"
+=======
+    created: "2024-05-10T00:51:05.713932871+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -54,7 +62,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.939990363+08:00"
+=======
+    created: "2024-05-10T00:51:05.7188016+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +90,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.956055961+08:00"
+=======
+    created: "2024-05-10T00:51:05.732635614+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -104,7 +120,11 @@ entries:
       version: 1.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
+<<<<<<< HEAD
     digest: e1c078f9f5e39b90576dbb20428bbadc5043f68b868a6f0c9c45eb7eae0f4a23
+=======
+    digest: 12d49573f01f7ae878884645b5abb340972091d4f727c840b4c2fedf29b806b7
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-server
@@ -119,6 +139,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.966354867+08:00"
     dependencies:
     - name: common
@@ -143,6 +164,9 @@ entries:
     apiVersion: v2
     appVersion: 1.0.0
     created: "2024-06-06T10:49:38.962389864+08:00"
+=======
+    created: "2024-05-10T00:51:05.736952536+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -166,7 +190,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.975437131+08:00"
+=======
+    created: "2024-05-10T00:51:05.74307511+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -195,7 +223,11 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
+<<<<<<< HEAD
     created: "2024-06-06T10:49:38.982787389+08:00"
+=======
+    created: "2024-05-10T00:51:05.748801374+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -214,4 +246,8 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
+<<<<<<< HEAD
 generated: "2024-06-06T10:49:38.909708261+08:00"
+=======
+generated: "2024-05-10T00:51:05.704036018+08:00"
+>>>>>>> bce2e7d766c204c7490a8cbb06e56c3313179d5d

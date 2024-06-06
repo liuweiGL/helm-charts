@@ -70,7 +70,6 @@
     {{- end -}}
 {{- end -}}
 
-
 {{- define "netmaker.server.database" -}}
     {{- if .Values.global.postgresqlEnabled -}}
 DATABASE: "postgres"
@@ -104,6 +103,7 @@ SERVER_BROKER_ENDPOINT: "mqtt://{{ include "netmaker.mosquitto.dns" . }}:{{ defa
 MQ_USERNAME: {{ .Values.mosquitto.auth.username | quote }}
 MQ_PASSWORD: {{ .Values.mosquitto.auth.password | quote }}
 MASTER_KEY: {{ default (randAlphaNum 16)  .Values.core.masterKey | quote }}
+STUN_LIST: {{ join "," .Values.core.stunList | quote }}
 
 DNS_MODE: "off"
 DISPLAY_KEYS: "off"

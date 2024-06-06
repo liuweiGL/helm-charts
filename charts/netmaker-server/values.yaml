@@ -63,9 +63,9 @@ extraDeploy: []
 diagnosticMode:
   enabled: false
   command:
-    - sleep
+  - sleep
   args:
-    - infinity
+  - infinity
 
 ## Bitnami netmaker image
 ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
@@ -370,6 +370,16 @@ core:
   baseDomain: netmaker.example.com
   apiDomain: api.netmaker.example.com
   mqDomain: broker.netmaker.example.com
+  stunList:
+  - stun.miwifi.com:3478
+  - stun.qq.com:3478
+  - stun.chat.bilibili.com:3478
+  - stun1.netmaker.io:3478
+  - stun2.netmaker.io:3478
+  - stun1.l.google.com:19302
+  - stun2.l.google.com:19302
+  - stun.syncthing.net:3478
+  - stun.xten.com:3478
   jwtDuration: ""
   racAutoDisable: ""
   AUTH_PROVIDER: ""
@@ -380,7 +390,7 @@ core:
   ee:
     licensekey: ""
     tenantId: ""
-  
+
 ## netmaker service parameters
 ##
 service:
@@ -463,7 +473,7 @@ ingress:
   ##   kubernetes.io/ingress.class: nginx
   ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
-  annotations: 
+  annotations:
     cert-manager.io/cluster-issuer: zerossl-http
   ## @param ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
   ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
