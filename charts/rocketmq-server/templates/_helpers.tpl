@@ -63,10 +63,10 @@
     {{- if .Values.broker.acl.enabled -}}
         {{- if not (empty .Values.broker.acl.globalWhiteRemoteAddresses) -}}
 globalWhiteRemoteAddresses:
-            {{- range .Values.broker.acl.globalWhiteRemoteAddresses -}}
+            {{- range .Values.broker.acl.globalWhiteRemoteAddresses }}
   - {{- . | indent 2 }}
             {{- end -}}        
-        {{- end -}}
+        {{- end }}
 accounts:
   - accessKey: {{- .Values.broker.acl.accessKey | indent 2 }}
     secretKey: {{- .Values.broker.acl.secretKey | indent 2 }}
