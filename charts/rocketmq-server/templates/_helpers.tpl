@@ -61,9 +61,9 @@
 
 {{- define "rocketmq.broker.plainAclFile" -}}
     {{- if .Values.broker.acl.enabled -}}
-        {{- if not (empty .Values.broker.globalWhiteRemoteAddresses) -}}
+        {{- if not (empty .Values.broker.acl.globalWhiteRemoteAddresses) -}}
 globalWhiteRemoteAddresses:
-            {{- range .Values.broker.globalWhiteRemoteAddresses -}}
+            {{- range .Values.broker.acl.globalWhiteRemoteAddresses -}}
   - {{- . | indent 2 }}
             {{- end -}}        
         {{- end -}}
