@@ -1,0 +1,1051 @@
+# Copyright Broadcom, Inc. All Rights Reserved.
+# SPDX-License-Identifier: APACHE-2.0
+
+## @section Global parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: ""
+  ## e.g:
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+  ## @param mysql.hostAliases mysql pods host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: 
+    - ip: "172.19.227.32"
+      hostnames:
+        - "harbor.eastcoal.club"
+
+## @section Common parameters
+##
+
+## @param nameOverride String to partially override common.names.name
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname
+##
+fullnameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param clusterDomain Kubernetes cluster domain name
+##
+clusterDomain: cluster.local
+## Diagnostic mode
+## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+## @param diagnosticMode.command Command to override all containers in the chart release
+## @param diagnosticMode.args Args to override all containers in the chart release
+##
+diagnosticMode:
+  enabled: false
+  command:
+    - sleep
+  args:
+    - infinity
+
+## console server
+##
+console:
+  ## Bitnami console image
+  ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
+  ## @param console.image.registry [default: REGISTRY_NAME] console image registry
+  ## @param console.image.repository [default: REPOSITORY_NAME/%%IMAGE_NAME%%] console image repository
+  ## @skip console.image.tag console image tag (immutable tags are recommended)
+  ## @param console.image.digest console image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag image tag (immutable tags are recommended)
+  ## @param console.image.pullPolicy console image pull policy
+  ## @param console.image.pullSecrets console image pull secrets
+  ## @param console.image.debug Enable console image debug mode
+  ##
+  image:
+    registry: harbor.eastcoal.club
+    repository: clougence/cloudcanal-console
+    tag: 4.1.1.0
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
+    ##
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    debug: false
+  ## @param console.replicaCount Number of console replicas to deploy
+  ##
+  replicaCount: 1
+  ## @param console.containerPorts.http console HTTP container port
+  ## @param console.containerPorts.https console HTTPS container port
+  ##
+  containerPorts:
+    rsocket: 7007
+    console: 8111
+  ## @param console.extraContainerPorts Optionally specify extra list of additional ports for console containers
+  ## e.g:
+  ## extraContainerPorts:
+  ##   - name: myservice
+  ##     containerPort: 9090
+  ##
+  extraContainerPorts: []
+  ## Configure extra options for console containers' liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param console.livenessProbe.enabled Enable livenessProbe on console containers
+  ## @param console.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param console.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param console.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param console.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param console.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param console.readinessProbe.enabled Enable readinessProbe on console containers
+  ## @param console.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param console.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param console.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param console.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param console.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param console.startupProbe.enabled Enable startupProbe on console containers
+  ## @param console.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param console.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param console.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param console.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param console.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param console.customLivenessProbe Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+  ## @param console.customReadinessProbe Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+  ## @param console.customStartupProbe Custom startupProbe that overrides the default one
+  ##
+  customStartupProbe: {}
+  ## console resource requests and limits
+  ## ref: http://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## @param console.resourcesPreset Set console container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if console.resources is set (console.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: none
+  ## @param console.resources Set console container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## Configure Pods Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param console.podSecurityContext.enabled Enable console pods' Security Context
+  ## @param console.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy for console pods
+  ## @param console.podSecurityContext.sysctls Set kernel settings using the sysctl interface for console pods
+  ## @param console.podSecurityContext.supplementalGroups Set filesystem extra groups for console pods
+  ## @param console.podSecurityContext.fsGroup Set fsGroup in console pods' Security Context
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## Configure Container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param console.containerSecurityContext.enabled Enabled console container' Security Context
+  ## @param console.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in console container
+  ## @param console.containerSecurityContext.runAsUser Set runAsUser in console container' Security Context
+  ## @param console.containerSecurityContext.runAsNonRoot Set runAsNonRoot in console container' Security Context
+  ## @param console.containerSecurityContext.readOnlyRootFilesystem Set readOnlyRootFilesystem in console container' Security Context
+  ## @param console.containerSecurityContext.privileged Set privileged in console container' Security Context
+  ## @param console.containerSecurityContext.allowPrivilegeEscalation Set allowPrivilegeEscalation in console container' Security Context
+  ## @param console.containerSecurityContext.capabilities.drop List of capabilities to be dropped in console container
+  ## @param console.containerSecurityContext.seccompProfile.type Set seccomp profile in console container
+  ##
+  containerSecurityContext:
+    enabled: true
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+
+  ## @param console.existingConfigmap The name of an existing ConfigMap with your custom configuration for console
+  ##
+  existingConfigmap:
+  ## @param console.command Override default console container command (useful when using custom images)
+  ##
+  command: []
+  ## @param console.args Override default console container args (useful when using custom images)
+  ##
+  args: []
+  ## @param console.automountServiceAccountToken Mount Service Account token in console pods
+  ##
+  automountServiceAccountToken: false
+  ## @param console.annotations Annotations for console deployment
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  annotations: {}
+  ## @param console.podLabels Extra labels for console pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+  ## @param console.podAnnotations Annotations for console pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param console.podAffinityPreset Pod affinity preset. Ignored if `console.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param console.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `console.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## Node console.affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param console.nodeAffinityPreset.type Node affinity preset type. Ignored if `console.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param console.nodeAffinityPreset.key Node label key to match. Ignored if `console.affinity` is set
+    ##
+    key: ""
+    ## @param console.nodeAffinityPreset.values Node label values to match. Ignored if `console.affinity` is set
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param console.affinity Affinity for console pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## NOTE: `console.podAffinityPreset`, `console.podAntiAffinityPreset`, and `console.nodeAffinityPreset` will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param console.nodeSelector Node labels for console pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param console.tolerations Tolerations for console pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## ONLY FOR DEPLOYMENTS:
+  ## @param console.updateStrategy.type console deployment strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## ONLY FOR STATEFULSETS:
+  ## @param console.updateStrategy.type console statefulset strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    ## ONLY FOR DEPLOYMENTS:
+    ## Can be set to RollingUpdate or Recreate
+    ## ONLY FOR STATEFULSETS:
+    ## Can be set to RollingUpdate or OnDelete
+    ##
+    type: Recreate
+  ## @param console.lifecycleHooks for console containers to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+  ## @param console.extraEnvVars Array with extra environment variables to add to console containers
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+  ## @param console.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for console containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param console.extraEnvVarsSecret Name of existing Secret containing extra env vars for console containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param console.extraVolumes Optionally specify extra list of additional volumes for the console pods
+  ##
+  extraVolumes: []
+  ## @param console.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the console containers
+  ##
+  extraVolumeMounts: []
+  ## console service parameters
+  ##
+  service:
+    ## @param service.type console service type
+    ##
+    type: ClusterIP
+    ## @param service.ports.http console service HTTP port
+    ## @param service.ports.https console service HTTPS port
+    ##
+    ports:
+      rsocket: 7007
+      console: 8111
+    ## Node ports to expose
+    ## @param service.nodePorts.http Node port for HTTP
+    ## @param service.nodePorts.https Node port for HTTPS
+    ## NOTE: choose port between <30000-32767>
+    ##
+    nodePorts:
+      rsocket: ""
+      console: ""
+    ## @param service.clusterIP console service Cluster IP
+    ## e.g.:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param service.loadBalancerIP console service Load Balancer IP
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+    ##
+    loadBalancerIP: ""
+    ## @param service.loadBalancerSourceRanges console service Load Balancer sources
+    ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## e.g:
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param service.externalTrafficPolicy console service external traffic policy
+    ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param service.annotations Additional custom annotations for console service
+    ##
+    annotations: {}
+    ## @param service.extraPorts Extra ports to expose in console service (normally used with the `sidecars` value)
+    ##
+    extraPorts: []
+    ## @param service.sessionAffinity Control where client requests go, to the same pod or round-robin
+    ## Values: ClientIP or None
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/
+    ##
+    sessionAffinity: None
+    ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
+  ## console ingress parameters
+  ## ref: http://kubernetes.io/docs/concepts/services-networking/ingress/
+  ##
+  ingress:
+    ## @param ingress.enabled Enable ingress record generation for console
+    ##
+    enabled: true
+    ## @param ingress.pathType Ingress path type
+    ##
+    pathType: ImplementationSpecific
+    ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
+    ##
+    apiVersion: ""
+    ## @param ingress.hostname Default host for the ingress record
+    ##
+    hostname: console.example.com
+    ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+    ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+    ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+    ##
+    ingressClassName: nginx
+    ## @param ingress.path Default path for the ingress record
+    ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
+    ##
+    path: /
+    ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+    ## Use this parameter to set the required annotations for cert-manager, see
+    ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    ## e.g:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+    ##
+    annotations: {}
+    ## @param ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
+    ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
+    ## You can:
+    ##   - Use the `ingress.secrets` parameter to create this TLS secret
+    ##   - Rely on cert-manager to create it by setting the corresponding annotations
+    ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+    ##
+    tls: true
+    ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+    ##
+    selfSigned: false
+    ## @param ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
+    ## e.g:
+    ## extraHosts:
+    ##   - name: %%COMPONENT_NAME%%.local
+    ##     path: /
+    ##
+    extraHosts: []
+    ## @param ingress.extraPaths An array with additional arbitrary paths that may need to be added to the ingress under the main host
+    ## e.g:
+    ## extraPaths:
+    ## - path: /*
+    ##   backend:
+    ##     serviceName: ssl-redirect
+    ##     servicePort: use-annotation
+    ##
+    extraPaths: []
+    ## @param ingress.extraTls TLS configuration for additional hostname(s) to be covered with this ingress record
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+    ## e.g:
+    ## extraTls:
+    ## - hosts:
+    ##     - %%COMPONENT_NAME%%.local
+    ##   secretName: %%COMPONENT_NAME%%.local-tls
+    ##
+    extraTls: []
+    ## @param ingress.secrets Custom TLS certificates as secrets
+    ## NOTE: 'key' and 'certificate' are expected in PEM format
+    ## NOTE: 'name' should line up with a 'secretName' set further up
+    ## If it is not set and you're using cert-manager, this is unneeded, as it will create a secret for you with valid certificates
+    ## If it is not set and you're NOT using cert-manager either, self-signed certificates will be created valid for 365 days
+    ## It is also possible to create and manage the certificates outside of this helm chart
+    ## Please see README.md for more information
+    ## e.g:
+    ## secrets:
+    ##   - name: %%COMPONENT_NAME%%.local-tls
+    ##     key: |-
+    ##       -----BEGIN RSA PRIVATE KEY-----
+    ##       ...
+    ##       -----END RSA PRIVATE KEY-----
+    ##     certificate: |-
+    ##       -----BEGIN CERTIFICATE-----
+    ##       ...
+    ##       -----END CERTIFICATE-----
+    ##
+    secrets: []
+    ## @param ingress.extraRules Additional rules to be covered with this ingress record
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+    ## e.g:
+    ## extraRules:
+    ## - host: example.local
+    ##     http:
+    ##       path: /
+    ##       backend:
+    ##         service:
+    ##           name: example-svc
+    ##           port:
+    ##             name: http
+    ##
+    extraRules: []
+
+## sidecar server
+##
+sidecar:
+  ## Bitnami sidecar image
+  ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
+  ## @param sidecar.image.registry [default: REGISTRY_NAME] sidecar image registry
+  ## @param sidecar.image.repository [default: REPOSITORY_NAME/%%IMAGE_NAME%%] sidecar image repository
+  ## @skip sidecar.image.tag sidecar image tag (immutable tags are recommended)
+  ## @param sidecar.image.digest sidecar image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag image tag (immutable tags are recommended)
+  ## @param sidecar.image.pullPolicy sidecar image pull policy
+  ## @param sidecar.image.pullSecrets sidecar image pull secrets
+  ## @param sidecar.image.debug Enable sidecar image debug mode
+  ##
+  image:
+    registry: harbor.eastcoal.club
+    repository: clougence/cloudcanal-sidecar
+    tag: 4.1.1.0
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
+    ##
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    debug: false
+  ## @param sidecar.replicaCount Number of sidecar replicas to deploy
+  ##
+  replicaCount: 1
+  ## @param sidecar.containerPorts.http sidecar HTTP container port
+  ## @param sidecar.containerPorts.https sidecar HTTPS container port
+  ##
+  containerPorts:
+    sidecar: 8083
+  ## @param sidecar.extraContainerPorts Optionally specify extra list of additional ports for sidecar containers
+  ## e.g:
+  ## extraContainerPorts:
+  ##   - name: myservice
+  ##     containerPort: 9090
+  ##
+  extraContainerPorts: []
+  ## Configure extra options for sidecar containers' liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param sidecar.livenessProbe.enabled Enable livenessProbe on sidecar containers
+  ## @param sidecar.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param sidecar.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param sidecar.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param sidecar.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param sidecar.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param sidecar.readinessProbe.enabled Enable readinessProbe on sidecar containers
+  ## @param sidecar.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param sidecar.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param sidecar.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param sidecar.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param sidecar.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param sidecar.startupProbe.enabled Enable startupProbe on sidecar containers
+  ## @param sidecar.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param sidecar.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param sidecar.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param sidecar.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param sidecar.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param sidecar.customLivenessProbe Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+  ## @param sidecar.customReadinessProbe Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+  ## @param sidecar.customStartupProbe Custom startupProbe that overrides the default one
+  ##
+  customStartupProbe: {}
+  ## sidecar resource requests and limits
+  ## ref: http://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## @param sidecar.resourcesPreset Set sidecar container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if sidecar.resources is set (sidecar.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: none
+  ## @param sidecar.resources Set sidecar container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## Configure Pods Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param sidecar.podSecurityContext.enabled Enable sidecar pods' Security Context
+  ## @param sidecar.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy for sidecar pods
+  ## @param sidecar.podSecurityContext.sysctls Set kernel settings using the sysctl interface for sidecar pods
+  ## @param sidecar.podSecurityContext.supplementalGroups Set filesystem extra groups for sidecar pods
+  ## @param sidecar.podSecurityContext.fsGroup Set fsGroup in sidecar pods' Security Context
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## Configure Container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param sidecar.containerSecurityContext.enabled Enabled sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in sidecar container
+  ## @param sidecar.containerSecurityContext.runAsUser Set runAsUser in sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.runAsNonRoot Set runAsNonRoot in sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.readOnlyRootFilesystem Set readOnlyRootFilesystem in sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.privileged Set privileged in sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.allowPrivilegeEscalation Set allowPrivilegeEscalation in sidecar container' Security Context
+  ## @param sidecar.containerSecurityContext.capabilities.drop List of capabilities to be dropped in sidecar container
+  ## @param sidecar.containerSecurityContext.seccompProfile.type Set seccomp profile in sidecar container
+  ##
+  containerSecurityContext:
+    enabled: true
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+
+  ## @param sidecar.existingConfigmap The name of an existing ConfigMap with your custom configuration for sidecar
+  ##
+  existingConfigmap:
+  ## @param sidecar.command Override default sidecar container command (useful when using custom images)
+  ##
+  command: []
+  ## @param sidecar.args Override default sidecar container args (useful when using custom images)
+  ##
+  args: []
+  ## @param sidecar.automountServiceAccountToken Mount Service Account token in sidecar pods
+  ##
+  automountServiceAccountToken: false
+  ## @param sidecar.annotations Annotations for sidecar deployment
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  annotations: {}
+  ## @param sidecar.podLabels Extra labels for sidecar pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+  ## @param sidecar.podAnnotations Annotations for sidecar pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param sidecar.podAffinityPreset Pod affinity preset. Ignored if `sidecar.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param sidecar.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `sidecar.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## Node sidecar.affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param sidecar.nodeAffinityPreset.type Node affinity preset type. Ignored if `sidecar.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param sidecar.nodeAffinityPreset.key Node label key to match. Ignored if `sidecar.affinity` is set
+    ##
+    key: ""
+    ## @param sidecar.nodeAffinityPreset.values Node label values to match. Ignored if `sidecar.affinity` is set
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param sidecar.affinity Affinity for sidecar pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## NOTE: `sidecar.podAffinityPreset`, `sidecar.podAntiAffinityPreset`, and `sidecar.nodeAffinityPreset` will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param sidecar.nodeSelector Node labels for sidecar pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param sidecar.tolerations Tolerations for sidecar pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## ONLY FOR DEPLOYMENTS:
+  ## @param sidecar.updateStrategy.type sidecar deployment strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## ONLY FOR STATEFULSETS:
+  ## @param sidecar.updateStrategy.type sidecar statefulset strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    ## ONLY FOR DEPLOYMENTS:
+    ## Can be set to RollingUpdate or Recreate
+    ## ONLY FOR STATEFULSETS:
+    ## Can be set to RollingUpdate or OnDelete
+    ##
+    type: Recreate
+  ## @param sidecar.lifecycleHooks for sidecar containers to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+  ## @param sidecar.extraEnvVars Array with extra environment variables to add to sidecar containers
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+  ## @param sidecar.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for sidecar containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param sidecar.extraEnvVarsSecret Name of existing Secret containing extra env vars for sidecar containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param sidecar.extraVolumes Optionally specify extra list of additional volumes for the sidecar pods
+  ##
+  extraVolumes: []
+  ## @param sidecar.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the sidecar containers
+  ##
+  extraVolumeMounts: []
+
+## mysql server
+##
+mysql:
+  ## Bitnami mysql image
+  ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
+  ## @param mysql.image.registry [default: REGISTRY_NAME] mysql image registry
+  ## @param mysql.image.repository [default: REPOSITORY_NAME/%%IMAGE_NAME%%] mysql image repository
+  ## @skip mysql.image.tag mysql image tag (immutable tags are recommended)
+  ## @param mysql.image.digest mysql image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag image tag (immutable tags are recommended)
+  ## @param mysql.image.pullPolicy mysql image pull policy
+  ## @param mysql.image.pullSecrets mysql image pull secrets
+  ## @param mysql.image.debug Enable mysql image debug mode
+  ##
+  image:
+    registry: harbor.eastcoal.club
+    repository: clougence/cloudcanal-mysql
+    tag: 4.1.1.0
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
+    ##
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    debug: false
+  ## @param mysql.replicaCount Number of mysql replicas to deploy
+  ##
+  replicaCount: 1
+  ## @param mysql.containerPorts.http mysql HTTP container port
+  ## @param mysql.containerPorts.https mysql HTTPS container port
+  ##
+  containerPorts:
+    mysql: 3306
+  ## @param mysql.extraContainerPorts Optionally specify extra list of additional ports for mysql containers
+  ## e.g:
+  ## extraContainerPorts:
+  ##   - name: myservice
+  ##     containerPort: 9090
+  ##
+  extraContainerPorts: []
+  ## Configure extra options for mysql containers' liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param mysql.livenessProbe.enabled Enable livenessProbe on mysql containers
+  ## @param mysql.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param mysql.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param mysql.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param mysql.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param mysql.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param mysql.readinessProbe.enabled Enable readinessProbe on mysql containers
+  ## @param mysql.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param mysql.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param mysql.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param mysql.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param mysql.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param mysql.startupProbe.enabled Enable startupProbe on mysql containers
+  ## @param mysql.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param mysql.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param mysql.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param mysql.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param mysql.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param mysql.customLivenessProbe Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+  ## @param mysql.customReadinessProbe Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+  ## @param mysql.customStartupProbe Custom startupProbe that overrides the default one
+  ##
+  customStartupProbe: {}
+  ## mysql resource requests and limits
+  ## ref: http://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## @param mysql.resourcesPreset Set mysql container resources according to one common preset (allowed values: none, nano, small, medium, large, xlarge, 2xlarge). This is ignored if mysql.resources is set (mysql.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: large
+  ## @param mysql.resources Set mysql container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## Configure Pods Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param mysql.podSecurityContext.enabled Enable mysql pods' Security Context
+  ## @param mysql.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy for mysql pods
+  ## @param mysql.podSecurityContext.sysctls Set kernel settings using the sysctl interface for mysql pods
+  ## @param mysql.podSecurityContext.supplementalGroups Set filesystem extra groups for mysql pods
+  ## @param mysql.podSecurityContext.fsGroup Set fsGroup in mysql pods' Security Context
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  ## Configure Container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param mysql.containerSecurityContext.enabled Enabled mysql container' Security Context
+  ## @param mysql.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in mysql container
+  ## @param mysql.containerSecurityContext.runAsUser Set runAsUser in mysql container' Security Context
+  ## @param mysql.containerSecurityContext.runAsNonRoot Set runAsNonRoot in mysql container' Security Context
+  ## @param mysql.containerSecurityContext.readOnlyRootFilesystem Set readOnlyRootFilesystem in mysql container' Security Context
+  ## @param mysql.containerSecurityContext.privileged Set privileged in mysql container' Security Context
+  ## @param mysql.containerSecurityContext.allowPrivilegeEscalation Set allowPrivilegeEscalation in mysql container' Security Context
+  ## @param mysql.containerSecurityContext.capabilities.drop List of capabilities to be dropped in mysql container
+  ## @param mysql.containerSecurityContext.seccompProfile.type Set seccomp profile in mysql container
+  ##
+  containerSecurityContext:
+    enabled: true
+    seLinuxOptions: {}
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+
+  ## @param mysql.existingConfigmap The name of an existing ConfigMap with your custom configuration for mysql
+  ##
+  existingConfigmap:
+  ## @param mysql.command Override default mysql container command (useful when using custom images)
+  ##
+  command: []
+  ## @param mysql.args Override default mysql container args (useful when using custom images)
+  ##
+  args: []
+  ## @param mysql.automountServiceAccountToken Mount Service Account token in mysql pods
+  ##
+  automountServiceAccountToken: false
+  ## @param mysql.statefulsetAnnotations Annotations for mysql statefulset
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  statefulsetAnnotations: {}
+  ## @param mysql.podLabels Extra labels for mysql pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+  ## @param mysql.podAnnotations Annotations for mysql pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param mysql.podAffinityPreset Pod affinity preset. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAffinityPreset: ""
+  ## @param mysql.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  ##
+  podAntiAffinityPreset: soft
+  ## Node mysql.affinity preset
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  nodeAffinityPreset:
+    ## @param mysql.nodeAffinityPreset.type Node affinity preset type. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
+    ##
+    type: ""
+    ## @param mysql.nodeAffinityPreset.key Node label key to match. Ignored if `mysql.affinity` is set
+    ##
+    key: ""
+    ## @param mysql.nodeAffinityPreset.values Node label values to match. Ignored if `mysql.affinity` is set
+    ## E.g.
+    ## values:
+    ##   - e2e-az1
+    ##   - e2e-az2
+    ##
+    values: []
+  ## @param mysql.affinity Affinity for mysql pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## NOTE: `mysql.podAffinityPreset`, `mysql.podAntiAffinityPreset`, and `mysql.nodeAffinityPreset` will be ignored when it's set
+  ##
+  affinity: {}
+  ## @param mysql.nodeSelector Node labels for mysql pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  ##
+  nodeSelector: {}
+  ## @param mysql.tolerations Tolerations for mysql pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+  ## ONLY FOR DEPLOYMENTS:
+  ## @param mysql.updateStrategy.type mysql deployment strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## ONLY FOR STATEFULSETS:
+  ## @param mysql.updateStrategy.type mysql statefulset strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ##
+  updateStrategy:
+    ## ONLY FOR DEPLOYMENTS:
+    ## Can be set to RollingUpdate or Recreate
+    ## ONLY FOR STATEFULSETS:
+    ## Can be set to RollingUpdate or OnDelete
+    ##
+    type: RollingUpdate
+  ## ONLY FOR STATEFULSETS:
+  ## @param mysql.podManagementPolicy Pod management policy for mysql statefulset
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+  ##
+  podManagementPolicy: OrderedReady
+    ## @param mysql.priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
+  ##
+  priorityClassName: ""
+  ## @param mysql.topologySpreadConstraints Topology Spread Constraints for %%MAIN_CONTAINER_NAME%% pod assignment spread across your cluster among failure-domains
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
+  ##
+  topologySpreadConstraints: []
+  ## @param mysql.schedulerName Name of the k8s scheduler (other than default) for %%MAIN_CONTAINER_NAME%% pods
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param mysql.terminationGracePeriodSeconds Seconds %%MAIN_CONTAINER_NAME%% pods need to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param mysql.lifecycleHooks for mysql containers to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+  ## @param mysql.extraEnvVars Array with extra environment variables to add to mysql containers
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+  ## @param mysql.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for mysql containers
+  ##
+  extraEnvVarsCM: ""
+  ## @param mysql.extraEnvVarsSecret Name of existing Secret containing extra env vars for mysql containers
+  ##
+  extraEnvVarsSecret: ""
+  ## @param mysql.extraVolumes Optionally specify extra list of additional volumes for the mysql pods
+  ##
+  extraVolumes: []
+  ## @param mysql.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the mysql containers
+  ##
+  extraVolumeMounts: []
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##
+  persistence:
+    ## @param persistence.mountPath Path to mount the volume at.
+    ##
+    mountPath: /clougence/console/data
+    ## @param persistence.subPath The subdirectory of the volume to mount to, useful in dev environments and one PV for multiple services
+    ##
+    subPath: ""
+    ## @param persistence.storageClass Storage class of backing PVC
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: ""
+    ## @param persistence.annotations Persistent Volume Claim annotations
+    ##
+    annotations: {}
+    ## @param persistence.accessModes Persistent Volume Access Modes
+    ##
+    accessModes:
+      - ReadWriteOnce
+    ## @param persistence.size Size of data volume
+    ##
+    size: 20Gi
+    ## @param persistence.existingClaim The name of an existing PVC to use for persistence
+    ##
+    existingClaim: ""
+    ## @param persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+    ## If set, the PVC can't have a PV dynamically provisioned for it
+    ## E.g.
+    ## selector:
+    ##   matchLabels:
+    ##     app: my-app
+    ##
+    selector: {}
