@@ -1,0 +1,11 @@
+global:
+  hostAliases:
+  # 172.19.227.32
+  - ip: "192.168.31.220"
+    hostnames:
+    - "harbor.eastcoal.club"
+
+console:
+  ingress:
+    hostname: cloudcanal.test.shjinyi.net
+    tls: false

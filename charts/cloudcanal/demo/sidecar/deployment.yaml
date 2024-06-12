@@ -1,0 +1,193 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) "sidecar" }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: sidecar
+  {{- if or .Values.sidecar.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" (dict "values" (list .Values.sidecar.annotations .Values.commonAnnotations) "context" .) }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.sidecar.replicaCount }}
+  {{- if .Values.sidecar.updateStrategy }}
+  strategy: {{- toYaml .Values.sidecar.updateStrategy | nindent 4 }}
+  {{- end }}
+  {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.sidecar.podLabels .Values.commonLabels) "context" .) }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 6 }}
+      app.kubernetes.io/component: sidecar
+  template:
+    metadata:
+      {{- if .Values.sidecar.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+      labels: {{- include "common.labels.standard" ( dict "customLabels" $podLabels "context" $ ) | nindent 8 }}
+        app.kubernetes.io/component: sidecar
+    spec:
+      {{- include "cloudcanal.imagePullSecrets" . | nindent 6 }}
+      automountServiceAccountToken: {{ .Values.sidecar.automountServiceAccountToken }}
+      {{- if .Values.global.hostAliases }}
+      hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.global.hostAliases "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.sidecar.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.sidecar.affinity "context" $) | nindent 8 }}
+      {{- else }}
+      affinity:
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.sidecar.podAffinityPreset "component" "sidecar" "customLabels" $podLabels "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.sidecar.podAntiAffinityPreset "component" "sidecar" "customLabels" $podLabels "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.sidecar.nodeAffinityPreset.type "key" .Values.sidecar.nodeAffinityPreset.key "values" .Values.sidecar.nodeAffinityPreset.values) | nindent 10 }}
+      {{- end }}
+      {{- if .Values.sidecar.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.sidecar.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.sidecar.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.sidecar.priorityClassName }}
+      priorityClassName: {{ .Values.sidecar.priorityClassName | quote }}
+      {{- end }}
+      {{- if .Values.sidecar.schedulerName }}
+      schedulerName: {{ .Values.sidecar.schedulerName | quote }}
+      {{- end }}
+      {{- if .Values.sidecar.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.sidecar.podSecurityContext.enabled }}
+      securityContext: {{- omit .Values.sidecar.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- end }}
+      {{- if .Values.sidecar.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.sidecar.terminationGracePeriodSeconds }}
+      {{- end }}
+      initContainers:
+        - name: prepare-workspace
+          image: {{ include "cloudcanal.sidecar.image" . }}
+          imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              cp -r /home/clougence/* /workspace
+              chmod -R 777 /workspace
+              chown -R clougence:clougence /workspace
+            - |
+              sidecar_conf_dir="/home/clougence/cloudcanal/sidecar/conf"
+              if [ ! -d $sidecar_conf_dir ]; then
+                mkdir -p $sidecar_conf_dir
+              fi
+              cp /conf/business-output.properties $sidecar_conf_dir/business-output.properties
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /workspace
+            - name: sidecar-conf
+              mountPath: /conf
+        - name: execute-init-scripts
+          image: {{ include "cloudcanal.sidecar.image" . }}
+          imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              ls -l /home/clougence
+              /usr/local/bin/sidecar-init-script.sh
+              /home/clougence/init.sh
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /home/clougence
+            - name: sidecar-init-script
+              mountPath: /usr/local/bin/sidecar-init-script.sh
+              subPath: sidecar-init-script.sh
+      containers:
+        - name: sidecar
+          image: {{ include "cloudcanal.sidecar.image" . }}
+          imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
+          {{- if .Values.sidecar.containerSecurityContext.enabled }}
+          securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.sidecar.containerSecurityContext "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.diagnosticMode.enabled }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
+          {{- else if .Values.sidecar.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.command "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.diagnosticMode.enabled }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
+          {{- else if .Values.sidecar.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.args "context" $) | nindent 12 }}
+          {{- end }}
+          env:
+            - name: BITNAMI_DEBUG
+              value: {{ ternary "true" "false" (or .Values.sidecar.image.debug .Values.diagnosticMode.enabled) | quote }}
+            {{- if .Values.sidecar.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.sidecar.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.sidecar.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.sidecar.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.sidecar.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          {{- if .Values.sidecar.resources }}
+          resources: {{- toYaml .Values.sidecar.resources | nindent 12 }}
+          {{- else if ne .Values.sidecar.resourcesPreset "none" }}
+          resources: {{- include "common.resources.preset" (dict "type" .Values.sidecar.resourcesPreset) | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: sidecar
+              containerPort: {{ .Values.sidecar.containerPorts.sidecar }}
+          {{- if not .Values.diagnosticMode.enabled }}
+          {{- if .Values.sidecar.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.customLivenessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.sidecar.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.sidecar.livenessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.sidecar.containerPorts.sidecar }}
+          {{- end }}
+          {{- if .Values.sidecar.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.customReadinessProbe "context" $) | nindent 12 }}
+          {{- else if .Values.sidecar.readinessProbe.enabled }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.sidecar.readinessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.sidecar.containerPorts.sidecar }}
+          {{- end }}
+          {{- if .Values.sidecar.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.customStartupProbe "context" $) | nindent 12 }}
+          {{- else if .Values.sidecar.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.sidecar.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.sidecar.containerPorts.sidecar }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.sidecar.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.lifecycleHooks "context" $) | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /home/clougence
+          {{- if .Values.sidecar.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
+        {{- if .Values.sidecar.sidecars }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.sidecar.sidecars "context" $) | nindent 8 }}
+        {{- end }}
+      volumes:
+        - name: empty-dir
+          emptyDir: {}
+        - name: sidecar-init-script
+          configMap:
+            name: {{ include "cloudcanal.sidecar.configMapName" . }}
+            items:
+              - key: sidecar-init-script.sh
+                path: sidecar-init-script.sh
+        - name: sidecar-conf
+          configMap:
+            name: {{ include "cloudcanal.sidecar.configMapName" . }}
+            items:
+              - key: business-output.properties
+                path: business-output.properties
+        {{- if .Values.sidecar.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}

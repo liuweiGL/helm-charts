@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cloudcanal.sidecar.configMapName" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: sidecar
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  sidecar-init-script.sh: |
+    #!/bin/bash
+    ak="ak0a2c62tdo1ap2416655mpyx0v36l359p1v5rn782caw8t0qkk1s94b80lfs90";
+    sk="sk6206iy4pb0eydz9hg97jo3tu5d80j97e91bbql65167u8wb75x4ej6e4v4aa4";
+    wsn="wsn582nm54ca045p014288w6e919ec6294m430h427619v64g0pyqzcjb5040q3f";
+    console_domain="console";
+
+    config_file_path="/home/clougence/cloudcanal/global_conf";
+    mkdir -p $config_file_path;
+    config_file="$config_file_path/conf.properties";
+
+    if [ ! -f "$config_file" ]; then
+      touch "$config_file";
+      echo "cloudcanal.auth.ak=$ak" > "$config_file";
+      echo "cloudcanal.auth.sk=$sk" >> "$config_file";
+      echo "cloudcanal.sidecar.wsn=$wsn" >> "$config_file";
+      echo "cloudcanal.console.domain=$console_domain" >> "$config_file";
+    fi
+  business-output.properties: |
+    console.rsocket.port={{ .Values.console.service.ports.rsocket }}
+    server.port={{ .Values.sidecar.containerPorts.sidecar }}
+    #####################
+    ## aliyun vpc info ##
+    #####################
+    sidecar.config.api.aliyun.invpc=false
+    sidecar.config.externalip.fetch=true
+    #####################
+    ## rsocket config ##
+    #####################
+    sidecar.config.rsocket.connect_timeout_ms=10000
+    sidecar.config.rsocket.wait_result_timeout_ms=300000
+    #####################
+    ## extra config    ##
+    #####################
+    sidecar.config.exp.suppressed.min=5
+    #####################
+    ## package config  ##
+    #####################
+    sidecar.config.package.mode=K8S

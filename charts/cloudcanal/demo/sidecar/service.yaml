@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: sidecar
+  {{- if or .Values.sidecar.service.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" (dict "values" (list .Values.sidecar.service.annotations .Values.commonAnnotations) "context" .) }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.sidecar.service.type }}
+  {{- if and .Values.sidecar.service.clusterIP (eq .Values.sidecar.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.sidecar.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.sidecar.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.sidecar.service.sessionAffinity }}
+  {{- end }}
+  {{- if .Values.sidecar.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- end }}
+  {{- if or (eq .Values.sidecar.service.type "LoadBalancer") (eq .Values.sidecar.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.sidecar.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if and (eq .Values.sidecar.service.type "LoadBalancer") (not (empty .Values.sidecar.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{ .Values.sidecar.service.loadBalancerSourceRanges }}
+  {{- end }}
+  {{- if and (eq .Values.sidecar.service.type "LoadBalancer") (not (empty .Values.sidecar.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.sidecar.service.loadBalancerIP }}
+  {{- end }}
+  ports:
+    - name: sidecar
+      port: {{ .Values.sidecar.service.ports.sidecar }}
+      {{- if not (eq .Values.sidecar.service.ports.sidecar .Values.sidecar.containerPorts.sidecar) }}
+      targetPort: {{ .Values.sidecar.containerPorts.sidecar }}
+      {{- end }}
+      protocol: TCP
+      {{- if and (or (eq .Values.sidecar.service.type "NodePort") (eq .Values.sidecar.service.type "LoadBalancer")) (not (empty .Values.sidecar.service.nodePorts.sidecar)) }}
+      nodePort: {{ .Values.sidecar.service.nodePorts.sidecar }}
+      {{- else if eq .Values.sidecar.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+    {{- if .Values.sidecar.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+  {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.sidecar.podLabels .Values.commonLabels) "context" .) | fromYaml }}
+  selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: sidecar

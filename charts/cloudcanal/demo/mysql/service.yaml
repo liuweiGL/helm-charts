@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cloudcanal.mysql.serviceName" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: mysql
+  {{- if or .Values.mysql.service.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" (dict "values" (list .Values.mysql.service.annotations .Values.commonAnnotations) "context" .) }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.mysql.service.type }}
+  {{- if and .Values.mysql.service.clusterIP (eq .Values.mysql.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.mysql.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.mysql.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.mysql.service.sessionAffinity }}
+  {{- end }}
+  {{- if .Values.mysql.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.mysql.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- end }}
+  {{- if or (eq .Values.mysql.service.type "LoadBalancer") (eq .Values.mysql.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.mysql.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if and (eq .Values.mysql.service.type "LoadBalancer") (not (empty .Values.mysql.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{ .Values.mysql.service.loadBalancerSourceRanges }}
+  {{- end }}
+  {{- if and (eq .Values.mysql.service.type "LoadBalancer") (not (empty .Values.mysql.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.mysql.service.loadBalancerIP }}
+  {{- end }}
+  ports:
+    - name: mysql
+      port: {{ .Values.mysql.service.ports.mysql }}
+      {{- if not (eq .Values.mysql.service.ports.mysql .Values.mysql.containerPorts.mysql) }}
+      targetPort: {{ .Values.mysql.containerPorts.mysql }}
+      {{- end }}
+      protocol: TCP
+      {{- if and (or (eq .Values.mysql.service.type "NodePort") (eq .Values.mysql.service.type "LoadBalancer")) (not (empty .Values.mysql.service.nodePorts.mysql)) }}
+      nodePort: {{ .Values.mysql.service.nodePorts.mysql }}
+      {{- else if eq .Values.mysql.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+    {{- if .Values.mysql.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.mysql.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+  {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.mysql.podLabels .Values.commonLabels) "context" .) | fromYaml }}
+  selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: mysql
