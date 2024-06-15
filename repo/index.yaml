@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2024-06-16T04:36:58.585819403+08:00"
+    created: "2024-06-16T04:46:19.731306141+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2024-06-16T04:36:58.596614886+08:00"
+    created: "2024-06-16T04:46:19.735900482+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -54,7 +54,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-06-16T04:36:58.606307825+08:00"
+    created: "2024-06-16T04:46:19.742571585+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -77,7 +77,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2024-06-16T04:36:58.611842658+08:00"
+    created: "2024-06-16T04:46:19.747158374+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -101,7 +101,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-16T04:36:58.621157944+08:00"
+    created: "2024-06-16T04:46:19.752342743+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -125,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-16T04:36:58.640203103+08:00"
+    created: "2024-06-16T04:46:19.767183791+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -166,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-06-16T04:36:58.648827864+08:00"
+    created: "2024-06-16T04:46:19.77342804+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -190,7 +190,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-16T04:36:58.698465088+08:00"
+    created: "2024-06-16T04:46:19.806267737+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -218,7 +218,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-16T04:36:58.690168234+08:00"
+    created: "2024-06-16T04:46:19.79944834+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -246,7 +246,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-16T04:36:58.680719667+08:00"
+    created: "2024-06-16T04:46:19.793880031+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -274,7 +274,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-16T04:36:58.666953572+08:00"
+    created: "2024-06-16T04:46:19.787363245+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -302,7 +302,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-16T04:36:58.658466058+08:00"
+    created: "2024-06-16T04:46:19.779718195+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -331,7 +331,30 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-16T04:36:58.713660848+08:00"
+    created: "2024-06-16T04:46:19.819649261+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: LDAP Tool Box Self Service Password is a web application for end
+      users. It allows them to change or reset their password if they lost it
+    digest: f00ecc5160f78dc4295075e1287f351c1ed38e298f0ec784837958dac10a4674
+    home: https://self-service-password.readthedocs.io/en/stable/
+    icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
+    name: self-service-password
+    sources:
+    - https://github.com/ltb-project/self-service-password
+    type: application
+    urls:
+    - self-service-password-1.0.2.tgz
+    version: 1.0.2
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.5.4
+    created: "2024-06-16T04:46:19.815476885+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -354,7 +377,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-16T04:36:58.709298111+08:00"
+    created: "2024-06-16T04:46:19.810612362+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -373,4 +396,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-16T04:36:58.579667401+08:00"
+generated: "2024-06-16T04:46:19.725255035+08:00"
