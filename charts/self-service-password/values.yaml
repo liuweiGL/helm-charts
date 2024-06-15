@@ -572,21 +572,21 @@ livenessProbe:
   successThreshold: 1
   failureThreshold: 5
   ## Configure extra options for readiness probe
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
-  ## @param primary.readinessProbe.enabled Enable readinessProbe
-  ## @param primary.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
-  ## @param primary.readinessProbe.periodSeconds Period seconds for readinessProbe
-  ## @param primary.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
-  ## @param primary.readinessProbe.failureThreshold Failure threshold for readinessProbe
-  ## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
-  ##
-  readinessProbe:
-    enabled: false
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 1
-    failureThreshold: 3
-    successThreshold: 1
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param primary.readinessProbe.enabled Enable readinessProbe
+## @param primary.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+## @param primary.readinessProbe.periodSeconds Period seconds for readinessProbe
+## @param primary.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+## @param primary.readinessProbe.failureThreshold Failure threshold for readinessProbe
+## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
+##
+readinessProbe:
+  enabled: false
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
 ## Configure extra options for startupProbe probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param startupProbe.enabled Enable startupProbe
