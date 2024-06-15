@@ -1,11 +1,34 @@
 apiVersion: v1
 entries:
+  cloudcanal:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 4.1.1.0
+    created: "2024-06-16T04:36:58.585819403+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
+    digest: 059ce3b4499b10706a1b5ca90adc3a23c980028fcf53c1f5d1250e4f5c78c261
+    home: https://www.clougence.com/
+    icon: https://www.clougence.com/favicon.svg
+    name: cloudcanal
+    sources:
+    - https://www.clougence.com/
+    type: application
+    urls:
+    - cloudcanal-1.0.0.tgz
+    version: 1.0.0
   mosquitto:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2024-06-07T16:09:38.721473509+08:00"
+    created: "2024-06-16T04:36:58.596614886+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -31,7 +54,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-06-07T16:09:38.725656018+08:00"
+    created: "2024-06-16T04:36:58.606307825+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -49,12 +72,36 @@ entries:
     urls:
     - nacos-1.0.3.tgz
     version: 1.0.3
+  netmaker-client:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 0.24.1
+    created: "2024-06-16T04:36:58.611842658+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
+    digest: b64f7741167b3cb327045e56e7f23a25ce67d656b9e6a153c21ed5dfa4082e2f
+    home: https://www.netmaker.io/
+    icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
+    name: netmaker-client
+    sources:
+    - https://github.com/gravitl/netmaker
+    type: application
+    urls:
+    - netmaker-client-1.0.0.tgz
+    version: 1.0.0
   netmaker-dashboard:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-07T16:09:38.730049214+08:00"
+    created: "2024-06-16T04:36:58.621157944+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-07T16:09:38.741777987+08:00"
+    created: "2024-06-16T04:36:58.640203103+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -119,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-06-07T16:09:38.745690233+08:00"
+    created: "2024-06-16T04:36:58.648827864+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -143,7 +190,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-07T16:09:38.775064419+08:00"
+    created: "2024-06-16T04:36:58.698465088+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -171,7 +218,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-07T16:09:38.76880484+08:00"
+    created: "2024-06-16T04:36:58.690168234+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -199,7 +246,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-07T16:09:38.763194626+08:00"
+    created: "2024-06-16T04:36:58.680719667+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -227,7 +274,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-07T16:09:38.757464835+08:00"
+    created: "2024-06-16T04:36:58.666953572+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -255,7 +302,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-07T16:09:38.751424135+08:00"
+    created: "2024-06-16T04:36:58.658466058+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -284,7 +331,30 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-07T16:09:38.782077338+08:00"
+    created: "2024-06-16T04:36:58.713660848+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: LDAP Tool Box Self Service Password is a web application for end
+      users. It allows them to change or reset their password if they lost it
+    digest: 416424834ed5113bdc157d6df82f41faea49eba94a522409cb95ce14bf82f8ed
+    home: https://self-service-password.readthedocs.io/en/stable/
+    icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
+    name: self-service-password
+    sources:
+    - https://github.com/ltb-project/self-service-password
+    type: application
+    urls:
+    - self-service-password-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.5.4
+    created: "2024-06-16T04:36:58.709298111+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -303,4 +373,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-07T16:09:38.716348212+08:00"
+generated: "2024-06-16T04:36:58.579667401+08:00"
