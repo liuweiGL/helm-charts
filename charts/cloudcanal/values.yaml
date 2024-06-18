@@ -215,9 +215,6 @@ console:
     seccompProfile:
       type: "RuntimeDefault"
 
-  ## @param console.existingConfigmap The name of an existing ConfigMap with your custom configuration for console
-  ##
-  existingConfigmap:
   ## @param console.command Override default console container command (useful when using custom images)
   ##
   command: []
@@ -239,14 +236,6 @@ console:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
-  ## @param console.podAffinityPreset Pod affinity preset. Ignored if `console.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param console.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `console.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
   ## Node console.affinity preset
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
   ##
@@ -264,11 +253,6 @@ console:
     ##   - e2e-az2
     ##
     values: []
-  ## @param console.affinity Affinity for console pods assignment
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## NOTE: `console.podAffinityPreset`, `console.podAntiAffinityPreset`, and `console.nodeAffinityPreset` will be ignored when it's set
-  ##
-  affinity: {}
   ## @param console.nodeSelector Node labels for console pods assignment
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   ##
@@ -479,6 +463,9 @@ console:
 ## sidecar server
 ##
 sidecar:
+  ## @param sidecar.externalLibraryUrl 外部库下载地址，返回 .tar.gz 格式的压缩包
+  ##
+  externalLibraryUrl: ""
   ## Bitnami sidecar image
   ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
   ## @param sidecar.image.registry [default: REGISTRY_NAME] sidecar image registry
@@ -632,10 +619,6 @@ sidecar:
       drop: ["ALL"]
     seccompProfile:
       type: "RuntimeDefault"
-
-  ## @param sidecar.existingConfigmap The name of an existing ConfigMap with your custom configuration for sidecar
-  ##
-  existingConfigmap:
   ## @param sidecar.command Override default sidecar container command (useful when using custom images)
   ##
   command: []
@@ -731,6 +714,16 @@ sidecar:
   ## @param sidecar.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the sidecar containers
   ##
   extraVolumeMounts: []
+  ## @param mosquitto.initContainers Add additional init containers to the mosquitto pods
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+  ## e.g:
+  ## initContainers:
+  ##  - name: your-image-name
+  ##    image: your-image
+  ##    imagePullPolicy: Always
+  ##    command: ['sh', '-c', 'echo "hello world"']
+  ##
+  initContainers: []
   ## console service parameters
   ##
   service:
@@ -916,9 +909,12 @@ mysql:
   podSecurityContext:
     enabled: true
     fsGroupChangePolicy: Always
+    # 镜像中 mysql 用户的 uid 跟 gid
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
     sysctls: []
     supplementalGroups: []
-    fsGroup: 1001
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param mysql.containerSecurityContext.enabled Enabled mysql container' Security Context
@@ -932,12 +928,12 @@ mysql:
   ## @param mysql.containerSecurityContext.seccompProfile.type Set seccomp profile in mysql container
   ##
   containerSecurityContext:
-    enabled: false
+    enabled: true
     seLinuxOptions: {}
-    runAsUser: 1001
-    runAsGroup: 1001
+    runAsUser: 999
+    runAsGroup: 999
     runAsNonRoot: true
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     privileged: false
     allowPrivilegeEscalation: false
     capabilities:
@@ -945,9 +941,6 @@ mysql:
     seccompProfile:
       type: "RuntimeDefault"
 
-  ## @param mysql.existingConfigmap The name of an existing ConfigMap with your custom configuration for mysql
-  ##
-  existingConfigmap:
   ## @param mysql.command Override default mysql container command (useful when using custom images)
   ##
   command: []
@@ -969,36 +962,6 @@ mysql:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
-  ## @param mysql.podAffinityPreset Pod affinity preset. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param mysql.podAntiAffinityPreset Pod anti-affinity preset. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Node mysql.affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param mysql.nodeAffinityPreset.type Node affinity preset type. Ignored if `mysql.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param mysql.nodeAffinityPreset.key Node label key to match. Ignored if `mysql.affinity` is set
-    ##
-    key: ""
-    ## @param mysql.nodeAffinityPreset.values Node label values to match. Ignored if `mysql.affinity` is set
-    ## E.g.
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
-  ## @param mysql.affinity Affinity for mysql pods assignment
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## NOTE: `mysql.podAffinityPreset`, `mysql.podAntiAffinityPreset`, and `mysql.nodeAffinityPreset` will be ignored when it's set
-  ##
-  affinity: {}
   ## @param mysql.nodeSelector Node labels for mysql pods assignment
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   ##
@@ -1020,12 +983,7 @@ mysql:
     ## ONLY FOR STATEFULSETS:
     ## Can be set to RollingUpdate or OnDelete
     ##
-    type: RollingUpdate
-  ## ONLY FOR STATEFULSETS:
-  ## @param mysql.podManagementPolicy Pod management policy for mysql statefulset
-  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-  ##
-  podManagementPolicy: OrderedReady
+    type: Recreate
   ## @param mysql.priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
   ##
   priorityClassName: ""
@@ -1065,17 +1023,11 @@ mysql:
   extraVolumeMounts: []
   ## @param mysql.rootPassword MySQL root password
   ##
-  rootPassword: "123456"
+  rootPassword: ""
   ## Enable persistence using Persistent Volume Claims
   ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
   ##
   persistence:
-    ## @param persistence.mountPath Path to mount the volume at.
-    ##
-    mountPath: /var/lib/mysql
-    ## @param persistence.subPath The subdirectory of the volume to mount to, useful in dev environments and one PV for multiple services
-    ##
-    subPath: ""
     ## @param persistence.storageClass Storage class of backing PVC
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning

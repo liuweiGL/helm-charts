@@ -1,0 +1,25 @@
+{{- if not .Values.mysql.persistence.existingClaim }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "cloudcanal.mysql.pvcName" . }}
+  {{- if or .Values.mysql.persistence.annotations .Values.commonAnnotations }}
+  {{- $claimAnnotations := include "common.tplvalues.merge" (dict "values" .Values.mysql.persistence.annotations .Values.commonAnnotations "context" .) | fromYaml }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $claimAnnotations "context" $ ) | nindent 10 }}
+  {{- end }}
+  {{- if .Values.commonLabels }}
+  labels: {{- include "common.labels.matchLabels" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 10 }}
+  {{- end }}
+spec:
+  accessModes:
+  {{- range .Values.mysql.persistence.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.persistence.size | quote }}
+  {{- if .Values.mysql.persistence.selector }}
+  selector: {{- include "common.tplvalues.render" (dict "value" .Values.mysql.persistence.selector "context" $) | nindent 10 }}
+  {{- end }}
+  {{- include "common.storage.class" (dict "persistence" .Values.mysql.persistence "global" .Values.global) | nindent 2 }}
+{{- end }}

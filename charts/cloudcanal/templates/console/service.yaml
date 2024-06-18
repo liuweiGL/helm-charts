@@ -41,6 +41,17 @@ spec:
       {{- else if eq .Values.console.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
+    - name: rsocket
+      port: {{ .Values.console.service.ports.rsocket }}
+      {{- if not (eq .Values.console.service.ports.rsocket .Values.console.containerPorts.rsocket) }}
+      targetPort: {{ .Values.console.containerPorts.rsocket }}
+      {{- end }}
+      protocol: TCP
+      {{- if and (or (eq .Values.console.service.type "NodePort") (eq .Values.console.service.type "LoadBalancer")) (not (empty .Values.console.service.nodePorts.rsocket)) }}
+      nodePort: {{ .Values.console.service.nodePorts.rsocket }}
+      {{- else if eq .Values.console.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
     {{- if .Values.console.service.extraPorts }}
     {{- include "common.tplvalues.render" (dict "value" .Values.console.service.extraPorts "context" $) | nindent 4 }}
     {{- end }}

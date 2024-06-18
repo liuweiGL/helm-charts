@@ -1,11 +1,46 @@
 global:
+  storageClass: "longhorn"
   hostAliases:
-  # 172.19.227.32
   - ip: "192.168.31.220"
     hostnames:
     - "harbor.eastcoal.club"
 
+diagnosticMode:
+  enabled: false
+
 console:
   ingress:
-    hostname: cloudcanal.test.shjinyi.net
+    hostname: "test.eastcoal.club"
     tls: false
+
+mysql:
+  rootPassword: "123456"
+
+sidecar:
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  startupProbe:
+    enabled: false
+  initContainers:
+  - name: 'download-external-library'
+    image: 'alpine:3.20'
+    imagePullPolicy: IfNotPresent
+    command:
+    - sh
+    - -c
+    - |
+      echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main" > /etc/apk/repositories
+      echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community" >> /etc/apk/repositories
+      apk update
+      apk add unzip curl
+      curl -sfkSL -o /tmp/external-library.zip --header "PRIVATE-TOKEN: gK73yVMRbm8zF4Vq2xcS" "https://git.eastcoal.club/api/v4/projects/70/repository/files/lib%2Fsidecar.zip/raw?ref=master"
+      unzip /tmp/external-library.zip -d /tmp/external-library
+      if [ ! -d /workspace/cloudcanal/lib ]; then
+        mkdir -p /workspace/cloudcanal/lib
+      fi
+      cp /tmp/external-library/* /workspace/cloudcanal/lib
+    volumeMounts:
+    - name: empty-dir
+      mountPath: /workspace

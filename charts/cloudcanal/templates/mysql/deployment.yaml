@@ -1,7 +1,7 @@
-apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
-kind: StatefulSet
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" (include "common.names.fullname" .) "mysql" }}
+  name: {{ include "cloudcanal.mysql.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: mysql
@@ -11,14 +11,12 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ .Values.mysql.replicaCount }}
-  podManagementPolicy: {{ .Values.podManagementPolicy | quote }}
   {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.mysql.podLabels .Values.commonLabels) "context" .) }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 6 }}
       app.kubernetes.io/component: mysql
-  serviceName: {{ template "common.names.fullname" . }}
   {{- if .Values.mysql.updateStrategy }}
-  updateStrategy: {{- toYaml .Values.mysql.updateStrategy | nindent 4 }}
+  strategy: {{- toYaml .Values.mysql.updateStrategy | nindent 4 }}
   {{- end }}
   template:
     metadata:
@@ -32,14 +30,6 @@ spec:
       automountServiceAccountToken: {{ .Values.mysql.automountServiceAccountToken }}
       {{- if .Values.global.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.global.hostAliases "context" $) | nindent 8 }}
-      {{- end }}
-      {{- if .Values.mysql.affinity }}
-      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.mysql.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.mysql.podAffinityPreset "component" "mysql" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.mysql.podAntiAffinityPreset "component" "mysql" "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.mysql.nodeAffinityPreset.type "key" .Values.mysql.nodeAffinityPreset.key "values" .Values.mysql.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
       {{- if .Values.mysql.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.mysql.nodeSelector "context" $) | nindent 8 }}
@@ -64,11 +54,19 @@ spec:
       {{- end }}
       initContainers:
         - name: test
+          image: {{ include "cloudcanal.mysql.image" . }}
+          imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
+          securityContext: 
+            runAsUser: 0
+            privileged: true
           command:
             - sh
             - -c
             - |
-              ls -l /var/lib/mysql
+              chown mysql:mysql /var/lib/mysql
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
       containers:
         - name: mysql
           image: {{ include "cloudcanal.mysql.image" . }}
@@ -80,8 +78,6 @@ spec:
           command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
           {{- else if .Values.mysql.command }}
           command: {{- include "common.tplvalues.render" (dict "value" .Values.mysql.command "context" $) | nindent 12 }}
-          {{- else }}
-          command: ["sh", "-c", "mysqld"]
           {{- end }}
           {{- if .Values.diagnosticMode.enabled }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
@@ -91,8 +87,6 @@ spec:
           args: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
           {{- end }}
           env:
-            - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" (or .Values.mysql.image.debug .Values.diagnosticMode.enabled) | quote }}
             - name: MYSQL_ROOT_PASSWORD
               value: {{ .Values.mysql.rootPassword | quote }}
             {{- if .Values.mysql.extraEnvVars }}
@@ -145,40 +139,15 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.mysql.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
-            # - name: data
-            #   mountPath: {{ .Values.mysql.persistence.mountPath }}
-            #   {{- if .Values.mysql.persistence.subPath }}
-            #   subPath: {{ .Values.mysql.persistence.subPath }}
-            #   {{- end }}
+            - name: data
+              mountPath: /var/lib/mysql
           {{- if .Values.mysql.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.mysql.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ default (include "common.names.fullname" .) .Values.mysql.persistence.existingClaim }}
+            claimName: {{ include "cloudcanal.mysql.pvcName" . }}
         {{- if .Values.mysql.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.mysql.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-        {{- if or .Values.mysql.persistence.annotations .Values.commonAnnotations }}
-        {{- $claimAnnotations := include "common.tplvalues.merge" (dict "values" .Values.persistence.annotations .Values.commonAnnotations "context" .) | fromYaml }}
-        annotations: {{- include "common.tplvalues.render" ( dict "value" $claimAnnotations "context" $ ) | nindent 10 }}
-        {{- end }}
-        {{- if .Values.commonLabels }}
-        labels: {{- include "common.labels.matchLabels" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 10 }}
-        {{- end }}
-      spec:
-        accessModes:
-        {{- range .Values.mysql.persistence.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.mysql.persistence.size | quote }}
-        {{- if .Values.mysql.persistence.selector }}
-        selector: {{- include "common.tplvalues.render" (dict "value" .Values.mysql.persistence.selector "context" $) | nindent 10 }}
-        {{- end }}
-        {{- include "common.storage.class" (dict "persistence" .Values.mysql.persistence "global" .Values.global) | nindent 8 }}

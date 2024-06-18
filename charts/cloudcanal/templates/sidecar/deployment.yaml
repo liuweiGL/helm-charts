@@ -68,36 +68,35 @@ spec:
             - sh
             - -c
             - |
+              # 复制文件到工作目录
               cp -r /home/clougence/* /workspace
               chmod -R 777 /workspace
               chown -R clougence:clougence /workspace
-            - |
-              sidecar_conf_dir="/home/clougence/cloudcanal/sidecar/conf"
+
+              # 处理 init.sh 脚本
+              sed -i 's/console:8111/$CONSOLE_ADDRESS/g' /workspace/init.sh
+
+              # 复制全局配置
+              global_conf_dir="/workspace/cloudcanal/global_conf"
+              if [ ! -d $global_conf_dir ]; then
+                mkdir -p $global_conf_dir
+              fi
+              cp /tmp/conf/conf.properties $global_conf_dir/conf.properties
+
+              # 复制 sidecar 配置
+              sidecar_conf_dir="/workspace/cloudcanal/sidecar/conf"
               if [ ! -d $sidecar_conf_dir ]; then
                 mkdir -p $sidecar_conf_dir
               fi
-              cp /conf/business-output.properties $sidecar_conf_dir/business-output.properties
+              cp /tmp/conf/business-output.properties $sidecar_conf_dir/business-output.properties
           volumeMounts:
             - name: empty-dir
               mountPath: /workspace
             - name: sidecar-conf
-              mountPath: /conf
-        - name: execute-init-scripts
-          image: {{ include "cloudcanal.sidecar.image" . }}
-          imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
-          command:
-            - sh
-            - -c
-            - |
-              ls -l /home/clougence
-              /usr/local/bin/sidecar-init-script.sh
-              /home/clougence/init.sh
-          volumeMounts:
-            - name: empty-dir
-              mountPath: /home/clougence
-            - name: sidecar-init-script
-              mountPath: /usr/local/bin/sidecar-init-script.sh
-              subPath: sidecar-init-script.sh
+              mountPath: /tmp/conf
+        {{- if .Values.sidecar.initContainers }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.initContainers "context" $) | nindent 8 }}
+        {{- end }}
       containers:
         - name: sidecar
           image: {{ include "cloudcanal.sidecar.image" . }}
@@ -116,8 +115,8 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" (or .Values.sidecar.image.debug .Values.diagnosticMode.enabled) | quote }}
+            - name: CONSOLE_ADDRESS
+              value: {{ include "cloudcanal.console.internalAddress" . | quote }}
             {{- if .Values.sidecar.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -176,18 +175,9 @@ spec:
       volumes:
         - name: empty-dir
           emptyDir: {}
-        - name: sidecar-init-script
-          configMap:
-            name: {{ include "cloudcanal.sidecar.configMapName" . }}
-            items:
-              - key: sidecar-init-script.sh
-                path: sidecar-init-script.sh
         - name: sidecar-conf
           configMap:
             name: {{ include "cloudcanal.sidecar.configMapName" . }}
-            items:
-              - key: business-output.properties
-                path: business-output.properties
         {{- if .Values.sidecar.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraVolumes "context" $) | nindent 8 }}
         {{- end }}

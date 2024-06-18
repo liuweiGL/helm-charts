@@ -31,14 +31,6 @@ spec:
       {{- if .Values.global.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.global.hostAliases "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.console.affinity }}
-      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.console.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.console.podAffinityPreset "component" "console" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.console.podAntiAffinityPreset "component" "console" "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.console.nodeAffinityPreset.type "key" .Values.console.nodeAffinityPreset.key "values" .Values.console.nodeAffinityPreset.values) | nindent 10 }}
-      {{- end }}
       {{- if .Values.console.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.console.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
@@ -71,13 +63,13 @@ spec:
               cp -r /home/clougence/* /workspace
               chmod -R 777 /workspace
               chown -R clougence:clougence /workspace
-              ls -l -R  /workspace/
-            - |
-              console_conf_dir="/home/clougence/cloudcanal/console/conf"
+              console_conf_dir="/workspace/cloudcanal/console/conf"
               if [ ! -d $console_conf_dir ]; then
                 mkdir -p $console_conf_dir
               fi
               cp /conf/business-output.properties $console_conf_dir/business-output.properties
+              cat $console_conf_dir/business-output.properties
+            
           volumeMounts:
             - name: empty-dir
               mountPath: /workspace
@@ -101,8 +93,8 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.console.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" (or .Values.console.image.debug .Values.diagnosticMode.enabled) | quote }}
+            # - name: TZ
+            #   value: Asia/Shanghai
             {{- if .Values.console.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.console.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -155,12 +147,18 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.console.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
+            # - name: timezone
+            #   mountPath: /etc/localtime
+            #   readOnly: true
             - name: empty-dir
               mountPath: /home/clougence
           {{- if .Values.console.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.console.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
       volumes:
+        # - name: timezone
+        #   hostPath:
+        #     path: /etc/localtime
         - name: empty-dir
           emptyDir: {}
         - name: console-conf
