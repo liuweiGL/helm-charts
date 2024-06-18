@@ -20,7 +20,7 @@
 {{- end -}}
 
 {{- define "cloudcanal.console.internalAddress" -}}
-    {{- printf "%s:%d" (include "cloudcanal.console.serviceName" .) (int .Values.console.service.ports.console) }}
+    {{- printf "%s:%d" (include "cloudcanal.console.serviceName" .) (int .Values.console.service.ports.console) -}}
 {{- end -}}
 
 

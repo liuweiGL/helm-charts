@@ -11,10 +11,10 @@ metadata:
 data:
 # /home/clougence/cloudcanal/global_conf
   conf.properties: |
-    cloudcanal.auth.ak="ak0a2c62tdo1ap2416655mpyx0v36l359p1v5rn782caw8t0qkk1s94b80lfs90";
-    cloudcanal.auth.sk="sk6206iy4pb0eydz9hg97jo3tu5d80j97e91bbql65167u8wb75x4ej6e4v4aa4";
-    cloudcanal.sidecar.wsn="wsn582nm54ca045p014288w6e919ec6294m430h427619v64g0pyqzcjb5040q3f";
-    cloudcanal.console.domain={{ include "cloudcanal.console.serviceName" . | quote }};
+    cloudcanal.auth.ak=ak0a2c62tdo1ap2416655mpyx0v36l359p1v5rn782caw8t0qkk1s94b80lfs90
+    cloudcanal.auth.sk=sk6206iy4pb0eydz9hg97jo3tu5d80j97e91bbql65167u8wb75x4ej6e4v4aa4
+    cloudcanal.sidecar.wsn=wsn582nm54ca045p014288w6e919ec6294m430h427619v64g0pyqzcjb5040q3f
+    cloudcanal.console.domain={{ include "cloudcanal.console.serviceName" . }}
   business-output.properties: |
     console.rsocket.port={{ .Values.console.service.ports.rsocket }}
     server.port={{ .Values.sidecar.containerPorts.sidecar }}
