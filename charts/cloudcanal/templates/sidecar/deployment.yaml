@@ -94,6 +94,43 @@ spec:
               mountPath: /workspace
             - name: sidecar-conf
               mountPath: /tmp/conf
+        {{- if .Values.sidecar.externalLibraries }}
+          {{- range $index, $value := .Values.sidecar.externalLibraries }}
+        - name: {{ printf "%s-%d" "download-external-library" $index }}
+          image: 'alpine:3.20'
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DOWNLOAD_URL
+              value: {{ $value.url | quote }}
+            - name: CURL_OPTIONS
+              {{- if $value.args }}
+              value: '{{ join " " $value.args }}'
+              {{- else }}
+              value: ''
+              {{- end }}
+          command:
+          - /bin/sh
+          - -c
+          - |
+            echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main" > /etc/apk/repositories
+            echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community" >> /etc/apk/repositories
+            apk update
+            apk add unzip curl
+            command="curl -sfkSL $CURL_OPTIONS  -o /tmp/external-library.zip \"$DOWNLOAD_URL\""
+            echo "$command"
+            eval "$command"
+            cloudcanal_tmp_dir="/tmp/external-library"
+            cloudcanal_lib_dir="/workspace/cloudcanal/cloudcanal/lib"
+            unzip /tmp/external-library.zip -d "$cloudcanal_tmp_dir"
+            if [ ! -d "$cloudcanal_lib_dir" ]; then
+              mkdir -p "$cloudcanal_lib_dir"
+            fi
+            cp "$cloudcanal_tmp_dir"/* "$cloudcanal_lib_dir"
+          volumeMounts:
+          - name: empty-dir
+            mountPath: /workspace
+            {{- end }}
+        {{- end }}
         {{- if .Values.sidecar.initContainers }}
           {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.initContainers "context" $) | nindent 8 }}
         {{- end }}

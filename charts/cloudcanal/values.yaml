@@ -463,9 +463,11 @@ console:
 ## sidecar server
 ##
 sidecar:
-  ## @param sidecar.externalLibraryUrl 外部库下载地址，返回 .tar.gz 格式的压缩包
+  ## @param sidecar.externalLibraries 外部依赖库
+  ## @param sidecar.externalLibraries.url 下载地址，返回 .zip 格式的压缩包
+  ## @param sidecar.externalLibraries.args curl 参数
   ##
-  externalLibraryUrl: ""
+  externalLibraries: []
   ## Bitnami sidecar image
   ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
   ## @param sidecar.image.registry [default: REGISTRY_NAME] sidecar image registry

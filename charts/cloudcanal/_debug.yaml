@@ -13,31 +13,13 @@ mysql:
   rootPassword: "123456"
 
 sidecar:
+  externalLibraries:
+  - url: "https://git.eastcoal.club/api/v4/projects/70/repository/files/lib%2Fsidecar.zip/raw?ref=master"
+    args: ["--header", "\"PRIVATE-TOKEN: mvKFuz5WV8n2DirbSSMN\""]
   livenessProbe:
     enabled: false
   readinessProbe:
     enabled: false
   startupProbe:
     enabled: false
-  initContainers:
-  - name: 'download-external-library'
-    image: 'alpine:3.20'
-    imagePullPolicy: IfNotPresent
-    command:
-    - sh
-    - -c
-    - |
-      echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main" > /etc/apk/repositories
-      echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community" >> /etc/apk/repositories
-      apk update
-      apk add unzip curl
-      curl -sfkSL -o /tmp/external-library.zip --header "PRIVATE-TOKEN: gK73yVMRbm8zF4Vq2xcS" "https://git.eastcoal.club/api/v4/projects/70/repository/files/lib%2Fsidecar.zip/raw?ref=master"
-      unzip /tmp/external-library.zip -d /tmp/external-library
-      $cloudcanal_lib_dir = "/workspace/cloudcanal/cloudcanal/lib"
-      if [ ! -d $cloudcanal_lib_dir ]; then
-        mkdir -p $cloudcanal_lib_dir
-      fi
-      cp /tmp/external-library/* $cloudcanal_lib_dir
-    volumeMounts:
-    - name: empty-dir
-      mountPath: /workspace
+
