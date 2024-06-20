@@ -122,6 +122,7 @@ spec:
             cloudcanal_tmp_dir="/tmp/external-library"
             cloudcanal_lib_dir="/workspace/cloudcanal/cloudcanal/lib"
             unzip /tmp/external-library.zip -d "$cloudcanal_tmp_dir"
+            chmod -R 777 "$cloudcanal_tmp_dir"
             if [ ! -d "$cloudcanal_lib_dir" ]; then
               mkdir -p "$cloudcanal_lib_dir"
             fi
