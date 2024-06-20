@@ -1,9 +1,5 @@
 global:
   storageClass: "longhorn"
-  hostAliases:
-  - ip: "192.168.31.220"
-    hostnames:
-    - "harbor.eastcoal.club"
 
 diagnosticMode:
   enabled: false
@@ -37,10 +33,11 @@ sidecar:
       apk add unzip curl
       curl -sfkSL -o /tmp/external-library.zip --header "PRIVATE-TOKEN: gK73yVMRbm8zF4Vq2xcS" "https://git.eastcoal.club/api/v4/projects/70/repository/files/lib%2Fsidecar.zip/raw?ref=master"
       unzip /tmp/external-library.zip -d /tmp/external-library
-      if [ ! -d /workspace/cloudcanal/lib ]; then
-        mkdir -p /workspace/cloudcanal/lib
+      $cloudcanal_lib_dir = "/workspace/cloudcanal/cloudcanal/lib"
+      if [ ! -d $cloudcanal_lib_dir ]; then
+        mkdir -p $cloudcanal_lib_dir
       fi
-      cp /tmp/external-library/* /workspace/cloudcanal/lib
+      cp /tmp/external-library/* $cloudcanal_lib_dir
     volumeMounts:
     - name: empty-dir
       mountPath: /workspace
