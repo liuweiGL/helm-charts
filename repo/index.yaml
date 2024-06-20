@@ -5,7 +5,29 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2024-06-20T10:55:26.990368892+08:00"
+    created: "2024-06-20T12:02:00.677688098+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
+    digest: f28189d7f0031730e0be22f7fc0630341d38272e63e6c062f15b07b3d5258e9a
+    home: https://www.clougence.com/
+    icon: https://www.clougence.com/favicon.svg
+    name: cloudcanal
+    sources:
+    - https://www.clougence.com/
+    type: application
+    urls:
+    - cloudcanal-1.1.1.tgz
+    version: 1.1.1
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 4.1.1.0
+    created: "2024-06-20T12:02:00.670513596+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -27,7 +49,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2024-06-20T10:55:26.985687253+08:00"
+    created: "2024-06-20T12:02:00.657841267+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -49,7 +71,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2024-06-20T10:55:26.980298262+08:00"
+    created: "2024-06-20T12:02:00.648288702+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -72,7 +94,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2024-06-20T10:55:26.994812008+08:00"
+    created: "2024-06-20T12:02:00.688288116+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -98,7 +120,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.3.2
-    created: "2024-06-20T10:55:26.999054007+08:00"
+    created: "2024-06-20T12:02:00.695830501+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -121,7 +143,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2024-06-20T10:55:27.00299193+08:00"
+    created: "2024-06-20T12:02:00.70520377+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -145,7 +167,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-20T10:55:27.007055347+08:00"
+    created: "2024-06-20T12:02:00.712361121+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -169,7 +191,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2024-06-20T10:55:27.020769615+08:00"
+    created: "2024-06-20T12:02:00.738056617+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -210,7 +232,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-06-20T10:55:27.025817728+08:00"
+    created: "2024-06-20T12:02:00.746394839+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -234,7 +256,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-20T10:55:27.061432127+08:00"
+    created: "2024-06-20T12:02:00.806511235+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -262,7 +284,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-20T10:55:27.054393305+08:00"
+    created: "2024-06-20T12:02:00.794261727+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -290,7 +312,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-20T10:55:27.047794723+08:00"
+    created: "2024-06-20T12:02:00.783861148+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -318,7 +340,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-20T10:55:27.040118982+08:00"
+    created: "2024-06-20T12:02:00.771179492+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -346,7 +368,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.2.0
-    created: "2024-06-20T10:55:27.033636726+08:00"
+    created: "2024-06-20T12:02:00.757027498+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -375,7 +397,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-20T10:55:27.077731267+08:00"
+    created: "2024-06-20T12:02:00.838901473+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -398,7 +420,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-20T10:55:27.072087223+08:00"
+    created: "2024-06-20T12:02:00.830105076+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -421,7 +443,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2024-06-20T10:55:27.066428297+08:00"
+    created: "2024-06-20T12:02:00.818141954+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -440,4 +462,4 @@ entries:
     urls:
     - self-service-password-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-20T10:55:26.973354471+08:00"
+generated: "2024-06-20T12:02:00.635670005+08:00"
