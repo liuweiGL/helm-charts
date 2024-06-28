@@ -71,7 +71,7 @@ console:
   ## @param console.image.debug Enable console image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
+    registry: registry.cn-shanghai.aliyuncs.com
     repository: clougence/cloudcanal-console
     tag: 4.1.1.0
     digest: ""
@@ -479,7 +479,7 @@ sidecar:
   ## @param sidecar.image.debug Enable sidecar image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
+    registry: registry.cn-shanghai.aliyuncs.com
     repository: clougence/cloudcanal-sidecar
     tag: 4.1.1.0
     digest: ""
@@ -797,7 +797,7 @@ mysql:
   ## @param mysql.image.debug Enable mysql image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
+    registry: registry.cn-shanghai.aliyuncs.com
     repository: clougence/cloudcanal-mysql
     tag: 4.1.1.0
     digest: ""
