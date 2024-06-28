@@ -9,7 +9,7 @@ global:
 
 image:
   registry: registry.cn-shanghai.aliyuncs.com
-  repository: eastcoal_cn/rocketmq-dashboard
+  repository: eastcoal-docker/rocketmq-dashboard
   tag: latest
   digest: ""
   ## Specify a imagePullPolicy
