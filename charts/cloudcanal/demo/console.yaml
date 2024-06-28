@@ -8,10 +8,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "31111"
-      port: 8111
-      targetPort: 8111
-      nodePort: 31111
+  - name: "31111"
+    port: 8111
+    targetPort: 8111
+    nodePort: 31111
   selector:
     cloudcanal-service: console
 ---
@@ -24,15 +24,15 @@ metadata:
   namespace: cloudcanal
 spec:
   ports:
-    - name: "7007"
-      port: 7007
-      targetPort: 7007
-    - name: "8084"
-      port: 8084
-      targetPort: 8084
-    - name: "8111"
-      port: 8111
-      targetPort: 8111
+  - name: "7007"
+    port: 7007
+    targetPort: 7007
+  - name: "8084"
+    port: 8084
+    targetPort: 8084
+  - name: "8111"
+    port: 8111
+    targetPort: 8111
   selector:
     cloudcanal-service: console
 ---
@@ -215,64 +215,64 @@ spec:
         cloudcanal-service: console
     spec:
       containers:
-        - image: clougence/cloudcanal-console:${build_version}
-          imagePullPolicy: IfNotPresent
-          startupProbe:
-            httpGet:
-              path: /
-              port: 8111
-              scheme: HTTP
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 3
-            successThreshold: 1
-            failureThreshold: 10
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8111
-              scheme: HTTP
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            periodSeconds: 60
-            successThreshold: 1
-            failureThreshold: 5
-          name: cloudcanal-console
-          ports:
-            - containerPort: 8111
-              protocol: TCP
-            - containerPort: 7007
-              protocol: TCP
-          command:
-            - /bin/sh
-            - -c
-            - "chown clougence:clougence /home/clougence/logs; rm /home/clougence/cloudcanal/console/conf/business-output.properties; ln -s /home/clougence/conf/business-output.properties /home/clougence/cloudcanal/console/conf/business-output.properties; cat /usr/local/bin/init.sh | sh"
-          resources: # need be fill limit and requests to avoid Java OOM
-            requests:
-              memory: "2Gi"
-              cpu: "1"
-            limits:
-              memory: "2Gi"
-              cpu: "1"
-          volumeMounts:
-            - mountPath: /home/clougence/logs
-              name: cloudcanal-console-logs
-            - mountPath: /home/clougence/conf
-              name: cloudcanal-console-config
+      - image: eastcoal-docker/cloudcanal-console:${build_version}
+        imagePullPolicy: IfNotPresent
+        startupProbe:
+          httpGet:
+            path: /
+            port: 8111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 3
+          successThreshold: 1
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8111
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 60
+          successThreshold: 1
+          failureThreshold: 5
+        name: cloudcanal-console
+        ports:
+        - containerPort: 8111
+          protocol: TCP
+        - containerPort: 7007
+          protocol: TCP
+        command:
+        - /bin/sh
+        - -c
+        - "chown clougence:clougence /home/eastcoal-docker/logs; rm /home/eastcoal-docker/cloudcanal/console/conf/business-output.properties; ln -s /home/eastcoal-docker/conf/business-output.properties /home/eastcoal-docker/cloudcanal/console/conf/business-output.properties; cat /usr/local/bin/init.sh | sh"
+        resources: # need be fill limit and requests to avoid Java OOM
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+        volumeMounts:
+        - mountPath: /home/eastcoal-docker/logs
+          name: cloudcanal-console-logs
+        - mountPath: /home/eastcoal-docker/conf
+          name: cloudcanal-console-config
       restartPolicy: Always
       volumes:
-        - name: cloudcanal-console-config
-          configMap:
-            name: console-config
-            items:
-            - key: business-output.properties
-              path: business-output.properties
+      - name: cloudcanal-console-config
+        configMap:
+          name: console-config
+          items:
+          - key: business-output.properties
+            path: business-output.properties
   volumeClaimTemplates:
-    - metadata:
-        name: cloudcanal-console-logs
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 10Gi
-        storageClassName: local-path
+  - metadata:
+      name: cloudcanal-console-logs
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: local-path

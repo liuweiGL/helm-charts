@@ -60,7 +60,7 @@ spec:
             - sh
             - -c
             - |
-              cp -r /home/clougence/* /workspace
+              cp -r /home/eastcoal-docker/* /workspace
               chmod -R 777 /workspace
               chown -R clougence:clougence /workspace
               console_conf_dir="/workspace/cloudcanal/console/conf"

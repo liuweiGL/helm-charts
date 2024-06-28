@@ -8,10 +8,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "32727"
-      port: 8787
-      targetPort: 8787
-      nodePort: 32727
+  - name: "32727"
+    port: 8787
+    targetPort: 8787
+    nodePort: 32727
   selector:
     cloudcanal-service: sidecar
 ---
@@ -24,9 +24,9 @@ metadata:
   namespace: cloudcanal
 spec:
   ports:
-    - port: 8787
-      targetPort: 8787
-      name: "8787"
+  - port: 8787
+    targetPort: 8787
+    name: "8787"
   selector:
     cloudcanal-service: sidecar
 ---
@@ -43,7 +43,7 @@ data:
     wsn="wsn582nm54ca045p014288w6e919ec6294m430h427619v64g0pyqzcjb5040q3f";
     console_domain="console";
 
-    config_file_path="/home/clougence/cloudcanal/global_conf";
+    config_file_path="/home/eastcoal-docker/cloudcanal/global_conf";
     mkdir -p $config_file_path;
     config_file="$config_file_path/conf.properties";
 
@@ -95,71 +95,71 @@ spec:
         cloudcanal-service: sidecar
     spec:
       containers:
-        - image: clougence/cloudcanal-sidecar:${build_version}
-          imagePullPolicy: IfNotPresent
-          name: cloudcanal-sidecar
-          startupProbe:
-            tcpSocket:
-              port: 8083
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 10
-          ports:
-            - containerPort: 8787
-              protocol: TCP
-          command:
-            - /bin/sh
-            - -c
-            - "chown -R clougence:clougence /home/clougence/logs; rm /home/clougence/cloudcanal/sidecar/conf/business-output.properties; ln -s /home/clougence/conf/business-output.properties /home/clougence/cloudcanal/sidecar/conf/business-output.properties; cat /usr/local/bin/sidecar-conf-init.sh | sh; cat /home/clougence/init.sh | sh"
-          resources: # need be fill limit and requests to avoid Java OOM
-            requests:
-              memory: "3Gi"
-              cpu: "1"
-            limits:
-              memory: "3Gi"
-              cpu: "1"
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - mountPath: /home/clougence/logs
-              name: cloudcanal-sidecar-logs
-            - mountPath: /home/clougence/cloudcanal/global_conf
-              name: cloudcanal-sidecar-config
-            - mountPath: /usr/local/bin/sidecar-conf-init.sh
-              name: cloudcanal-sidecar-conf-init
-              subPath: sidecar-conf-init.sh
-            - mountPath: /home/clougence/conf
-              name: cloudcanal-sidecar-props
+      - image: eastcoal-docker/cloudcanal-sidecar:${build_version}
+        imagePullPolicy: IfNotPresent
+        name: cloudcanal-sidecar
+        startupProbe:
+          tcpSocket:
+            port: 8083
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 10
+        ports:
+        - containerPort: 8787
+          protocol: TCP
+        command:
+        - /bin/sh
+        - -c
+        - "chown -R clougence:clougence /home/eastcoal-docker/logs; rm /home/eastcoal-docker/cloudcanal/sidecar/conf/business-output.properties; ln -s /home/eastcoal-docker/conf/business-output.properties /home/eastcoal-docker/cloudcanal/sidecar/conf/business-output.properties; cat /usr/local/bin/sidecar-conf-init.sh | sh; cat /home/eastcoal-docker/init.sh | sh"
+        resources: # need be fill limit and requests to avoid Java OOM
+          requests:
+            memory: "3Gi"
+            cpu: "1"
+          limits:
+            memory: "3Gi"
+            cpu: "1"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/eastcoal-docker/logs
+          name: cloudcanal-sidecar-logs
+        - mountPath: /home/eastcoal-docker/cloudcanal/global_conf
+          name: cloudcanal-sidecar-config
+        - mountPath: /usr/local/bin/sidecar-conf-init.sh
+          name: cloudcanal-sidecar-conf-init
+          subPath: sidecar-conf-init.sh
+        - mountPath: /home/eastcoal-docker/conf
+          name: cloudcanal-sidecar-props
       restartPolicy: Always
       volumes:
-        - name: cloudcanal-sidecar-conf-init
-          configMap:
-            name: sidecar-config
-            items:
-              - key: sidecar-conf-init.sh
-                path: sidecar-conf-init.sh
-        - name: cloudcanal-sidecar-props
-          configMap:
-            name: sidecar-config
-            items:
-              - key: business-output.properties
-                path: business-output.properties
+      - name: cloudcanal-sidecar-conf-init
+        configMap:
+          name: sidecar-config
+          items:
+          - key: sidecar-conf-init.sh
+            path: sidecar-conf-init.sh
+      - name: cloudcanal-sidecar-props
+        configMap:
+          name: sidecar-config
+          items:
+          - key: business-output.properties
+            path: business-output.properties
   volumeClaimTemplates:
-    - metadata:
-        name: cloudcanal-sidecar-logs
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 10Gi
-        storageClassName: local-path
-    - metadata:
-        name: cloudcanal-sidecar-config
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 5Mi
-        storageClassName: local-path
+  - metadata:
+      name: cloudcanal-sidecar-logs
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: local-path
+  - metadata:
+      name: cloudcanal-sidecar-config
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Mi
+      storageClassName: local-path
