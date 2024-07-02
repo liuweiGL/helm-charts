@@ -1,7 +1,7 @@
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
-  name: {{ printf "%s-%s" (include "common.names.fullname" .) "sidecar" }}
+  name: {{ include "cloudcanal.sidecar.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: sidecar
@@ -204,6 +204,9 @@ spec:
           volumeMounts:
             - name: empty-dir
               mountPath: /home/clougence
+            - name: data
+              mountPath: /home/clougence/cloudcanal/datahandle
+              subPath: datahandle
           {{- if .Values.sidecar.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -216,6 +219,13 @@ spec:
         - name: sidecar-conf
           configMap:
             name: {{ include "cloudcanal.sidecar.configMapName" . }}
+        - name: data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "common.names.fullname" .) .Values.persistence.existingClaim }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
         {{- if .Values.sidecar.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.extraVolumes "context" $) | nindent 8 }}
         {{- end }}

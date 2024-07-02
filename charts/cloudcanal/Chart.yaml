@@ -3,7 +3,7 @@ annotations:
 apiVersion: v2
 name: cloudcanal
 type: application
-version: 1.1.1
+version: 1.1.2
 appVersion: 4.1.1.0
 description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
 icon: https://www.clougence.com/favicon.svg
