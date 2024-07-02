@@ -6,7 +6,7 @@ metadata:
 spec:
   storageClassName: local-path
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
@@ -21,10 +21,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "32500"
-      port: 3306
-      targetPort: 3306
-      nodePort: 32500
+  - name: "32500"
+    port: 3306
+    targetPort: 3306
+    nodePort: 32500
   selector:
     cloudcanal-service: mysql
 ---
@@ -64,57 +64,57 @@ spec:
         cloudcanal-service: mysql
     spec:
       containers:
-        - args:
-            - mysqld
-            - --character-set-server=utf8mb4
-            - --collation-server=utf8mb4_unicode_ci
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: "123456"
-          image: clougence/cloudcanal-mysql:${build_version}
-          imagePullPolicy: IfNotPresent
-          startupProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 10
-            timeoutSeconds: 5
-            periodSeconds: 3
-            successThreshold: 1
-            failureThreshold: 10
-          readinessProbe:
-            tcpSocket:
-              port: 3306
-            timeoutSeconds: 5
-            periodSeconds: 3
-            successThreshold: 1
-            failureThreshold: 10
-          livenessProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            periodSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
-          name: cloudcanal-mysql
-          ports:
-            - containerPort: 3306
-              protocol: TCP
-              name: mysql
-          resources: # need be fill limit and requests to avoid Java OOM
-            requests:
-              memory: "1Gi"
-              cpu: "1"
-            limits:
-              memory: "1Gi"
-              cpu: "1"
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: cloudcanal-mysql-volume
+      - args:
+        - mysqld
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+        image: eastcoal-docker/cloudcanal-mysql:${build_version}
+        imagePullPolicy: IfNotPresent
+        startupProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          periodSeconds: 3
+          successThreshold: 1
+          failureThreshold: 10
+        readinessProbe:
+          tcpSocket:
+            port: 3306
+          timeoutSeconds: 5
+          periodSeconds: 3
+          successThreshold: 1
+          failureThreshold: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          periodSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
+        name: cloudcanal-mysql
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+          name: mysql
+        resources: # need be fill limit and requests to avoid Java OOM
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: cloudcanal-mysql-volume
       restartPolicy: Always
       volumes:
-        - name: cloudcanal-mysql-volume
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+      - name: cloudcanal-mysql-volume
+        persistentVolumeClaim:
+          claimName: mysql-pvc

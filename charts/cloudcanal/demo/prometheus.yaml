@@ -6,7 +6,7 @@ metadata:
 spec:
   storageClassName: local-path
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
@@ -19,7 +19,7 @@ metadata:
 spec:
   storageClassName: local-path
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
@@ -39,7 +39,7 @@ data:
       external_labels:  # 当和其他外部系统交互时的标签，如远程存储、联邦集群时
         # prometheus: monitoring/k8s  # 如：prometheus-operator的配置
         # prometheus_replica: prometheus-k8s-1
-    
+
     # Alertmanager的配置
     alerting:
       alertmanagers:
@@ -51,14 +51,14 @@ data:
         regex: prometheus_replica
         replacement: $1
         action: labeldrop
-    
+
     # 一旦加载了报警规则文件，将按照evaluation_interval即15s一次进行计算，rule文件可以有多个
     rule_files:
       # - "first_rules.yml"
       # - "second_rules.yml"
-    
+
     # scrape_configs为采集配置，包含至少一个job
-    
+
     scrape_configs:
       # Prometheus的自身监控 将在采集到的时间序列数据上打上标签job=xx
       - job_name: 'prometheus'
@@ -88,10 +88,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "31900"
-      port: 9090
-      targetPort: 9090
-      nodePort: 31900
+  - name: "31900"
+    port: 9090
+    targetPort: 9090
+    nodePort: 31900
   selector:
     cloudcanal-service: prometheus
 ---
@@ -105,9 +105,9 @@ metadata:
 spec:
   clusterIP: None
   ports:
-    - name: "9090"
-      port: 9090
-      targetPort: 9090
+  - name: "9090"
+    port: 9090
+    targetPort: 9090
   selector:
     cloudcanal-service: prometheus
 ---
@@ -131,34 +131,34 @@ spec:
         cloudcanal-service: prometheus
     spec:
       containers:
-        - image: clougence/cloudcanal-prometheus:${build_version}
-          imagePullPolicy: IfNotPresent
-          name: cloudcanal-prometheus
-          ports:
-            - containerPort: 9090
-              hostPort: 9090
-              protocol: TCP
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "1"
-            limits:
-              memory: "1Gi"
-              cpu: "1"
-          volumeMounts:
-            - mountPath: /prometheus
-              name: cloudcanal-prometheus-volume
-            - mountPath: /etc/prometheus/prometheus.yml
-              subPath: prometheus.yml
-              name: cloudcanal-prometheus-config
+      - image: eastcoal-docker/cloudcanal-prometheus:${build_version}
+        imagePullPolicy: IfNotPresent
+        name: cloudcanal-prometheus
+        ports:
+        - containerPort: 9090
+          hostPort: 9090
+          protocol: TCP
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        volumeMounts:
+        - mountPath: /prometheus
+          name: cloudcanal-prometheus-volume
+        - mountPath: /etc/prometheus/prometheus.yml
+          subPath: prometheus.yml
+          name: cloudcanal-prometheus-config
       restartPolicy: Always
       volumes:
-        - name: cloudcanal-prometheus-volume
-          persistentVolumeClaim:
-            claimName: prometheus-pvc
-        - name: cloudcanal-prometheus-config
-          configMap:
-            name: prometheus-config
-            items:
-              - key: prometheus.yml
-                path: prometheus.yml
+      - name: cloudcanal-prometheus-volume
+        persistentVolumeClaim:
+          claimName: prometheus-pvc
+      - name: cloudcanal-prometheus-config
+        configMap:
+          name: prometheus-config
+          items:
+          - key: prometheus.yml
+            path: prometheus.yml

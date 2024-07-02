@@ -71,8 +71,8 @@ console:
   ## @param console.image.debug Enable console image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
-    repository: clougence/cloudcanal-console
+    registry: registry.cn-shanghai.aliyuncs.com
+    repository: eastcoal-docker/cloudcanal-console
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy
@@ -479,8 +479,8 @@ sidecar:
   ## @param sidecar.image.debug Enable sidecar image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
-    repository: clougence/cloudcanal-sidecar
+    registry: registry.cn-shanghai.aliyuncs.com
+    repository: eastcoal-docker/cloudcanal-sidecar
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy
@@ -835,8 +835,8 @@ mysql:
   ## @param mysql.image.debug Enable mysql image debug mode
   ##
   image:
-    registry: harbor.eastcoal.club
-    repository: clougence/cloudcanal-mysql
+    registry: registry.cn-shanghai.aliyuncs.com
+    repository: eastcoal-docker/cloudcanal-mysql
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy

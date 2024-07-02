@@ -9,7 +9,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-# /home/clougence/cloudcanal/global_conf
+# /home/eastcoal-docker/cloudcanal/global_conf
   conf.properties: |
     cloudcanal.auth.ak=ak0a2c62tdo1ap2416655mpyx0v36l359p1v5rn782caw8t0qkk1s94b80lfs90
     cloudcanal.auth.sk=sk6206iy4pb0eydz9hg97jo3tu5d80j97e91bbql65167u8wb75x4ej6e4v4aa4
