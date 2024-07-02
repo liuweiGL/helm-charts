@@ -806,7 +806,7 @@ sidecar:
     - ReadWriteOnce
     ## @param persistence.size Size of data volume
     ##
-    size: 200MB
+    size: 200M
     ## @param persistence.existingClaim The name of an existing PVC to use for persistence
     ##
     existingClaim: ""
