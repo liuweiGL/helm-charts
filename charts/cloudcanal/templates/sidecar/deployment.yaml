@@ -222,7 +222,7 @@ spec:
         - name: data
         {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ default (include "common.names.fullname" .) .Values.persistence.existingClaim }}
+            claimName: {{ include "cloudcanal.sidecar.pvcName" . }}
         {{- else }}
           emptyDir: {}
         {{- end }}

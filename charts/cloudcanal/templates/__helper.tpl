@@ -32,6 +32,14 @@
     {{ printf "%s-%s" (include "common.names.fullname" .) "sidecar" }}
 {{- end }}
 
+{{- define "cloudcanal.sidecar.pvcName" -}}
+    {{- if .Values.sidecar.persistence.existingClaim }}
+        {{- .Values.sidecar.persistence.existingClaim }}
+    {{- else }}
+        {{- printf "%s-%s" (include "cloudcanal.sidecar.fullname" .) "data" }}
+    {{- end }}
+{{- end -}}
+
 {{- define "cloudcanal.sidecar.configMapName" -}}
     {{- printf "%s-%s" (include "common.names.fullname" .) "sidecar-config" }}
 {{- end -}}
