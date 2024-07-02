@@ -90,7 +90,7 @@ spec:
               fi
               cp /tmp/conf/business-output.properties $sidecar_conf_dir/business-output.properties
           volumeMounts:
-            - name: empty-dir
+            - name: workspace
               mountPath: /workspace
             - name: sidecar-conf
               mountPath: /tmp/conf
@@ -128,7 +128,7 @@ spec:
             fi
             cp "$cloudcanal_tmp_dir"/* "$cloudcanal_lib_dir"
           volumeMounts:
-          - name: empty-dir
+          - name: workspace
             mountPath: /workspace
             {{- end }}
         {{- end }}
@@ -202,7 +202,7 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.sidecar.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: empty-dir
+            - name: workspace
               mountPath: /home/clougence
             - name: data
               mountPath: /home/clougence/cloudcanal/datahandle
@@ -214,13 +214,13 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecar.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
-        - name: empty-dir
+        - name: workspace
           emptyDir: {}
         - name: sidecar-conf
           configMap:
             name: {{ include "cloudcanal.sidecar.configMapName" . }}
         - name: data
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.sidecar.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ include "cloudcanal.sidecar.pvcName" . }}
         {{- else }}
