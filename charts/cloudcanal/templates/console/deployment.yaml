@@ -60,7 +60,7 @@ spec:
             - sh
             - -c
             - |
-              cp -r /home/eastcoal-docker/* /workspace
+              cp -r /home/clougence/* /workspace
               chmod -R 777 /workspace
               chown -R clougence:clougence /workspace
               console_conf_dir="/workspace/cloudcanal/console/conf"
@@ -71,7 +71,7 @@ spec:
               cat $console_conf_dir/business-output.properties
             
           volumeMounts:
-            - name: empty-dir
+            - name: workspace
               mountPath: /workspace
             - name: console-conf
               mountPath: /conf
@@ -150,7 +150,7 @@ spec:
             # - name: timezone
             #   mountPath: /etc/localtime
             #   readOnly: true
-            - name: empty-dir
+            - name: workspace
               mountPath: /home/clougence
           {{- if .Values.console.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.console.extraVolumeMounts "context" $) | nindent 12 }}
@@ -159,7 +159,7 @@ spec:
         # - name: timezone
         #   hostPath:
         #     path: /etc/localtime
-        - name: empty-dir
+        - name: workspace
           emptyDir: {}
         - name: console-conf
           configMap:
