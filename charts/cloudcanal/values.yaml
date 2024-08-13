@@ -72,7 +72,7 @@ console:
   ##
   image:
     registry: registry.cn-shanghai.aliyuncs.com
-    repository: eastcoal-docker/cloudcanal-console
+    repository: eastcoal-library/cloudcanal-console
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy
@@ -480,7 +480,7 @@ sidecar:
   ##
   image:
     registry: registry.cn-shanghai.aliyuncs.com
-    repository: eastcoal-docker/cloudcanal-sidecar
+    repository: eastcoal-library/cloudcanal-sidecar
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy
@@ -836,7 +836,7 @@ mysql:
   ##
   image:
     registry: registry.cn-shanghai.aliyuncs.com
-    repository: eastcoal-docker/cloudcanal-mysql
+    repository: eastcoal-library/cloudcanal-mysql
     tag: 4.1.1.0
     digest: ""
     ## Specify a imagePullPolicy
