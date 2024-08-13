@@ -206,7 +206,7 @@ namesrv:
     fsGroupChangePolicy: Always
     sysctls: []
     supplementalGroups: []
-    fsGroup: 1001
+    fsGroup: 3000
   ## RocketMQ namesrv container security context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param namesrv.containerSecurityContext.enabled RocketMQ namesrv container securityContext
@@ -222,8 +222,8 @@ namesrv:
   containerSecurityContext:
     enabled: false
     seLinuxOptions: {}
-    runAsUser: 1001
-    runAsGroup: 1001
+    runAsUser: 3000
+    runAsGroup: 3000
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     capabilities:
@@ -580,7 +580,7 @@ broker:
     fsGroupChangePolicy: Always
     sysctls: []
     supplementalGroups: []
-    fsGroup: 1001
+    fsGroup: 3000
   ## RocketMQ broker container security context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param broker.containerSecurityContext.enabled RocketMQ broker container securityContext
@@ -596,8 +596,8 @@ broker:
   containerSecurityContext:
     enabled: false
     seLinuxOptions: {}
-    runAsUser: 1001
-    runAsGroup: 1001
+    runAsUser: 3000
+    runAsGroup: 3000
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     capabilities:
