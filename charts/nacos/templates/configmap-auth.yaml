@@ -11,7 +11,7 @@ data:
   NACOS_AUTH_ENABLE: {{ .Values.auth.enabled | default true | quote }}
   NACOS_AUTH_SYSTEM_TYPE: {{ .Values.auth.type | default "nacos" }}
   NACOS_AUTH_TOKEN: {{ .Values.auth.token.value }}
-  NACOS_AUTH_TOKEN_EXPIRE_SECONDS: {{ .Values.auth.token.expire | default 1800 | quote }}
+  NACOS_AUTH_TOKEN_EXPIRE_SECONDS: {{ .Values.auth.token.expireSeconds | default 1800 | quote }}
   NACOS_AUTH_CACHE_ENABLE: {{ .Values.auth.token.cacheEnabled | default false | quote }}
   NACOS_AUTH_IDENTITY_KEY: {{ .Values.auth.server.identityKey | quote }}
   NACOS_AUTH_IDENTITY_VALUE: {{ .Values.auth.server.identityValue | quote }}
