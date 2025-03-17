@@ -23,8 +23,8 @@ global:
       adaptSecurityContext: auto
       ## @section Common parameters
 
-## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
-##
+      ## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+      ##
 nameOverride: ""
 ## @param namespaceOverride String to fully override common.names.namespace
 ##
@@ -51,7 +51,7 @@ commonAnnotations: {}
 image:
   registry: docker.io
   repository: nacos/nacos-server
-  tag: v2.4.1
+  tag: v2.5.1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -119,7 +119,6 @@ storage:
     username: ""
     password: ""
     param: ""
-
 
 ## @param extraEnvVars Extra environment variables to be set on Nacos container
 ## e.g:
@@ -216,7 +215,7 @@ statefulset:
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
     capabilities:
-      drop: ["ALL"]
+      drop: [ "ALL" ]
     seccompProfile:
       type: "RuntimeDefault"
   ## Automatic Cleanup for Finished Jobs
@@ -323,7 +322,7 @@ containerSecurityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   capabilities:
-    drop: ["ALL"]
+    drop: [ "ALL" ]
   seccompProfile:
     type: "RuntimeDefault"
 ## @param podLabels Extra labels for Nacos pods
@@ -495,8 +494,8 @@ persistence:
   ##
   selector: {}
   ## Primary Persistent Volume Claim Retention Policy
-## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
-##
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+  ##
 persistentVolumeClaimRetentionPolicy:
   ## @param primary.persistentVolumeClaimRetentionPolicy.enabled Enable Persistent volume retention policy for Primary StatefulSet
   ##
