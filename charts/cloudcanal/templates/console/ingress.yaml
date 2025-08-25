@@ -23,9 +23,7 @@ spec:
           {{- toYaml .Values.console.ingress.extraPaths | nindent 10 }}
           {{- end }}
           - path: {{ .Values.console.ingress.path }}
-            {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
             pathType: {{ .Values.console.ingress.pathType }}
-            {{- end }}
             backend: {{- include "common.ingress.backend" (dict "serviceName" (include "cloudcanal.console.serviceName" $) "servicePort" .Values.console.service.ports.console "context" $) | nindent 14 }}
     {{- end }}
     {{- range .Values.console.ingress.extraHosts }}
@@ -33,9 +31,7 @@ spec:
       http:
         paths:
           - path: {{ default "/" .path }}
-            {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
-            {{- end }}
             backend: {{- include "common.ingress.backend" (dict "serviceName" (include "cloudcanal.console.serviceName" $) "servicePort" .Values.console.service.ports.console "context" $) | nindent 14 }}
     {{- end }}
     {{- if .Values.console.ingress.extraRules }}

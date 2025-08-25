@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2025-08-25T18:07:46.92986153+08:00"
+    created: "2025-08-25T18:16:24.760549141+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +13,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 3138afafd62b16dd96553a6688662a3e598ba7862a1417588dd40fbbe6617c61
+    digest: 640b49681c730b3433e814bfff6bc0b372b6ed955cef7f9006113ac6baa8ea8f
     home: https://www.clougence.com/
     icon: https://www.clougence.com/favicon.svg
     name: cloudcanal
@@ -28,7 +28,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2025-08-25T18:07:46.934267366+08:00"
+    created: "2025-08-25T18:16:24.769738752+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -39,7 +39,7 @@ entries:
       that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
       lightweight and is suitable for use on all devices from low power single board
       computers to full servers
-    digest: e719fc903bba7669c6aea8631a0784770541f74adab866b866ea806fe52c0239
+    digest: 7d413d70a8bbb30d82029dd7f7b1870876cb37e913616fcb0e8ce46ecf6281ea
     home: https://mosquitto.org/
     icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
     name: mosquitto
@@ -54,7 +54,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2025-08-25T18:07:46.940707679+08:00"
+    created: "2025-08-25T18:16:24.775949014+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -62,7 +62,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: df3d08c82ef51390a6adf383c37aef62b61bd1018a381abbd432ad444ba08c21
+    digest: 4e33ef0c039583037823415a8e62b6d6a00d6178d24aed4346297b80e0eb9079
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -77,7 +77,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2025-08-25T18:07:46.944670879+08:00"
+    created: "2025-08-25T18:16:24.781070358+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -86,7 +86,7 @@ entries:
       version: 2.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: 320425fa0badaeb15910640e98ebdae6afc795dc706ee9a40952801927d04246
+    digest: 063f8e8a86712df34b856c5bbcee108653402b25f3fcc8249df6d6132a157ef8
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-client
@@ -101,7 +101,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-08-25T18:07:46.948861746+08:00"
+    created: "2025-08-25T18:16:24.788454565+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -110,7 +110,7 @@ entries:
       version: 2.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: 9a86004ddfbe7ccad2045d410801d95d4babbee2a3fc5c95de2ea106c1d5cc5b
+    digest: 16ce52d820a2db88c9b4064a0e45177a872484dbb59a2dc818ba00cae536646c
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-dashboard
@@ -125,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-08-25T18:07:46.965392574+08:00"
+    created: "2025-08-25T18:16:24.805336898+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -151,7 +151,7 @@ entries:
       version: 1.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: 48db05991258009512b98d58128781603b06ddba45150f45c2098d02c525d489
+    digest: cfc63f9b0063a55d0ff32bbea6fc0e7084c745562cbd5ad953d85d9d857dacf8
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-server
@@ -166,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-08-25T18:07:46.970755958+08:00"
+    created: "2025-08-25T18:16:24.810271234+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -175,7 +175,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: 17cbf49a5ed935618ff8c63731c47de7dbceba919be65ad874151d4cefb2099b
+    digest: 0ed72b87083cc450b78e822814b848b959b7662bf9e070e99e0b2e3328f3808f
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -190,7 +190,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2025-08-25T18:07:46.977324548+08:00"
+    created: "2025-08-25T18:16:24.816294829+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -204,7 +204,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 636b69ebacaa2b22b3791dd3e561566aaed3367dbbefbd11571964e62e3d2fdc
+    digest: fc971eaa5cdcaa8163a593405e413ef8b4518f9712358331fc6193590f6e00c8
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -219,7 +219,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2025-08-25T18:07:46.981633876+08:00"
+    created: "2025-08-25T18:16:24.822670628+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -228,7 +228,7 @@ entries:
       version: 2.x.x
     description: LDAP Tool Box Self Service Password is a web application for end
       users. It allows them to change or reset their password if they lost it
-    digest: 48854283799df941622b67f7a354e0f30327d9e40d1266cc0e735155fdf24904
+    digest: 6436a8a8fa853f31e03853f870f3210d89c23f26402e13bfabe121d4d984f81a
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
     name: self-service-password
@@ -238,4 +238,4 @@ entries:
     urls:
     - self-service-password-1.0.2.tgz
     version: 1.0.2
-generated: "2025-08-25T18:07:46.920933412+08:00"
+generated: "2025-08-25T18:16:24.753772513+08:00"
