@@ -51,16 +51,11 @@ spec:
     {{- if .Values.ingress.extraRules }}
     {{- include "common.tplvalues.render" (dict "value" .Values.ingress.extraRules "context" $) | nindent 4 }}
     {{- end }}
-  {{- if or (and .Values.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.ingress.annotations )) .Values.ingress.selfSigned (not (empty .Values.ingress.secrets)))) .Values.ingress.extraTls }}
+  {{- if .Values.ingress.tls }}
   tls:
-    {{- if and .Values.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.ingress.annotations )) .Values.ingress.selfSigned (not (empty .Values.ingress.secrets))) }}
     - hosts:
         - {{ .Values.ingress.hostname | quote }}
-        {{- if or (.Values.ingress.tlsWwwPrefix) (eq (index .Values.ingress.annotations "nginx.ingress.kubernetes.io/from-to-www-redirect") "true" ) }}
-        - {{ printf "www.%s" (tpl .Values.ingress.hostname $) | quote }}
-        {{- end }}
-      secretName: {{ printf "%s-tls" .Values.ingress.hostname }}
-    {{- end }}
+      secretName: {{ include "nacos.ingress.tlsSecretName" . }}
     {{- if .Values.ingress.extraTls }}
     {{- include "common.tplvalues.render" (dict "value" .Values.ingress.extraTls "context" $) | nindent 4 }}
     {{- end }}

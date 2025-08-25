@@ -25,3 +25,11 @@
 {{- define "nacos.configMapNames.app" -}}
     {{ printf "%s-%s" (include "common.names.fullname" .) "app" }}
 {{- end -}}
+
+{{- define "nacos.ingress.tlsSecretName" -}}
+    {{- if .Values.ingress.existingSecret -}}
+        {{- printf "%s" (tpl .Values.ingress.existingSecret $) -}}
+    {{- else -}}
+        {{- printf "%s-tls" .Values.ingress.hostname -}}
+    {{- end -}}
+{{- end -}}

@@ -3,7 +3,7 @@ annotations:
 apiVersion: v2
 name: nacos
 type: application
-version: 1.1.0
+version: 1.2.0
 appVersion: 2.5.1
 description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
 icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png

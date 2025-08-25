@@ -12,5 +12,10 @@ helm repo update
 3. Install the chart
 helm install eastcoal/CHART_NAME
 
+## 调试模板
+```sh
+helm template  [RELEASE_NAME] [CHART_PATH] . -f _debug.yaml > test.yaml
+```
+
 ## 参考资料
 1. https://docs.vmware.com/en/VMware-Tanzu-Application-Catalog/services/tutorials/GUID-index.html
