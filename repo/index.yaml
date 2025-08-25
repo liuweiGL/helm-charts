@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.34542977+08:00"
+    created: "2025-08-25T18:07:46.92986153+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -13,7 +13,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: db57667f72a48dc9677c423050a450bc029c0d91670400e52c3ebcd960e31b9f
+    digest: 3138afafd62b16dd96553a6688662a3e598ba7862a1417588dd40fbbe6617c61
     home: https://www.clougence.com/
     icon: https://www.clougence.com/favicon.svg
     name: cloudcanal
@@ -23,210 +23,12 @@ entries:
     urls:
     - cloudcanal-1.2.4.tgz
     version: 1.2.4
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.339783018+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 8923ba5259759c70767792c3608f22064720606927a841a4248aa1e2807ed93d
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.2.3.tgz
-    version: 1.2.3
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.333788307+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 1967fc00df78d9efcf7cece3380acc9c59623ef25d2feec8caa695061c46c2e4
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.2.2.tgz
-    version: 1.2.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.327086564+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 0243a87e4206c61723f405c2d95f60f5cd43fd35b93b4e603a1a765ac5e2366a
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.2.1.tgz
-    version: 1.2.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.322262301+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: e03000d398bc0299ddd8dcde9ff7619cceb131c3f35d43eb6d3acfdf60ecd069
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.2.0.tgz
-    version: 1.2.0
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.310868817+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 925954a460a59fb00ebcdc85720ce2230d006ca65abeedbd20ac6bc7d241e81f
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.1.2.tgz
-    version: 1.1.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.305104785+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: f28189d7f0031730e0be22f7fc0630341d38272e63e6c062f15b07b3d5258e9a
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.1.1.tgz
-    version: 1.1.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.300074843+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: ad488b75406c7306fd7164ad5d3be2e9e657c8f99b9a756816695653c3404486
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.1.0.tgz
-    version: 1.1.0
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.29432196+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 98dfb35ad73c2f35d690686cac34c05e30c5c1ad501c8eff5d77d4f5042f2d44
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 4.1.1.0
-    created: "2025-08-25T17:49:54.288878914+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: CloudCanal-企业级数据实时同步工具，可视化操作，高效进行多源异构数据源间的数据互通与融合，助力企业构建丰富的数据应用场景
-    digest: 9db3dd5c9af5a8b11cf66fe5424b1310c6087287a06a4686279df6c25e54865b
-    home: https://www.clougence.com/
-    icon: https://www.clougence.com/favicon.svg
-    name: cloudcanal
-    sources:
-    - https://www.clougence.com/
-    type: application
-    urls:
-    - cloudcanal-1.0.0.tgz
-    version: 1.0.0
   mosquitto:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2025-08-25T17:49:54.349851927+08:00"
+    created: "2025-08-25T18:07:46.934267366+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -237,7 +39,7 @@ entries:
       that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
       lightweight and is suitable for use on all devices from low power single board
       computers to full servers
-    digest: 4d765d3ca7c712649e357d1b1961f8f5c8cd2c2465fdcb61a5424bc8e65fdb38
+    digest: e719fc903bba7669c6aea8631a0784770541f74adab866b866ea806fe52c0239
     home: https://mosquitto.org/
     icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
     name: mosquitto
@@ -252,7 +54,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2025-08-25T17:49:54.368061656+08:00"
+    created: "2025-08-25T18:07:46.940707679+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -260,7 +62,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 7b1a07e35fef07756649f8aa0fe74254d51508b3d7dc60d054196026a778dc2d
+    digest: df3d08c82ef51390a6adf383c37aef62b61bd1018a381abbd432ad444ba08c21
     home: https://nacos.io/docs/latest/what-is-nacos/
     icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
     name: nacos
@@ -270,78 +72,12 @@ entries:
     urls:
     - nacos-1.2.0.tgz
     version: 1.2.0
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.5.1
-    created: "2025-08-25T17:49:54.36365529+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 68adab0e5fab1a6733cf956cba131629b65709ec663429612e310c2f78eead2c
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.1.0.tgz
-    version: 1.1.0
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.4.x
-    created: "2025-08-25T17:49:54.358591719+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 55a67f5ea057fa90762f7e0a316419674f3abe89e3595225b6501096eaf95b5c
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.0.5.tgz
-    version: 1.0.5
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 2.3.2
-    created: "2025-08-25T17:49:54.353999821+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
-    digest: 937bab4c5e00fd23775e5ab89adfc1460bb25f23401c868b17c5ddf9eaea4be1
-    home: https://nacos.io/docs/latest/what-is-nacos/
-    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
-    name: nacos
-    sources:
-    - https://github.com/alibaba/nacos
-    type: application
-    urls:
-    - nacos-1.0.3.tgz
-    version: 1.0.3
   netmaker-client:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2025-08-25T17:49:54.372050952+08:00"
+    created: "2025-08-25T18:07:46.944670879+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -350,7 +86,7 @@ entries:
       version: 2.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: b64f7741167b3cb327045e56e7f23a25ce67d656b9e6a153c21ed5dfa4082e2f
+    digest: 320425fa0badaeb15910640e98ebdae6afc795dc706ee9a40952801927d04246
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-client
@@ -365,7 +101,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-08-25T17:49:54.37683818+08:00"
+    created: "2025-08-25T18:07:46.948861746+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -374,7 +110,7 @@ entries:
       version: 2.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: c65db16a82649b0c599b4710a8e2a27907de2a8ac37ff53925e1d2e9b92082df
+    digest: 9a86004ddfbe7ccad2045d410801d95d4babbee2a3fc5c95de2ea106c1d5cc5b
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-dashboard
@@ -389,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-08-25T17:49:54.38957752+08:00"
+    created: "2025-08-25T18:07:46.965392574+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -415,7 +151,7 @@ entries:
       version: 1.x.x
     description: Netmaker makes networks with WireGuard. Netmaker automates fast,
       secure, and distributed virtual networks
-    digest: e92269e225df9dcc6a44bd780ce2aa33b96b4a9c3ff6c776c70865bb41b196e4
+    digest: 48db05991258009512b98d58128781603b06ddba45150f45c2098d02c525d489
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
     name: netmaker-server
@@ -430,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-08-25T17:49:54.408595888+08:00"
+    created: "2025-08-25T18:07:46.970755958+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -439,7 +175,7 @@ entries:
       version: 2.x.x
     description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
       Topic 配置、Broker 管理等命令行操作
-    digest: fc2f7d811a193ea60766a8e63c4395780981a84426c73b0d7a2b139fd2ad0fae
+    digest: 17cbf49a5ed935618ff8c63731c47de7dbceba919be65ad874151d4cefb2099b
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-dashboard
@@ -449,81 +185,12 @@ entries:
     urls:
     - rocketmq-dashboard-1.0.5.tgz
     version: 1.0.5
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2025-08-25T17:49:54.404524341+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: c7e20e0c8f7126aeee68803a7098a4105d49bfc5eb1956da35e7a7b239f1c5d6
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-dashboard
-    sources:
-    - https://github.com/apache/rocketmq-dashboard
-    type: application
-    urls:
-    - rocketmq-dashboard-1.0.4.tgz
-    version: 1.0.4
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2025-08-25T17:49:54.400501296+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: dbee39894827e8eabd32b053d662280a9d341e1f41c787e3c23855224fc034be
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-dashboard
-    sources:
-    - https://github.com/apache/rocketmq-dashboard
-    type: application
-    urls:
-    - rocketmq-dashboard-1.0.3.tgz
-    version: 1.0.3
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2025-08-25T17:49:54.393714874+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: 0ecd9278fd43764e63580de8d64d667924c4d5ab73bbba118390cca43ee2f60c
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-dashboard
-    sources:
-    - https://github.com/apache/rocketmq-dashboard
-    type: application
-    urls:
-    - rocketmq-dashboard-1.0.2.tgz
-    version: 1.0.2
   rocketmq-server:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2025-08-25T17:49:54.455693708+08:00"
+    created: "2025-08-25T18:07:46.977324548+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -537,7 +204,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 46610c2b2473ca448dfb5c2439c48227296f21c8f5e9e40d7bf7673bd78c8c06
+    digest: 636b69ebacaa2b22b3791dd3e561566aaed3367dbbefbd11571964e62e3d2fdc
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -547,180 +214,12 @@ entries:
     urls:
     - rocketmq-server-1.1.6.tgz
     version: 1.1.6
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.3.0
-    created: "2025-08-25T17:49:54.450034972+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 0ba4f75552b2f7814841bdafe2442f782bf2d949204c882bff81cad378e9f97f
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.1.5.tgz
-    version: 1.1.5
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2025-08-25T17:49:54.442317416+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 191fe69bbefac80457649f407fa893a408d3cf07d7a8fd7acbbc3aa5f4485c59
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.1.4.tgz
-    version: 1.1.4
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2025-08-25T17:49:54.435848571+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: bed62fb04b1455e1d121e0f49d0c74c00ef764a63f0f52b955dc130b5b75926e
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.1.3.tgz
-    version: 1.1.3
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2025-08-25T17:49:54.428104605+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: 70d436eb39e770360750e1c3d55336a97313bc01570ff1584165797c81729e96
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.1.2.tgz
-    version: 1.1.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2025-08-25T17:49:54.422253628+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: bff3d959b461c4fd1746b5a1a4d10257ceea4fb32624831b5de02a5d3721707a
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.0.2.tgz
-    version: 1.0.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 5.2.0
-    created: "2025-08-25T17:49:54.415586456+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - condition: global.dashboardEnabled
-      name: rocketmq-dashboard
-      repository: file://../rocketmq-dashboard
-      tags:
-      - rocketmq-dashboard
-      version: 1.x.x
-    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: c672eedebbc26818820ca783447a1c9cfbd042ed9d01d1d8b2b4df38dd9e85f0
-    home: https://rocketmq.apache.org/zh/docs/
-    icon: https://rocketmq.apache.org/img/favicon-192x192.png
-    name: rocketmq-server
-    sources:
-    - https://github.com/apache/rocketmq
-    type: application
-    urls:
-    - rocketmq-server-1.0.1.tgz
-    version: 1.0.1
   self-service-password:
   - annotations:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2025-08-25T17:49:54.472873002+08:00"
+    created: "2025-08-25T18:07:46.981633876+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -729,7 +228,7 @@ entries:
       version: 2.x.x
     description: LDAP Tool Box Self Service Password is a web application for end
       users. It allows them to change or reset their password if they lost it
-    digest: f00ecc5160f78dc4295075e1287f351c1ed38e298f0ec784837958dac10a4674
+    digest: 48854283799df941622b67f7a354e0f30327d9e40d1266cc0e735155fdf24904
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
     name: self-service-password
@@ -739,50 +238,4 @@ entries:
     urls:
     - self-service-password-1.0.2.tgz
     version: 1.0.2
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.5.4
-    created: "2025-08-25T17:49:54.46825463+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: LDAP Tool Box Self Service Password is a web application for end
-      users. It allows them to change or reset their password if they lost it
-    digest: 416424834ed5113bdc157d6df82f41faea49eba94a522409cb95ce14bf82f8ed
-    home: https://self-service-password.readthedocs.io/en/stable/
-    icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
-    name: self-service-password
-    sources:
-    - https://github.com/ltb-project/self-service-password
-    type: application
-    urls:
-    - self-service-password-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-      category: Infrastructure
-    apiVersion: v2
-    appVersion: 1.5.4
-    created: "2025-08-25T17:49:54.460910346+08:00"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: LDAP Tool Box Self Service Password is a web application for end
-      users. It allows them to change or reset their password if they lost it
-    digest: d041fb9290bb0db3cec5631ee1344264afb8d1b393d34bac910df7cf1a952a45
-    home: https://self-service-password.readthedocs.io/en/stable/
-    icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
-    name: self-service-password
-    sources:
-    - https://github.com/ltb-project/self-service-password
-    type: application
-    urls:
-    - self-service-password-1.0.0.tgz
-    version: 1.0.0
-generated: "2025-08-25T17:49:54.283369553+08:00"
+generated: "2025-08-25T18:07:46.920933412+08:00"
