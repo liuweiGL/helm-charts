@@ -30,6 +30,7 @@ image:
 ##
 config:
   existingConfigMap: ""
+  jvmOpts: ""
   auth:
     enabled: true
   dashboard:
