@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2025-09-08T14:38:22.333738499+08:00"
+    created: "2025-09-08T15:08:20.758640758+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -26,7 +26,7 @@ entries:
   descheduler:
   - apiVersion: v1
     appVersion: 0.33.0
-    created: "2025-09-08T14:38:22.337156745+08:00"
+    created: "2025-09-08T15:08:20.76681969+08:00"
     description: Descheduler for Kubernetes is used to rebalance clusters by evicting
       pods that can potentially be scheduled on better nodes. In the current implementation,
       descheduler does not schedule replacement of evicted pods but relies on the
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2025-09-08T14:38:22.343022347+08:00"
+    created: "2025-09-08T15:08:20.771953112+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2025-09-08T14:38:22.346794431+08:00"
+    created: "2025-09-08T15:08:20.776511886+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -101,7 +101,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2025-09-08T14:38:22.350689615+08:00"
+    created: "2025-09-08T15:08:20.782164108+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -125,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-09-08T14:38:22.355508795+08:00"
+    created: "2025-09-08T15:08:20.78674219+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -149,7 +149,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-09-08T14:38:22.368115129+08:00"
+    created: "2025-09-08T15:08:20.82837419+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -190,7 +190,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-08T14:38:22.373216695+08:00"
+    created: "2025-09-08T15:08:20.833306599+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -214,7 +214,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2025-09-08T14:38:22.379219265+08:00"
+    created: "2025-09-08T15:08:20.839755494+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -243,7 +243,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2025-09-08T14:38:22.384047041+08:00"
+    created: "2025-09-08T15:08:20.845526079+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -267,16 +267,15 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-08T14:38:22.390041403+08:00"
+    created: "2025-09-08T15:08:20.850399538+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
-      Topic 配置、Broker 管理等命令行操作
-    digest: 878137e3b557401a3416e6f7f89ab8ab151beea2572f038b776b873973bb945d
+    description: Sentinel 提供一个轻量级的开源控制台，它提供机器发现以及健康情况管理、监控（单机和集群），规则管理和推送的功能。
+    digest: 9e4c26be5c6f459706a9fb1fce40c131c3f4534991f5a6e0e3b10c766550c2fc
     home: https://sentinelguard.io/zh-cn/docs/dashboard.html
     icon: https://sentinelguard.io/img/sentinel_colorful.png
     name: sentinel-dashboard
@@ -286,4 +285,4 @@ entries:
     urls:
     - sentinel-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2025-09-08T14:38:22.328351832+08:00"
+generated: "2025-09-08T15:08:20.751837269+08:00"
