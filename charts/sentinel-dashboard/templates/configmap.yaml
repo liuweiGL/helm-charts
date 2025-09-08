@@ -9,11 +9,11 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  auth_enabled: "{{ .Values.config.auth.enabled }}"
-  sentinel_dashboard_auth_username: "{{ .Values.config.dashboard.auth.username }}"
-  sentinel_dashboard_auth_password: "{{ .Values.config.dashboard.auth.password }}"
-  sentinel_dashboard_app_hideAppNoMachineMillis: "{{ .Values.config.dashboard.app.hideAppNoMachineMillis }}"
-  sentinel_dashboard_app_removeAppNoMachineMillis: "{{ .Values.config.dashboard.app.removeAppNoMachineMillis }}"
-  sentinel_dashboard_app_unhealthyMachineMillis: "{{ .Values.config.dashboard.app.unhealthyMachineMillis }}"
-  sentinel_dashboard_app_autoRemoveMachineMillis: "{{ .Values.config.dashboard.app.autoRemoveMachineMillis }}"
+  auth.enabled: "{{ .Values.config.auth.enabled }}"
+  sentinel.dashboard.auth.username: "{{ .Values.config.dashboard.auth.username }}"
+  sentinel.dashboard.auth.password: "{{ .Values.config.dashboard.auth.password }}"
+  sentinel.dashboard.app.hideAppNoMachineMillis: "{{ .Values.config.dashboard.app.hideAppNoMachineMillis }}"
+  sentinel.dashboard.removeAppNoMachineMillis: "{{ .Values.config.dashboard.removeAppNoMachineMillis }}"
+  sentinel.dashboard.unhealthyMachineMillis: "{{ .Values.config.dashboard.unhealthyMachineMillis }}"
+  sentinel.dashboard.autoRemoveMachineMillis: "{{ .Values.config.dashboard.autoRemoveMachineMillis }}"
 {{- end -}}

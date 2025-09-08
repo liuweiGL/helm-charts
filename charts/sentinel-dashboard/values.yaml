@@ -56,10 +56,10 @@ commonAnnotations: {}
 commonLabels: {}
 
 replicaCount: 1
-## @param dashboard.command Override default container command on RocketMQ dashboard container(s) (useful when using custom images)
+## @param dashboard.command Override default container command on Sentinel dashboard container(s) (useful when using custom images)
 ##
 command: []
-## @param dashboard.args Override default container args on RocketMQ dashboard container(s) (useful when using custom images)
+## @param dashboard.args Override default container args on Sentinel dashboard container(s) (useful when using custom images)
 ##
 args: []
 ## @param dashboard.automountServiceAccountToken Mount Service Account token in pod
@@ -73,66 +73,66 @@ hostAliases: []
 ##
 containerPorts:
   dashboard: 8080
-## @param dashboard.updateStrategy.type Update strategy type for the RocketMQ dashboard Deployment
+## @param dashboard.updateStrategy.type Update strategy type for the Sentinel dashboard Deployment
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
 ##
 updateStrategy:
   type: Recreate
-## @param dashboard.podAnnotations Additional pod annotations for RocketMQ dashboard pods
+## @param dashboard.podAnnotations Additional pod annotations for Sentinel dashboard pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
 podAnnotations: {}
-## @param dashboard.podAffinityPreset RocketMQ dashboard pod affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+## @param dashboard.podAffinityPreset Sentinel dashboard pod affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
 podAffinityPreset: ""
-## @param dashboard.podAntiAffinityPreset RocketMQ dashboard pod anti-affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+## @param dashboard.podAntiAffinityPreset Sentinel dashboard pod anti-affinity preset. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
 podAntiAffinityPreset: soft
-## RocketMQ dashboard node affinity preset
+## Sentinel dashboard node affinity preset
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
 ##
 nodeAffinityPreset:
-  ## @param dashboard.nodeAffinityPreset.type RocketMQ dashboard node affinity preset type. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
+  ## @param dashboard.nodeAffinityPreset.type Sentinel dashboard node affinity preset type. Ignored if `dashboard.affinity` is set. Allowed values: `soft` or `hard`
   ##
   type: ""
-  ## @param dashboard.nodeAffinityPreset.key RocketMQ dashboard node label key to match Ignored if `dashboard.affinity` is set.
+  ## @param dashboard.nodeAffinityPreset.key Sentinel dashboard node label key to match Ignored if `dashboard.affinity` is set.
   ## E.g.
   ## key: "kubernetes.io/e2e-az-name"
   ##
   key: ""
-  ## @param dashboard.nodeAffinityPreset.values RocketMQ dashboard node label values to match. Ignored if `dashboard.affinity` is set.
+  ## @param dashboard.nodeAffinityPreset.values Sentinel dashboard node label values to match. Ignored if `dashboard.affinity` is set.
   ## E.g.
   ## values:
   ##   - e2e-az1
   ##   - e2e-az2
   ##
   values: []
-## @param dashboard.affinity Affinity for RocketMQ dashboard pods assignment
+## @param dashboard.affinity Affinity for Sentinel dashboard pods assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
 ##
 affinity: {}
-## @param dashboard.nodeSelector Node labels for RocketMQ dashboard pods assignment
+## @param dashboard.nodeSelector Node labels for Sentinel dashboard pods assignment
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 ##
 nodeSelector: {}
-## @param dashboard.tolerations Tolerations for RocketMQ dashboard pods assignment
+## @param dashboard.tolerations Tolerations for Sentinel dashboard pods assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
-## @param dashboard.priorityClassName RocketMQ dashboard pods' priorityClassName
+## @param dashboard.priorityClassName Sentinel dashboard pods' priorityClassName
 ##
 priorityClassName: ""
-## @param dashboard.runtimeClassName RocketMQ dashboard pods' runtimeClassName
+## @param dashboard.runtimeClassName Sentinel dashboard pods' runtimeClassName
 ##
 runtimeClassName: ""
 ## @param dashboard.schedulerName Name of the k8s scheduler (other than default)
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
 schedulerName: ""
-## @param dashboard.terminationGracePeriodSeconds In seconds, time the given to the RocketMQ dashboard pod needs to terminate gracefully
+## @param dashboard.terminationGracePeriodSeconds In seconds, time the given to the Sentinel dashboard pod needs to terminate gracefully
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 ##
 terminationGracePeriodSeconds: ""
@@ -141,9 +141,9 @@ terminationGracePeriodSeconds: ""
 ## The value is evaluated as a template
 ##
 topologySpreadConstraints: []
-## RocketMQ dashboard Pod security context
+## Sentinel dashboard Pod security context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-## @param dashboard.podSecurityContext.enabled Enable security context for RocketMQ dashboard pods
+## @param dashboard.podSecurityContext.enabled Enable security context for Sentinel dashboard pods
 ## @param dashboard.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
 ## @param dashboard.podSecurityContext.sysctls Set kernel settings using the sysctl interface
 ## @param dashboard.podSecurityContext.supplementalGroups Set filesystem extra groups
@@ -155,13 +155,13 @@ podSecurityContext:
   sysctls: []
   supplementalGroups: []
   fsGroup: 1001
-## RocketMQ dashboard container security context
+## Sentinel dashboard container security context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-## @param dashboard.containerSecurityContext.enabled RocketMQ dashboard container securityContext
+## @param dashboard.containerSecurityContext.enabled Sentinel dashboard container securityContext
 ## @param dashboard.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
-## @param dashboard.containerSecurityContext.runAsUser User ID for the RocketMQ dashboard container
-## @param dashboard.containerSecurityContext.runAsGroup Group ID for the RocketMQ dashboard container
-## @param dashboard.containerSecurityContext.runAsNonRoot Set RocketMQ dashboard container's Security Context runAsNonRoot
+## @param dashboard.containerSecurityContext.runAsUser User ID for the Sentinel dashboard container
+## @param dashboard.containerSecurityContext.runAsGroup Group ID for the Sentinel dashboard container
+## @param dashboard.containerSecurityContext.runAsNonRoot Set Sentinel dashboard container's Security Context runAsNonRoot
 ## @param dashboard.containerSecurityContext.allowPrivilegeEscalation Set container's privilege escalation
 ## @param dashboard.containerSecurityContext.capabilities.drop Set container's Security Context runAsNonRoot
 ## @param dashboard.containerSecurityContext.seccompProfile.type Set Client container's Security Context seccomp profile
@@ -179,7 +179,7 @@ containerSecurityContext:
   seccompProfile:
     type: "RuntimeDefault"
   readOnlyRootFilesystem: true
-## RocketMQ dashboard container's resource requests and limits
+## Sentinel dashboard container's resource requests and limits
 ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
@@ -257,55 +257,55 @@ extraVolumeMounts: []
 ##       - name: portname
 ##         containerPort: 1234
 ##
-## @param dashboard.extraEnvVars Extra environment variables to be set on RocketMQ dashboard containers
+## @param dashboard.extraEnvVars Extra environment variables to be set on Sentinel dashboard containers
 ## E.g.
 ## extraEnvVars:
 ##  - name: TZ
 ##    value: "Europe/Paris"
 ##
 extraEnvVars: []
-## @param dashboard.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for RocketMQ dashboard containers
+## @param dashboard.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for Sentinel dashboard containers
 ##
 extraEnvVarsCM: ""
-## @param dashboard.extraEnvVarsSecret Name of existing Secret containing extra env vars for RocketMQ dashboard containers
+## @param dashboard.extraEnvVarsSecret Name of existing Secret containing extra env vars for Sentinel dashboard containers
 ##
 extraEnvVarsSecret: ""
-## @param dashboard.extraPodSpec Optionally specify extra PodSpec for the RocketMQ dashboard pod(s)
+## @param dashboard.extraPodSpec Optionally specify extra PodSpec for the Sentinel dashboard pod(s)
 ##
 extraPodSpec: {}
 ## @param dashboard.extraPorts Extra ports to expose
 ##
 extraPorts: []
-## @param dashboard.initContainers Add additional init containers for the RocketMQ dashboard pod(s)
+## @param dashboard.initContainers Add additional init containers for the Sentinel dashboard pod(s)
 ##
 initContainers: []
-## @param dashboard.sidecars Add additional sidecar containers for the RocketMQ dashboard pod(s)
+## @param dashboard.sidecars Add additional sidecar containers for the Sentinel dashboard pod(s)
 ##
 sidecars: []
-## @param dashboard.podLabels RocketMQ dashboard pod label. If labels are same as commonLabels , this will take precedence
+## @param dashboard.podLabels Sentinel dashboard pod label. If labels are same as commonLabels , this will take precedence
 ##
 podLabels: {}
-## RocketMQ dashboard Service parameters
+## Sentinel dashboard Service parameters
 ##
 service:
-  ## @param dashboard.service.type RocketMQ dashboard K8s service type
+  ## @param dashboard.service.type Sentinel dashboard K8s service type
   ##
   type: ClusterIP
-  ## @param dashboard.service.ports.dashboard RocketMQ dashboard K8s service port
+  ## @param dashboard.service.ports.dashboard Sentinel dashboard K8s service port
   ##
   ports:
     dashboard: 8080
-  ## @param dashboard.service.nodePorts.dashboard RocketMQ dashboard K8s service node port
+  ## @param dashboard.service.nodePorts.dashboard Sentinel dashboard K8s service node port
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   nodePorts:
     dashboard: ""
-  ## @param dashboard.service.clusterIP RocketMQ dashboard K8s service clusterIP IP
+  ## @param dashboard.service.clusterIP Sentinel dashboard K8s service clusterIP IP
   ## e.g:
   ## clusterIP: None
   ##
   clusterIP: ""
-  ## @param dashboard.service.loadBalancerIP RocketMQ dashboard loadBalancerIP if service type is `LoadBalancer`
+  ## @param dashboard.service.loadBalancerIP Sentinel dashboard loadBalancerIP if service type is `LoadBalancer`
   ## Set the LoadBalancer service type to internal only
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
@@ -314,7 +314,7 @@ service:
   ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
-  ## @param dashboard.service.loadBalancerSourceRanges Addresses that are allowed when RocketMQ dashboard service is LoadBalancer
+  ## @param dashboard.service.loadBalancerSourceRanges Addresses that are allowed when Sentinel dashboard service is LoadBalancer
   ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
   ## E.g.
   ## loadBalancerSourceRanges:
@@ -324,7 +324,7 @@ service:
   ## @param dashboard.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
   ##
   extraPorts: []
-  ## @param dashboard.service.annotations Additional custom annotations for RocketMQ dashboard service
+  ## @param dashboard.service.annotations Additional custom annotations for Sentinel dashboard service
   ##
   annotations: {}
   ## @param dashboard.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
