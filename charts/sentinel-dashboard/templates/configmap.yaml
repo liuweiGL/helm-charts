@@ -1,0 +1,19 @@
+{{- if (include "dashboard.createConfigMap" .) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dashboard.configMapName" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  auth_enabled: "{{ .Values.config.auth.enabled }}"
+  sentinel_dashboard_auth_username: "{{ .Values.config.dashboard.auth.username }}"
+  sentinel_dashboard_auth_password: "{{ .Values.config.dashboard.auth.password }}"
+  sentinel_dashboard_app_hideAppNoMachineMillis: "{{ .Values.config.dashboard.app.hideAppNoMachineMillis }}"
+  sentinel_dashboard_app_removeAppNoMachineMillis: "{{ .Values.config.dashboard.app.removeAppNoMachineMillis }}"
+  sentinel_dashboard_app_unhealthyMachineMillis: "{{ .Values.config.dashboard.app.unhealthyMachineMillis }}"
+  sentinel_dashboard_app_autoRemoveMachineMillis: "{{ .Values.config.dashboard.app.autoRemoveMachineMillis }}"
+{{- end -}}
