@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2025-09-08T15:28:35.124064403+08:00"
+    created: "2025-09-08T15:35:43.028707526+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -26,7 +26,7 @@ entries:
   descheduler:
   - apiVersion: v1
     appVersion: 0.33.0
-    created: "2025-09-08T15:28:35.130922894+08:00"
+    created: "2025-09-08T15:35:43.032300554+08:00"
     description: Descheduler for Kubernetes is used to rebalance clusters by evicting
       pods that can potentially be scheduled on better nodes. In the current implementation,
       descheduler does not schedule replacement of evicted pods but relies on the
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2025-09-08T15:28:35.136968925+08:00"
+    created: "2025-09-08T15:35:43.036881853+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2025-09-08T15:28:35.14463163+08:00"
+    created: "2025-09-08T15:35:43.042508779+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -101,7 +101,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2025-09-08T15:28:35.148659907+08:00"
+    created: "2025-09-08T15:35:43.046496809+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -125,7 +125,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-09-08T15:28:35.153822208+08:00"
+    created: "2025-09-08T15:35:43.050653341+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -149,7 +149,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2025-09-08T15:28:35.168302543+08:00"
+    created: "2025-09-08T15:35:43.062464546+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -190,7 +190,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-08T15:28:35.173671633+08:00"
+    created: "2025-09-08T15:35:43.066511043+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -214,7 +214,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2025-09-08T15:28:35.182496352+08:00"
+    created: "2025-09-08T15:35:43.072995196+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -243,7 +243,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2025-09-08T15:28:35.188197493+08:00"
+    created: "2025-09-08T15:35:43.078219196+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -267,7 +267,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-09-08T15:28:35.192732765+08:00"
+    created: "2025-09-08T15:35:43.082356208+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -275,7 +275,7 @@ entries:
       - bitnami-common
       version: 2.x.x
     description: Sentinel 提供一个轻量级的开源控制台，它提供机器发现以及健康情况管理、监控（单机和集群），规则管理和推送的功能。
-    digest: f4238f59b9705a1612833bbb24939ae03a93feb40cddb0f867ce88398bf34f0d
+    digest: a67b8601a9d5affb760c5c48cc0c2453c483d8f26a29a019f592b0db1fb75ce4
     home: https://sentinelguard.io/zh-cn/docs/dashboard.html
     icon: https://sentinelguard.io/img/sentinel_colorful.png
     name: sentinel-dashboard
@@ -285,4 +285,4 @@ entries:
     urls:
     - sentinel-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2025-09-08T15:28:35.116237147+08:00"
+generated: "2025-09-08T15:35:43.022338975+08:00"
