@@ -11,12 +11,12 @@ metadata:
 data:
   JVM_OPTS: |
     -Dauth.enabled={{ .Values.config.auth.enabled }}
-    -Dsentinel.dashboard.auth.username="{{ .Values.config.dashboard.auth.username }}"
-    -Dsentinel.dashboard.auth.password="{{ .Values.config.dashboard.auth.password }}"
-    -Dsentinel.dashboard.app.hideAppNoMachineMillis="{{ .Values.config.dashboard.app.hideAppNoMachineMillis }}"
-    -Dsentinel.dashboard.removeAppNoMachineMillis="{{ .Values.config.dashboard.removeAppNoMachineMillis }}"
-    -Dsentinel.dashboard.unhealthyMachineMillis="{{ .Values.config.dashboard.unhealthyMachineMillis }}"
-    -Dsentinel.dashboard.autoRemoveMachineMillis="{{ .Values.config.dashboard.autoRemoveMachineMillis }}"
+    -Dsentinel.dashboard.auth.username={{ .Values.config.dashboard.auth.username }}
+    -Dsentinel.dashboard.auth.password={{ .Values.config.dashboard.auth.password }}
+    -Dsentinel.dashboard.app.hideAppNoMachineMillis={{ .Values.config.dashboard.app.hideAppNoMachineMillis }}
+    -Dsentinel.dashboard.removeAppNoMachineMillis={{ .Values.config.dashboard.removeAppNoMachineMillis }}
+    -Dsentinel.dashboard.unhealthyMachineMillis={{ .Values.config.dashboard.unhealthyMachineMillis }}
+    -Dsentinel.dashboard.autoRemoveMachineMillis={{ .Values.config.dashboard.autoRemoveMachineMillis }}
     {{- if .Values.config.jvmOpts }}
     {{- .Values.config.jvmOpts | nindent 4 }}
     {{- end }}
