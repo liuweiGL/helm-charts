@@ -69,7 +69,7 @@ spec:
             {{- end }}
           envFrom: 
             - configMapRef:
-                name: {{ include "dashboard.configMapName" . }}
+                name: {{ include "dashboard.config.configMapName" . }}
             {{- if .Values.extraEnvVarsCM }}
             - configMapRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsCM "context" $) }}
