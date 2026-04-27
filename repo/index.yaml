@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2026-04-27T09:59:34.050950635+08:00"
+    created: "2026-04-27T16:59:43.968237348+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -26,7 +26,7 @@ entries:
   descheduler:
   - apiVersion: v1
     appVersion: 0.33.0
-    created: "2026-04-27T09:59:34.056553001+08:00"
+    created: "2026-04-27T16:59:43.97277124+08:00"
     description: Descheduler for Kubernetes is used to rebalance clusters by evicting
       pods that can potentially be scheduled on better nodes. In the current implementation,
       descheduler does not schedule replacement of evicted pods but relies on the
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2026-04-27T09:59:34.064060727+08:00"
+    created: "2026-04-27T16:59:43.980483291+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -63,7 +63,7 @@ entries:
       that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
       lightweight and is suitable for use on all devices from low power single board
       computers to full servers
-    digest: 7a928e5443636b407b98b8e22692f4b7d79b8f2938a9dc49ddcc7cce79ddcbef
+    digest: dd354a5add826e201bd0bc47a836f09673090a624022c396d01262de297f4b70
     home: https://mosquitto.org/
     icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
     name: mosquitto
@@ -77,8 +77,30 @@ entries:
   - annotations:
       category: Infrastructure
     apiVersion: v2
+    appVersion: 3.x
+    created: "2026-04-27T16:59:44.008415318+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Nacos /nɑ:kəʊs/ 是 Dynamic Naming and Configuration Service的首字母简称，一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+    digest: 64e607d82d312a26463ffa87431fc0bbe1b151a988dcc8856c2a4890d64af970
+    home: https://nacos.io/docs/latest/what-is-nacos/
+    icon: https://gitee.com/mirrors_4/nacos-logo/raw/master/Nacos%20LOGO.png
+    name: nacos
+    sources:
+    - https://github.com/alibaba/nacos
+    type: application
+    urls:
+    - nacos-1.2.4.tgz
+    version: 1.2.4
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T09:59:34.087100902+08:00"
+    created: "2026-04-27T16:59:44.003596855+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -100,7 +122,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T09:59:34.081742026+08:00"
+    created: "2026-04-27T16:59:43.997223307+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -122,7 +144,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T09:59:34.0771951+08:00"
+    created: "2026-04-27T16:59:43.99121018+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -144,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T09:59:34.071190342+08:00"
+    created: "2026-04-27T16:59:43.986012924+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -167,7 +189,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2026-04-27T09:59:34.091445277+08:00"
+    created: "2026-04-27T16:59:44.013391522+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -191,7 +213,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-04-27T09:59:34.099794196+08:00"
+    created: "2026-04-27T16:59:44.020220856+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -215,7 +237,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-04-27T09:59:34.126369321+08:00"
+    created: "2026-04-27T16:59:44.036907752+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -256,7 +278,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-04-27T09:59:34.13265015+08:00"
+    created: "2026-04-27T16:59:44.042450376+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -280,7 +302,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2026-04-27T09:59:34.140900345+08:00"
+    created: "2026-04-27T16:59:44.049349081+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -309,7 +331,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2026-04-27T09:59:34.147020089+08:00"
+    created: "2026-04-27T16:59:44.0541746+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -333,7 +355,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-04-27T09:59:34.153376916+08:00"
+    created: "2026-04-27T16:59:44.059379935+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -351,4 +373,4 @@ entries:
     urls:
     - sentinel-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2026-04-27T09:59:34.043657715+08:00"
+generated: "2026-04-27T16:59:43.962111089+08:00"
