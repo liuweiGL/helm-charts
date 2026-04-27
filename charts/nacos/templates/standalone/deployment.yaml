@@ -107,11 +107,13 @@ spec:
               containerPort: {{ add .Values.containerPorts.http 1001 }}
             - name: jraft-rpc
               containerPort: {{ sub .Values.containerPorts.http 1000 }}
+            - name: console
+              containerPort: 8080
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               scheme: HTTP
-              port: http
+              port: console
               path: /v3/console/health/readiness
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
@@ -123,7 +125,7 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
-              port: http
+              port: console
               path: /v3/console/health/readiness
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.startupProbe.periodSeconds }}
@@ -135,7 +137,7 @@ spec:
           livenessProbe:
             httpGet:
               scheme: HTTP
-              port: http
+              port: console
               path: /v3/console/health/liveness
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
