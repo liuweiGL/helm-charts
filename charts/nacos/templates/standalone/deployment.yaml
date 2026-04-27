@@ -112,7 +112,7 @@ spec:
             httpGet:
               scheme: HTTP
               port: http
-              path: /nacos/v1/console/health/readiness
+              path: /nacos/v3/console/health/readiness
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
@@ -124,7 +124,7 @@ spec:
             httpGet:
               scheme: HTTP
               port: http
-              path: /nacos/v1/console/health/readiness
+              path: /nacos/v3/console/health/readiness
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.startupProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
@@ -136,7 +136,7 @@ spec:
             httpGet:
               scheme: HTTP
               port: http
-              path: /nacos/v1/console/health/liveness
+              path: /nacos/v3/console/health/liveness
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
