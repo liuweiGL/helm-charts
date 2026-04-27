@@ -547,12 +547,14 @@ service:
   ##
   ports:
     http: 8848
+    console: 8080
   ## @param service.nodePorts.api Specify the Nacos API nodePort value for the LoadBalancer and NodePort service types
   ## @param service.nodePorts.console Specify the Nacos Console nodePort value for the LoadBalancer and NodePort service types
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   nodePorts:
     http: ""
+    console: ""
   ## @param service.clusterIP Service Cluster IP
   ## e.g.:
   ## clusterIP: None
