@@ -31,6 +31,14 @@ spec:
       {{- else if eq .Values.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
+    - name: console
+      port: {{ .Values.service.ports.console }}
+      targetPort: console
+      {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.console)) }}
+      nodePort: {{ .Values.service.nodePorts.console }}
+      {{- else if eq .Values.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
     - name: client-rpc
       port: {{ add .Values.service.nodePorts.http 1000 }}
       targetPort: client-rpc

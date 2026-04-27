@@ -16,6 +16,9 @@ spec:
     - name: http
       port: {{ .Values.service.ports.http }}
       targetPort: http
+    - name: console
+      port: {{ .Values.service.ports.console }}
+      targetPort: console
     - name: client-rpc
       port: {{ add .Values.service.ports.http 1000 }}
       targetPort: client-rpc

@@ -108,7 +108,7 @@ spec:
             - name: jraft-rpc
               containerPort: {{ sub .Values.containerPorts.http 1000 }}
             - name: console
-              containerPort: 8080
+              containerPort: {{ .Values.containerPorts.console }}
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:

@@ -282,6 +282,7 @@ hostAliases: []
 ##
 containerPorts:
   http: 8848
+  console: 8080
 ## Nacos pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable pod Security Context
