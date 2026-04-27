@@ -17,6 +17,8 @@ data:
     -Dsentinel.dashboard.removeAppNoMachineMillis={{ .Values.config.dashboard.removeAppNoMachineMillis }}
     -Dsentinel.dashboard.unhealthyMachineMillis={{ .Values.config.dashboard.unhealthyMachineMillis }}
     -Dsentinel.dashboard.autoRemoveMachineMillis={{ .Values.config.dashboard.autoRemoveMachineMillis }}
+    -Dserver.port=8080
+    -Dcsp.sentinel.dashboard.serve=localhost:8080
     {{- if .Values.config.jvmOpts }}
     {{- .Values.config.jvmOpts | nindent 4 }}
     {{- end }}
