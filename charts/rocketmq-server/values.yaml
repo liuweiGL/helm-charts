@@ -9,7 +9,29 @@ global:
   ## 是否启用 RocketMQ Dashboard
   ##
   dashboardEnabled: true
-
+## 默认包含 helm install 时指定的 release name
+nameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+## @param commonAnnotations Common annotations to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
+##
+commonAnnotations: {}
+## @param commonLabels Common labels to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
+##
+commonLabels: {}
+## RocketMQ image version
+## @param image.registry [default: REGISTRY_NAME] RocketMQ image registry
+## @param image.repository [default: REPOSITORY_NAME/rocketmq] RocketMQ image repository
+## @skip image.tag RocketMQ image tag (immutable tags are recommended)
+## @param image.digest RocketMQ image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## @param image.pullPolicy Image pull policy
+## @param image.pullSecrets Specify docker-registry secret names as an array
+## @param image.debug Specify if debug logs should be enabled
+##
 image:
   registry: docker.io
   repository: apache/rocketmq
@@ -27,23 +49,6 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-
-## Chart name
-nameOverride: ""
-## 默认包含 helm install 时指定的 release name
-nameOverride: ""
-## @param namespaceOverride String to fully override common.names.namespace
-##
-namespaceOverride: ""
-## @param fullnameOverride String to fully override common.names.fullname template
-##
-fullnameOverride: ""
-## @param commonAnnotations Common annotations to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
-##
-commonAnnotations: {}
-## @param commonLabels Common labels to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
-##
-commonLabels: {}
 
 ## dashboard 配置
 ##
