@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2026-04-27T17:02:51.865294669+08:00"
+    created: "2026-04-30T11:36:31.462525559+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -26,7 +26,7 @@ entries:
   descheduler:
   - apiVersion: v1
     appVersion: 0.33.0
-    created: "2026-04-27T17:02:51.87187053+08:00"
+    created: "2026-04-30T11:36:31.467109698+08:00"
     description: Descheduler for Kubernetes is used to rebalance clusters by evicting
       pods that can potentially be scheduled on better nodes. In the current implementation,
       descheduler does not schedule replacement of evicted pods but relies on the
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2026-04-27T17:02:51.877136775+08:00"
+    created: "2026-04-30T11:36:31.471757572+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 3.x
-    created: "2026-04-27T17:02:51.915554252+08:00"
+    created: "2026-04-30T11:36:31.503268067+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -100,7 +100,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 3.x
-    created: "2026-04-27T17:02:51.910322993+08:00"
+    created: "2026-04-30T11:36:31.49870956+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -122,7 +122,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T17:02:51.904591535+08:00"
+    created: "2026-04-30T11:36:31.494068645+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -144,7 +144,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T17:02:51.899291275+08:00"
+    created: "2026-04-30T11:36:31.488560959+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -166,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T17:02:51.891741059+08:00"
+    created: "2026-04-30T11:36:31.482588089+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -188,7 +188,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-04-27T17:02:51.882204375+08:00"
+    created: "2026-04-30T11:36:31.477484994+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -211,7 +211,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2026-04-27T17:02:51.919605691+08:00"
+    created: "2026-04-30T11:36:31.512284221+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -235,7 +235,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-04-27T17:02:51.924398238+08:00"
+    created: "2026-04-30T11:36:31.51756187+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -259,7 +259,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-04-27T17:02:51.937597824+08:00"
+    created: "2026-04-30T11:36:31.534389111+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -300,7 +300,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-04-27T17:02:51.942474172+08:00"
+    created: "2026-04-30T11:36:31.539986633+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -323,8 +323,36 @@ entries:
   - annotations:
       category: Infrastructure
     apiVersion: v2
+    appVersion: 5.5.0
+    created: "2026-04-30T11:36:31.554145573+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: global.dashboardEnabled
+      name: rocketmq-dashboard
+      repository: file://../rocketmq-dashboard
+      tags:
+      - rocketmq-dashboard
+      version: 1.x.x
+    description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
+    digest: 222ba4229dfc3f48b153006a8d4dc2115d9b85065f9445f38c1d326cb41ff5af
+    home: https://rocketmq.apache.org/zh/docs/
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq-server
+    sources:
+    - https://github.com/apache/rocketmq
+    type: application
+    urls:
+    - rocketmq-server-1.2.0.tgz
+    version: 1.2.0
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     appVersion: 5.3.0
-    created: "2026-04-27T17:02:51.949075748+08:00"
+    created: "2026-04-30T11:36:31.546702167+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -353,7 +381,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2026-04-27T17:02:51.954268198+08:00"
+    created: "2026-04-30T11:36:31.559421311+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -377,7 +405,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-04-27T17:02:51.959390889+08:00"
+    created: "2026-04-30T11:36:31.563855879+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -395,4 +423,4 @@ entries:
     urls:
     - sentinel-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2026-04-27T17:02:51.851678887+08:00"
+generated: "2026-04-30T11:36:31.454777902+08:00"
