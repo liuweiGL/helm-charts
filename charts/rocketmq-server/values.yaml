@@ -31,7 +31,13 @@ image:
 ## Chart name
 nameOverride: ""
 ## 默认包含 helm install 时指定的 release name
-fullnameOverride: "rocketmq-server"
+nameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
 ## @param commonAnnotations Common annotations to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
 ##
 commonAnnotations: {}
