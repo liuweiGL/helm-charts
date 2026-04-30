@@ -10,5 +10,11 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  {{- include "common.tplvalues.render" ( dict "value" .Values.broker.configuration "context" $ ) | nindent 4 }}
+  broker.conf: |
+    storePathRootDir={{ .Values.broker.storePathRootDir }}
+    initAuthenticationUser={"username": "{{ .Values.broker.superUser.username }}","password": "{{ .Values.broker.superUser.password }}"}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.broker.configuration "context" $ ) | nindent 4 }}
+  tools.yml: |
+    accessKey: {{ .Values.broker.superUser.username }}
+    secretKey: {{ .Values.broker.superUser.password }}
 {{- end -}}

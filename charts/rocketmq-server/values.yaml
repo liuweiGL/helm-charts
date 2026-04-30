@@ -13,7 +13,7 @@ global:
 image:
   registry: docker.io
   repository: apache/rocketmq
-  tag: 5.3.0
+  tag: 5.5.0
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -95,7 +95,6 @@ rocketmq-dashboard:
     ##
     tls: false
 
-
 namesrv:
   name: namesrv
   replicaCount: 1
@@ -115,7 +114,7 @@ namesrv:
   ## @param namesrv.configuration [string] Configure RocketMQ namesrv with a custom namesrv.conf file
   ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/namesrv/NamesrvConfig.java
   ##
-  #configuration: |-
+  configuration: ""
 
   ## @param namesrv.existingConfigMap Name of existing ConfigMap with RocketMQ namesrv configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored
@@ -227,7 +226,7 @@ namesrv:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     capabilities:
-      drop: ["ALL"]
+      drop: [ "ALL" ]
     seccompProfile:
       type: RuntimeDefault
     readOnlyRootFilesystem: true
@@ -414,29 +413,29 @@ broker:
   ##
   hostAliases: []
 
-  ## @param broker.acl Configure RocketMQ broker with a custom acl file,only support administrator
-  acl:
-    enabled: false
-    accessKey: ""
-    secretKey: ""
-    globalWhiteRemoteAddresses: []
+  ## @param broker.superUser Super user for RocketMQ broker
+  ## https://rocketmq.apache.org/zh/docs/bestPractice/03access#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86
+  superUser:
+    username: ""
+    password: ""
+
   ## @param broker.configuration [string] Configure RocketMQ broker with a custom broker.conf file
   ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java
   ##
-  storePathRootDir: "/opt/rocketmq/data"
+  storePathRootDir: "/data"
   configuration: |-
-    {{- $aclEnable := .Values.broker.acl.enabled -}}
-    {{- $storePathRootDir := .Values.broker.storePathRootDir -}}
-    broker.conf: |
-      storePathRootDir={{ $storePathRootDir }}
-      aclEnable={{ $aclEnable }}
-      brokerClusterName=DefaultCluster
-      traceOn=true
-      autoCreateTopicEnable=false
-      autoCreateSubscriptionGroup=true
-      enableIncrementalTopicCreation=true
-      flushDiskType=ASYNC_FLUSH
-      enablePropertyFilter=true
+    authenticationEnabled=true
+    authenticationStrategy=org.apache.rocketmq.auth.authentication.strategy.StatelessAuthenticationStrategy
+    authenticationWhitelist=""
+    authorizationEnabled=true
+    authorizationStrategy=org.apache.rocketmq.auth.authorization.strategy.StatefulAuthorizationStrategy
+    authorizationWhitelist=""
+    brokerClusterName=DefaultCluster
+    autoCreateTopicEnable=true
+    autoCreateSubscriptionGroup=true
+    enableIncrementalTopicCreation=true
+    flushDiskType=ASYNC_FLUSH
+    enablePropertyFilter=true
 
   ## @param broker.existingConfigMap Name of existing ConfigMap with RocketMQ broker configuration.
   ## NOTE: When it's set the 'configuration' parameter is ignored
@@ -601,7 +600,7 @@ broker:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     capabilities:
-      drop: ["ALL"]
+      drop: [ "ALL" ]
     seccompProfile:
       type: "RuntimeDefault"
     readOnlyRootFilesystem: true

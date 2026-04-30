@@ -60,33 +60,9 @@ spec:
       securityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.broker.podSecurityContext "context" $) | nindent 8 }}
       {{- end }}
       initContainers:
-        - name: initialize-acl
-          image: {{ include "rocketmq.image" .  }}
-          env:
-            - name: NEW_ROCKETMQ_HOME
-              value: {{ include "rocketmq.broker.home" . }}
-            - name: PLAIN_ACL_CONTENT
-              value: |
-                {{- include "rocketmq.broker.plainAclFile" . | nindent 16 }}
-            - name: TOOLS_CONTENT
-              value: |
-                {{- include "rocketmq.broker.toolsFile" . | nindent 16 }}
-          command: 
-            - sh
-            - -ec
-            - |
-              cp -r ${ROCKETMQ_HOME}/* ${NEW_ROCKETMQ_HOME}
-              mkdir -p ${NEW_ROCKETMQ_HOME}/conf/acl
-              printf "${PLAIN_ACL_CONTENT}" > ${NEW_ROCKETMQ_HOME}/conf/plain_acl.yml
-              printf "${TOOLS_CONTENT}" > ${NEW_ROCKETMQ_HOME}/conf/tools.yml
-          volumeMounts:
-            - name: empty-dir
-              mountPath: {{ include "rocketmq.broker.home" . }}
         - name: initialize-broker-conf
-          image: {{ include "rocketmq.image" .  }}
+          image: busybox
           env:
-            - name: NEW_ROCKETMQ_HOME
-              value: {{ include "rocketmq.broker.home" . }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -101,15 +77,16 @@ spec:
             - sh
             - -ec
             - |
-              cat /tmp/rocketmq/conf/broker.conf > ${NEW_ROCKETMQ_HOME}/conf/broker.conf
-              echo "brokerName=${POD_NAME}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
-              echo "brokerIP1=${NODE_IP}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
-              echo "listenPort=${LISTEN_PORT}" >> ${NEW_ROCKETMQ_HOME}/conf/broker.conf
+              # 把 ConfigMap 的文件复制到可写目录
+              cp /rocketmqConf/* /tmp/
+              echo "brokerName=${POD_NAME}" >> /tmp/broker.conf
+              echo "brokerIP1=${NODE_IP}" >> /tmp/broker.conf
+              echo "listenPort=${LISTEN_PORT}" >> /tmp/broker.conf
           volumeMounts:
             - name: empty-dir
-              mountPath: {{ include "rocketmq.broker.home" . }}
+              mountPath: /tmp
             - name: config
-              mountPath: /tmp/rocketmq/conf
+              mountPath: /rocketmqConf
       containers:
         - name: broker
           image: {{ include "rocketmq.image" .  }}
@@ -125,13 +102,11 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "cd ${ROCKETMQ_HOME}/bin && ./mqbroker -c ${ROCKETMQ_HOME}/conf/broker.conf  --enable-proxy" ]
+          args: [ "-c", "./bin/mqbroker -c ./conf/broker.conf  --enable-proxy" ]
           {{- end }}
           env:
             - name: NAMESRV_ADDR
               value: {{ include "rocketmq.namesrv.addr" . | quote }}
-            - name: ROCKETMQ_HOME
-              value: {{ include "rocketmq.broker.home" . }}
             {{- if .Values.broker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.broker.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -200,8 +175,12 @@ spec:
           resources: {{ toYaml .Values.broker.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: empty-dir
-              mountPath: {{ include "rocketmq.broker.home" . }}
+            - name: config
+              mountPath: ./config/broker.conf
+              subPath: broker.conf
+            - name: config
+              mountPath: ./config/tools.yml
+              subPath: tools.yml
             - name: data
               mountPath: {{ .Values.broker.storePathRootDir }}
       volumes:

@@ -32,10 +32,6 @@
 {{- end -}}
 
 
-{{- define "rocketmq.broker.home" -}}
-/opt/rocketmq
-{{- end -}}
-
 {{- define "rocketmq.broker.fullname" -}}
     {{- $name := .Values.broker.name | default "broker" -}}
     {{- printf "%s-%s" (include "common.names.fullname" .) $name  | trunc 63 | trimSuffix "-" -}}
