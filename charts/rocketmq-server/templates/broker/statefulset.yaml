@@ -102,7 +102,7 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "./bin/mqbroker -c ./conf/broker.conf  --enable-proxy" ]
+          args: [ "-c", "./mqbroker -c ../conf/broker.conf  --enable-proxy" ]
           {{- end }}
           env:
             - name: NAMESRV_ADDR
