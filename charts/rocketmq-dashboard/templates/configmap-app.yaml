@@ -9,8 +9,9 @@ metadata:
   {{- end }}
 data:
   JAVA_OPTS: >-
+    -Dserver.port={{ .Values.containerPorts.dashboard }}
     -Drocketmq.config.loginRequired={{ .Values.auth.enabled }}
     -Drocketmq.config.dataPath={{ .Values.dataPath }}
     -Drocketmq.config.namesrvAddrs={{ include "dashboard.rocketmq.namesrvAddrs" . }}
-    -Drocketmq.config.isVipChannel={{ .Values.rocketmq.isVipChannel }}
+    -Drocketmq.config.isVipChannel={{ .Values.rocketmq.isVIPChannel }}
     -Drocketmq.config.timeoutMillis={{ .Values.rocketmq.timeoutMillis }}
