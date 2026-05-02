@@ -19,8 +19,8 @@ commonAnnotations: {}
 ##
 commonLabels: {}
 image:
-  registry: registry.cn-shanghai.aliyuncs.com
-  repository: eastcoal-library/rocketmq-dashboard
+  registry: docker.io
+  repository: apacherocketmq/rocketmq-dashboard
   tag: latest
   digest: ""
   ## Specify a imagePullPolicy
