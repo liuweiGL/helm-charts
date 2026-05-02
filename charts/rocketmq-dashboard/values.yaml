@@ -6,7 +6,18 @@ global:
   ##
   imagePullSecrets: []
   storageClass: ""
-
+## 默认包含 helm install 时指定的 release name
+nameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+commonAnnotations: {}
+## @param commonLabels Common labels to add to all RocketMQ resources (sub-charts are not considered). Evaluated as a template
+##
+commonLabels: {}
 image:
   registry: registry.cn-shanghai.aliyuncs.com
   repository: eastcoal-library/rocketmq-dashboard
@@ -47,19 +58,6 @@ rocketmq:
   accessKey: ""
   secretKey: ""
   existingSecret: ""
-
-## Chart name
-##
-nameOverride: ""
-## 默认包含 helm install 时指定的 release name
-##
-fullnameOverride: ""
-## @param commonAnnotations Common annotations to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
-##
-commonAnnotations: {}
-## @param commonLabels Common labels to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
-##
-commonLabels: {}
 
 replicaCount: 1
 ## @param dashboard.command Override default container command on RocketMQ dashboard container(s) (useful when using custom images)
