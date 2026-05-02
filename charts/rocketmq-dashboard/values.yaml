@@ -25,7 +25,6 @@ image:
   ##
   pullSecrets: []
 
-
 ## 是否需要登录之后才能访问
 ##
 auth:
@@ -41,8 +40,7 @@ dataPath: ""
 ## Rocketmq 服务端配置
 ##
 rocketmq:
-  namesrvAddrs:
-  - rocketmq-server-namesrv-headless:9876
+  namesrvAddr: rocketmq-server-namesrv-headless:9876
   isVIPChannel: true
   timeoutMillis: 5000
   accessKey: ""
@@ -182,7 +180,7 @@ containerSecurityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
   capabilities:
-    drop: ["ALL"]
+    drop: [ "ALL" ]
   seccompProfile:
     type: "RuntimeDefault"
   readOnlyRootFilesystem: true

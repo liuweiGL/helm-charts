@@ -28,12 +28,6 @@
     {{- printf "%s-%s" (include "common.names.fullname" .) "app" -}}
 {{- end -}}
 
-{{- define "dashboard.rocketmq.namesrvAddrs" -}}
-    {{- if .Values.rocketmq.namesrvAddrs -}}
-         {{- join ";" .Values.rocketmq.namesrvAddrs }}
-    {{- end -}}
-{{- end -}}
-
 {{- define "rocketmq.acl.createSecret" -}}
     {{- if and (not .Values.rocketmq.existingSecret) (and .Values.rocketmq.accessKey .Values.rocketmq.secretKey) -}}
         {{- true -}}

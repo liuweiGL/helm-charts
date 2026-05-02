@@ -8,8 +8,8 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  NAMESRV_ADDRS: {{ include "dashboard.rocketmq.namesrvAddrs" . }}
-  IS_VIP_CHANNEL: {{ .Values.rocketmq.isVipChannel | quote }}
-  TIMEOUT_MILLIS: {{ .Values.rocketmq.timeoutMillis | quote }}
-  LOGIN_REQUIRED: {{ .Values.auth.enabled | quote }}
-  DATA_PATH: {{ include "dashboard.dataPath" . }}
+  JAVA_OPTS: |
+    -Drocketmq.config.namesrvAddr={{ .Values.rocketmq.namesrvAddr }}
+    -Drocketmq.config.isVipChannel={{ .Values.rocketmq.isVipChannel }}
+    -Drocketmq.config.timeoutMillis={{ .Values.rocketmq.timeoutMillis }}
+    -Drocketmq.config.loginRequired={{ .Values.auth.enabled }}
