@@ -8,8 +8,9 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  JAVA_OPTS: |
-    -Drocketmq.config.namesrvAddr={{ .Values.rocketmq.namesrvAddr }}
+  JAVA_OPTS: >-
+    -Drocketmq.config.loginRequired={{ .Values.auth.enabled }}
+    -Drocketmq.config.dataPath={{ .Values.dataPath }}
+    -Drocketmq.config.namesrvAddrs={{ include "dashboard.rocketmq.namesrvAddrs" . }}
     -Drocketmq.config.isVipChannel={{ .Values.rocketmq.isVipChannel }}
     -Drocketmq.config.timeoutMillis={{ .Values.rocketmq.timeoutMillis }}
-    -Drocketmq.config.loginRequired={{ .Values.auth.enabled }}

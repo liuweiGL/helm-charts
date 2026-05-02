@@ -40,7 +40,8 @@ dataPath: ""
 ## Rocketmq 服务端配置
 ##
 rocketmq:
-  namesrvAddr: rocketmq-server-namesrv-headless:9876
+  namesrvAddrs:
+  - rocketmq-server-namesrv-headless:9876
   isVIPChannel: true
   timeoutMillis: 5000
   accessKey: ""
