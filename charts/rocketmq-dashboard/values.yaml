@@ -31,7 +31,7 @@ auth:
   enabled: true
   username: ""
   password: ""
-  existingConfigMap: ""
+  existingSecret: ""
 
 ## 数据存储位置，必须使用绝对路径
 ##

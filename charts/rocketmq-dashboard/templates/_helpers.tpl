@@ -10,15 +10,15 @@
     {{ .Values.dataPath | default "/opt/rocketmq-dashboard/data" }}
 {{- end -}}
 
-{{- define "dashboard.auth.createConfigMap" -}}
-    {{- if and (not .Values.auth.existingConfigMap) .Values.auth.enabled -}}
+{{- define "dashboard.auth.createSecret" -}}
+    {{- if and (not .Values.auth.existingSecret) .Values.auth.enabled -}}
         {{- true -}}
     {{- end -}}
 {{- end -}}
 
-{{- define "dashboard.auth.configMapName" -}}
-    {{- if .Values.auth.existingConfigMap -}}
-        {{- printf "%s" .Values.auth.existingConfigMap | trunc 63 | trimSuffix "-" -}}
+{{- define "dashboard.auth.secretName" -}}
+    {{- if .Values.auth.existingSecret -}}
+        {{- printf "%s" .Values.auth.existingSecret | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
         {{- printf "%s-%s" (include "common.names.fullname" .) "auth" -}}
     {{- end -}}

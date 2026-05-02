@@ -130,8 +130,8 @@ spec:
         - name: data
           emptyDir: {}
         - name: auth
-          configMap:
-            name: {{ include "dashboard.auth.configMapName" . }}
+          secret:
+            secretName: {{ include "dashboard.auth.secretName" . }}
             optional: true
         {{- if .Values.extraVolumes }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
