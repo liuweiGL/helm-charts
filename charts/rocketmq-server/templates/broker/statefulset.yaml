@@ -140,7 +140,7 @@ spec:
           {{- else if .Values.broker.livenessProbe.enabled }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.livenessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: broker   
+              port: 10911   
             initialDelaySeconds: {{ .Values.broker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.livenessProbe.timeoutSeconds }}
@@ -152,7 +152,7 @@ spec:
           {{- else if .Values.broker.readinessProbe.enabled }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.readinessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: broker   
+              port: 10911   
             initialDelaySeconds: {{ .Values.broker.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.readinessProbe.timeoutSeconds }}
@@ -164,7 +164,7 @@ spec:
           {{- else if .Values.broker.startupProbe.enabled }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.startupProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: broker
+              port: 10911
             initialDelaySeconds: {{ .Values.broker.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.startupProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.startupProbe.timeoutSeconds }}
