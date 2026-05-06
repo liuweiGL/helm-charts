@@ -8,7 +8,7 @@ entries:
     created: "2026-05-02T18:54:50.47471615+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -27,7 +27,10 @@ entries:
   - apiVersion: v1
     appVersion: 0.33.0
     created: "2026-05-02T18:54:50.480212727+08:00"
-    description: Descheduler for Kubernetes is used to rebalance clusters by evicting pods that can potentially be scheduled on better nodes. In the current implementation, descheduler does not schedule replacement of evicted pods but relies on the default scheduler for that.
+    description: Descheduler for Kubernetes is used to rebalance clusters by evicting
+      pods that can potentially be scheduled on better nodes. In the current implementation,
+      descheduler does not schedule replacement of evicted pods but relies on the
+      default scheduler for that.
     digest: 62c83391b549ceb62a7714f254452d22c60e7e19b7d4de75f16ed080c727b700
     home: https://github.com/kubernetes-sigs/descheduler
     icon: https://kubernetes.io/images/favicon.png
@@ -52,11 +55,14 @@ entries:
     created: "2026-05-02T18:54:50.487646463+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers
+    description: Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker
+      that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is
+      lightweight and is suitable for use on all devices from low power single board
+      computers to full servers
     digest: dd354a5add826e201bd0bc47a836f09673090a624022c396d01262de297f4b70
     home: https://mosquitto.org/
     icon: https://djeqr6to3dedg.cloudfront.net/repo-logos/library/eclipse-mosquitto/live/logo.png
@@ -75,7 +81,7 @@ entries:
     created: "2026-05-02T18:54:50.518971265+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -97,7 +103,7 @@ entries:
     created: "2026-05-02T18:54:50.513019402+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -119,7 +125,7 @@ entries:
     created: "2026-05-02T18:54:50.507799059+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -141,7 +147,7 @@ entries:
     created: "2026-05-02T18:54:50.501798693+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -163,7 +169,7 @@ entries:
     created: "2026-05-02T18:54:50.496763105+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -185,7 +191,7 @@ entries:
     created: "2026-05-02T18:54:50.492264443+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -208,11 +214,12 @@ entries:
     created: "2026-05-02T18:54:50.523020423+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: Netmaker makes networks with WireGuard. Netmaker automates fast, secure, and distributed virtual networks
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
     digest: 063f8e8a86712df34b856c5bbcee108653402b25f3fcc8249df6d6132a157ef8
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
@@ -231,11 +238,12 @@ entries:
     created: "2026-05-02T18:54:50.527894644+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: Netmaker makes networks with WireGuard. Netmaker automates fast, secure, and distributed virtual networks
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
     digest: 16ce52d820a2db88c9b4064a0e45177a872484dbb59a2dc818ba00cae536646c
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
@@ -254,13 +262,13 @@ entries:
     created: "2026-05-02T18:54:50.542081494+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
     - condition: global.postgresqlEnabled
       name: postgresql
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-postgresql
       version: 15.x.x
@@ -275,7 +283,8 @@ entries:
       tags:
       - netmaker-dashboard
       version: 1.x.x
-    description: Netmaker makes networks with WireGuard. Netmaker automates fast, secure, and distributed virtual networks
+    description: Netmaker makes networks with WireGuard. Netmaker automates fast,
+      secure, and distributed virtual networks
     digest: cfc63f9b0063a55d0ff32bbea6fc0e7084c745562cbd5ad953d85d9d857dacf8
     home: https://www.netmaker.io/
     icon: https://assets-global.website-files.com/64149f8bba6c1301c5e75001/641826f63c41852aed428edd_favicon.png
@@ -294,11 +303,12 @@ entries:
     created: "2026-05-02T18:54:50.584774527+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 1ae9c0f24cf732e4fa6e668641d8eda4e0fd88ed5c3e86782f0abfbd8bdb91bd
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -316,11 +326,12 @@ entries:
     created: "2026-05-02T18:54:50.579781593+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: af1118299ef443f63dcad8b0938a393afdd83e7289c52fdaeebf56d14378a485
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -338,11 +349,12 @@ entries:
     created: "2026-05-02T18:54:50.574762992+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 54cd3c358e8f5fe3a0eb39fa46fbd1c6b471283c2e103e6b25c170e374fda636
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -360,11 +372,12 @@ entries:
     created: "2026-05-02T18:54:50.57039898+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 989682ceb63f2b7d8caa74f554d3d6962f7a23b6544f9190d20a1be4d45beb1c
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -382,11 +395,12 @@ entries:
     created: "2026-05-02T18:54:50.566121244+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: ab81068f04a71da48aa0de5957fe6a60bf6a780d23c39ab3f44311697a5192cd
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -404,11 +418,12 @@ entries:
     created: "2026-05-02T18:54:50.560451898+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 8b1bf9d4820e6e98653b4477349a2547100f47acef86c181af1518327b882159
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -426,11 +441,12 @@ entries:
     created: "2026-05-02T18:54:50.555391029+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: ad2e8f62e2735988a23bae6ae7d95fd9ef3b4bb55c623ad26ea1a98f0becbab5
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -448,11 +464,12 @@ entries:
     created: "2026-05-02T18:54:50.551084683+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 0749ee0ac285274656291aa9d969c527998491c0a2e9df4bd26648f04c1779a4
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -470,11 +487,12 @@ entries:
     created: "2026-05-02T18:54:50.546358543+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替 Topic 配置、Broker 管理等命令行操作
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
     digest: 0ed72b87083cc450b78e822814b848b959b7662bf9e070e99e0b2e3328f3808f
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
@@ -493,7 +511,7 @@ entries:
     created: "2026-05-02T18:54:50.621587853+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -521,7 +539,7 @@ entries:
     created: "2026-05-02T18:54:50.614714395+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -549,7 +567,7 @@ entries:
     created: "2026-05-02T18:54:50.607059045+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -577,7 +595,7 @@ entries:
     created: "2026-05-02T18:54:50.600407627+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -605,7 +623,7 @@ entries:
     created: "2026-05-02T18:54:50.592501147+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
@@ -634,11 +652,12 @@ entries:
     created: "2026-05-02T18:54:50.627307348+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x
-    description: LDAP Tool Box Self Service Password is a web application for end users. It allows them to change or reset their password if they lost it
+    description: LDAP Tool Box Self Service Password is a web application for end
+      users. It allows them to change or reset their password if they lost it
     digest: 6436a8a8fa853f31e03853f870f3210d89c23f26402e13bfabe121d4d984f81a
     home: https://self-service-password.readthedocs.io/en/stable/
     icon: https://self-service-password.readthedocs.io/en/latest/_static/ltb-logo.png
@@ -657,7 +676,7 @@ entries:
     created: "2026-05-02T18:54:50.631803184+08:00"
     dependencies:
     - name: common
-      repository: oci://1ms.run/bitnamicharts
+      repository: oci://registry-1.docker.io/bitnamicharts
       tags:
       - bitnami-common
       version: 2.x.x

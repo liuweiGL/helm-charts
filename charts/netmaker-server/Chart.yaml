@@ -13,12 +13,12 @@ sources:
 dependencies:
 - name: common
   version: 2.x.x
-  repository: oci://1ms.run/bitnamicharts
+  repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-common
 - name: postgresql
   version: 15.x.x
-  repository: oci://1ms.run/bitnamicharts
+  repository: oci://registry-1.docker.io/bitnamicharts
   tags:
   - bitnami-postgresql
   condition: global.postgresqlEnabled

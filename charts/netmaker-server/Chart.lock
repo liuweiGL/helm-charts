@@ -1,9 +1,9 @@
 dependencies:
 - name: common
-  repository: oci://1ms.run/bitnamicharts
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.31.4
 - name: postgresql
-  repository: oci://1ms.run/bitnamicharts
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 15.5.38
 - name: mosquitto
   repository: file://../mosquitto

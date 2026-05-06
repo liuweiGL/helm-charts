@@ -1,6 +1,6 @@
 dependencies:
 - name: common
-  repository: oci://1ms.run/bitnamicharts
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 2.38.0
 - name: rocketmq-dashboard
   repository: file://../rocketmq-dashboard
