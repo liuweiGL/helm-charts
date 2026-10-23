@@ -10,8 +10,19 @@
     {{ .Values.dataPath | default "/opt/rocketmq-dashboard/data" }}
 {{- end -}}
 
+{{- define "dashboard.auth.enabled" -}}
+    {{- $enabled := true -}}
+    {{- $value := .Values.auth.enabled -}}
+    {{- if kindIs "bool" $value -}}
+        {{- $enabled = $value -}}
+    {{- else if and (kindIs "string" $value) (ne $value "") -}}
+        {{- $enabled = eq (lower $value) "true" -}}
+    {{- end -}}
+    {{- $enabled -}}
+{{- end -}}
+
 {{- define "dashboard.auth.createSecret" -}}
-    {{- if and (not .Values.auth.existingSecret) .Values.auth.enabled -}}
+    {{- if and (not .Values.auth.existingSecret) (eq (include "dashboard.auth.enabled" .) "true") -}}
         {{- true -}}
     {{- end -}}
 {{- end -}}

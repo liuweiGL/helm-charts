@@ -10,7 +10,7 @@ metadata:
 data:
   JAVA_OPTS: >-
     -Dserver.port={{ .Values.containerPorts.dashboard }}
-    -Drocketmq.config.loginRequired={{ .Values.auth.enabled }}
+    -Drocketmq.config.loginRequired={{ include "dashboard.auth.enabled" . }}
     -Drocketmq.config.dataPath={{ include "dashboard.dataPath" . }}
     -Drocketmq.config.namesrvAddrs={{ include "dashboard.rocketmq.namesrvAddrs" . }}
     -Drocketmq.config.isVipChannel={{ .Values.rocketmq.isVIPChannel }}

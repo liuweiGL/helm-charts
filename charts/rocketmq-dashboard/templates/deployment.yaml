@@ -18,6 +18,10 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-app.yaml") . | sha256sum }}
+        {{- if eq (include "dashboard.auth.enabled" .) "true" }}
+        checksum/auth: {{ include (print $.Template.BasePath "/secret-auth.yaml") . | sha256sum }}
+        {{- end }}
         {{- if .Values.podAnnotations }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
@@ -119,20 +123,24 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
+            {{- if eq (include "dashboard.auth.enabled" .) "true" }}
             - name: auth
               mountPath: {{ printf "%s/%s" (include "dashboard.dataPath" .) "users.properties" }}
               subPath: users.properties
               readOnly: false
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
             {{- end }}
       volumes:
         - name: data
           emptyDir: {}
+        {{- if eq (include "dashboard.auth.enabled" .) "true" }}
         - name: auth
           secret:
             secretName: {{ include "dashboard.auth.secretName" . }}
-            optional: true
+            optional: false
+        {{- end }}
         {{- if .Values.extraVolumes }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
