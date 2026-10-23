@@ -5,7 +5,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 4.1.1.0
-    created: "2026-10-23T15:47:59.666381849+08:00"
+    created: "2026-10-23T17:08:17.101833731+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -26,7 +26,7 @@ entries:
   descheduler:
   - apiVersion: v1
     appVersion: 0.33.0
-    created: "2026-10-23T15:47:59.680219023+08:00"
+    created: "2026-10-23T17:08:17.107616777+08:00"
     description: Descheduler for Kubernetes is used to rebalance clusters by evicting
       pods that can potentially be scheduled on better nodes. In the current implementation,
       descheduler does not schedule replacement of evicted pods but relies on the
@@ -52,7 +52,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.0.18
-    created: "2026-10-23T15:47:59.695302931+08:00"
+    created: "2026-10-23T17:08:17.114754286+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -78,7 +78,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 3.x
-    created: "2026-10-23T15:47:59.776329645+08:00"
+    created: "2026-10-23T17:08:17.161711634+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -100,7 +100,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 3.x
-    created: "2026-10-23T15:47:59.762745774+08:00"
+    created: "2026-10-23T17:08:17.153275717+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -122,7 +122,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-10-23T15:47:59.748883501+08:00"
+    created: "2026-10-23T17:08:17.145166793+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -144,7 +144,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-10-23T15:47:59.731353179+08:00"
+    created: "2026-10-23T17:08:17.138562081+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -166,7 +166,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-10-23T15:47:59.720724563+08:00"
+    created: "2026-10-23T17:08:17.13013297+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -188,7 +188,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.5.1
-    created: "2026-10-23T15:47:59.710009837+08:00"
+    created: "2026-10-23T17:08:17.122805609+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -211,7 +211,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.1
-    created: "2026-10-23T15:47:59.795460711+08:00"
+    created: "2026-10-23T17:08:17.1719157+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -235,7 +235,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-10-23T15:47:59.811717267+08:00"
+    created: "2026-10-23T17:08:17.179618546+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -259,7 +259,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 0.24.0
-    created: "2026-10-23T15:47:59.848050504+08:00"
+    created: "2026-10-23T17:08:17.197137228+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -300,7 +300,30 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.991004652+08:00"
+    created: "2026-10-23T17:08:17.274035796+08:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: RocketMQ Dashboard 是 RocketMQ 的管控利器，为用户提供客户端和应用程序的各种事件、性能的统计信息，支持以可视化工具代替
+      Topic 配置、Broker 管理等命令行操作
+    digest: f876c6b376f0ef6f570a74493ca5df13d7d36273812cfd906f98101ab039cdf9
+    home: https://rocketmq.apache.org/zh/docs/
+    icon: https://rocketmq.apache.org/img/favicon-192x192.png
+    name: rocketmq-dashboard
+    sources:
+    - https://github.com/apache/rocketmq-dashboard
+    type: application
+    urls:
+    - rocketmq-dashboard-1.1.4.tgz
+    version: 1.1.4
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 2.x.x
+    created: "2026-10-23T17:08:17.265381955+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -323,7 +346,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.976383761+08:00"
+    created: "2026-10-23T17:08:17.253320563+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -346,7 +369,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.957306116+08:00"
+    created: "2026-10-23T17:08:17.246591979+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -369,7 +392,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.943187331+08:00"
+    created: "2026-10-23T17:08:17.239192513+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -392,7 +415,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.929660606+08:00"
+    created: "2026-10-23T17:08:17.232128749+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -415,7 +438,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.91533493+08:00"
+    created: "2026-10-23T17:08:17.225044914+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -438,7 +461,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.893749164+08:00"
+    created: "2026-10-23T17:08:17.218001805+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -461,7 +484,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 2.x.x
-    created: "2026-10-23T15:47:59.878380976+08:00"
+    created: "2026-10-23T17:08:17.210928118+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -484,7 +507,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-23T15:47:59.864107806+08:00"
+    created: "2026-10-23T17:08:17.204008588+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -508,7 +531,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.x
-    created: "2026-10-23T15:48:00.140099057+08:00"
+    created: "2026-10-23T17:08:17.360732893+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -522,7 +545,7 @@ entries:
       - rocketmq-dashboard
       version: 1.x.x
     description: RocketMQ 5.0：云原生“消息、事件、流”实时数据处理平台，覆盖云边端一体化数据处理场景
-    digest: f2bcd6a29e15067f48eae788867783d91e1c5a26376e8d296570535cdaf51b2b
+    digest: 29415baf44d131b397a8edb229ee8c15a2879232716c7aa84a5ab2e2ff1c7fe8
     home: https://rocketmq.apache.org/zh/docs/
     icon: https://rocketmq.apache.org/img/favicon-192x192.png
     name: rocketmq-server
@@ -536,7 +559,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.x
-    created: "2026-10-23T15:48:00.120400272+08:00"
+    created: "2026-10-23T17:08:17.349142493+08:00"
     dependencies:
     - name: common
       repository: oci://docker.1ms.run/bitnamicharts
@@ -564,7 +587,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.x
-    created: "2026-10-23T15:48:00.102961131+08:00"
+    created: "2026-10-23T17:08:17.337548118+08:00"
     dependencies:
     - name: common
       repository: oci://docker.1ms.run/bitnamicharts
@@ -592,7 +615,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.x
-    created: "2026-10-23T15:48:00.086489448+08:00"
+    created: "2026-10-23T17:08:17.327301323+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -620,7 +643,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.5.0
-    created: "2026-10-23T15:48:00.06896401+08:00"
+    created: "2026-10-23T17:08:17.316617988+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -648,7 +671,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.5.0
-    created: "2026-10-23T15:48:00.052686736+08:00"
+    created: "2026-10-23T17:08:17.307200431+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -676,7 +699,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.5.0
-    created: "2026-10-23T15:48:00.033271141+08:00"
+    created: "2026-10-23T17:08:17.294271477+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -704,7 +727,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 5.3.0
-    created: "2026-10-23T15:48:00.009333152+08:00"
+    created: "2026-10-23T17:08:17.285876502+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -733,7 +756,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.5.4
-    created: "2026-10-23T15:48:00.161866365+08:00"
+    created: "2026-10-23T17:08:17.366372477+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -757,7 +780,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-23T15:48:00.176765318+08:00"
+    created: "2026-10-23T17:08:17.372616896+08:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -775,4 +798,4 @@ entries:
     urls:
     - sentinel-dashboard-1.0.0.tgz
     version: 1.0.0
-generated: "2026-10-23T15:47:59.648187033+08:00"
+generated: "2026-10-23T17:08:17.093037868+08:00"

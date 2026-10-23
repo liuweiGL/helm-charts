@@ -4,6 +4,6 @@ dependencies:
   version: 2.41.0
 - name: rocketmq-dashboard
   repository: file://../rocketmq-dashboard
-  version: 1.1.3
-digest: sha256:7482715d26b39550a62ea41b0e370a32e424aad81f963337fe2aacd6a7eaafb9
-generated: "2026-10-23T15:47:57.211372156+08:00"
+  version: 1.1.4
+digest: sha256:1f685cfc4158ec3302798bd9d3c026f902e3a46652f4ac04213d95dd2407b36c
+generated: "2026-10-23T17:08:15.34913769+08:00"
