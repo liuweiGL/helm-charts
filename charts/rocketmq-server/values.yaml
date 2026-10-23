@@ -443,9 +443,11 @@ broker:
   configuration: |-
     authenticationEnabled=true
     authenticationStrategy=org.apache.rocketmq.auth.authentication.strategy.StatelessAuthenticationStrategy
+    authenticationMetadataProvider=org.apache.rocketmq.auth.authentication.provider.LocalAuthenticationMetadataProvider
     authenticationWhitelist=""
     authorizationEnabled=true
     authorizationStrategy=org.apache.rocketmq.auth.authorization.strategy.StatefulAuthorizationStrategy
+    authorizationMetadataProvider=org.apache.rocketmq.auth.authorization.provider.LocalAuthorizationMetadataProvider
     authorizationWhitelist=""
     brokerClusterName=DefaultCluster
     autoCreateTopicEnable=true
