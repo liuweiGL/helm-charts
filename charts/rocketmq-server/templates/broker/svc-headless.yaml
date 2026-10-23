@@ -15,14 +15,14 @@ spec:
   publishNotReadyAddresses: true
   ports:
     - name: broker
-      port: 10911
+      port: {{ include "rocketmq.broker.listenPort" . }}
       targetPort: broker
     - name: ha
-      port: 10912
-      targetPort: broker
+      port: {{ include "rocketmq.broker.haListenPort" . }}
+      targetPort: ha
     - name: fast
-      port: 10909
-      targetPort: broker
+      port: {{ include "rocketmq.broker.fastListenPort" . }}
+      targetPort: fast
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.broker.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: broker

@@ -425,10 +425,16 @@ broker:
   hostAliases: []
 
   ## @param broker.superUser Super user for RocketMQ broker
+  ## 写入 broker.conf 的 initAuthenticationUser 及 tools.yml，需与客户端、dashboard 的 accessKey/secretKey 保持一致
   ## https://rocketmq.apache.org/zh/docs/bestPractice/03access#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86
   superUser:
     username: ""
     password: ""
+
+  ## @param broker.externalIP 外部客户端可达的 broker 地址，写入 brokerIP1 并注册到 nameserver
+  ## 为空时回退为 Pod 所在节点的 status.hostIP
+  ##
+  externalIP: ""
 
   ## @param broker.configuration [string] Configure RocketMQ broker with a custom broker.conf file
   ## ref: https://github.com/apache/rocketmq/blob/develop/common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java
@@ -714,6 +720,23 @@ broker:
   ## RocketMQ broker Service parameters
   ##
   service:
+    ## @param broker.service.type RocketMQ broker K8s service type
+    ##
+    type: ClusterIP
+    ## @param broker.service.nodePorts.broker RocketMQ broker K8s service node port (同时作为 broker 实际监听端口)
+    ## @param broker.service.nodePorts.ha RocketMQ broker HA service node port
+    ## @param broker.service.nodePorts.fast RocketMQ broker VIPChannel service node port
+    ##
+    nodePorts:
+      broker: ""
+      ha: ""
+      fast: ""
+    ## @param broker.service.annotations Additional custom annotations for RocketMQ broker service
+    ##
+    annotations: {}
+    ## @param broker.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
     headless:
       ## @param broker.service.headless.annotations Additional custom annotations for headless RocketMQ broker service.
       ##

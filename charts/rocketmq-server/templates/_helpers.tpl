@@ -78,7 +78,9 @@ secretKey: {{ .Values.broker.acl.secretKey }}
 {{- end -}}
 
 {{- define "rocketmq.broker.listenPort" -}}
-    {{- if eq .Values.namesrv.service.type "NodePort" }}
+    {{- if .Values.broker.service.nodePorts.broker -}}
+        {{- int .Values.broker.service.nodePorts.broker -}}
+    {{- else if eq .Values.broker.service.type "NodePort" }}
         {{- add .Values.namesrv.service.nodePorts.namesrv 1 }}
     {{- else -}}
         {{- 10911 -}}
@@ -86,9 +88,17 @@ secretKey: {{ .Values.broker.acl.secretKey }}
 {{- end -}}
 
 {{- define "rocketmq.broker.haListenPort" -}}
-    {{-  add (include "rocketmq.broker.listenPort" .) 1 }}
+    {{- if .Values.broker.service.nodePorts.ha -}}
+        {{- int .Values.broker.service.nodePorts.ha -}}
+    {{- else -}}
+        {{- add (include "rocketmq.broker.listenPort" .) 1 }}
+    {{- end -}}
 {{- end -}}
 
 {{- define "rocketmq.broker.fastListenPort" -}}
-    {{- sub (include "rocketmq.broker.listenPort" .) 2 }}
+    {{- if .Values.broker.service.nodePorts.fast -}}
+        {{- int .Values.broker.service.nodePorts.fast -}}
+    {{- else -}}
+        {{- sub (include "rocketmq.broker.listenPort" .) 2 }}
+    {{- end -}}
 {{- end -}}

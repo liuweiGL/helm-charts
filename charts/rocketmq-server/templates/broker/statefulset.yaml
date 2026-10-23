@@ -73,6 +73,12 @@ spec:
                   fieldPath: status.hostIP
             - name: LISTEN_PORT
               value: {{ include "rocketmq.broker.listenPort" . | quote }}
+            - name: HA_LISTEN_PORT
+              value: {{ include "rocketmq.broker.haListenPort" . | quote }}
+            - name: FAST_LISTEN_PORT
+              value: {{ include "rocketmq.broker.fastListenPort" . | quote }}
+            - name: BROKER_IP1
+              value: {{ .Values.broker.externalIP | quote }}
           command: 
             - sh
             - -ec
@@ -80,8 +86,11 @@ spec:
               # 把 ConfigMap 的文件复制到可写目录
               cp /rocketmqConf/* /tmp/
               echo "brokerName=${POD_NAME}" >> /tmp/broker.conf
-              echo "brokerIP1=${NODE_IP}" >> /tmp/broker.conf
+              # 优先使用外部可达地址，未配置时回退到节点地址
+              echo "brokerIP1=${BROKER_IP1:-${NODE_IP}}" >> /tmp/broker.conf
               echo "listenPort=${LISTEN_PORT}" >> /tmp/broker.conf
+              echo "haListenPort=${HA_LISTEN_PORT}" >> /tmp/broker.conf
+              echo "fastListenPort=${FAST_LISTEN_PORT}" >> /tmp/broker.conf
           volumeMounts:
             - name: empty-dir
               mountPath: /tmp
@@ -102,7 +111,7 @@ spec:
           {{- if .Values.broker.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.broker.args "context" $) | nindent 12 }}
           {{- else }}
-          args: [ "-c", "./mqbroker -c ../conf/broker.conf  --enable-proxy" ]
+          args: [ "-c", "./mqbroker -c /tmp/broker.conf --enable-proxy" ]
           {{- end }}
           env:
             - name: NAMESRV_ADDR
@@ -140,7 +149,7 @@ spec:
           {{- else if .Values.broker.livenessProbe.enabled }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.livenessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: 10911   
+              port: {{ include "rocketmq.broker.listenPort" . }}
             initialDelaySeconds: {{ .Values.broker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.livenessProbe.timeoutSeconds }}
@@ -152,7 +161,7 @@ spec:
           {{- else if .Values.broker.readinessProbe.enabled }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.readinessProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: 10911   
+              port: {{ include "rocketmq.broker.listenPort" . }}
             initialDelaySeconds: {{ .Values.broker.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.readinessProbe.timeoutSeconds }}
@@ -164,7 +173,7 @@ spec:
           {{- else if .Values.broker.startupProbe.enabled }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.broker.startupProbe "enabled") "context" $) | nindent 12 }}
             tcpSocket:
-              port: 10911
+              port: {{ include "rocketmq.broker.listenPort" . }}
             initialDelaySeconds: {{ .Values.broker.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.broker.startupProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.broker.startupProbe.timeoutSeconds }}
@@ -175,9 +184,8 @@ spec:
           resources: {{ toYaml .Values.broker.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: config
-              mountPath: ./config/broker.conf
-              subPath: broker.conf
+            - name: empty-dir
+              mountPath: /tmp
             - name: config
               mountPath: ./config/tools.yml
               subPath: tools.yml

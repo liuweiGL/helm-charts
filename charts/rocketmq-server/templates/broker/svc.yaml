@@ -10,27 +10,27 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
   {{- end }}
 spec:
-  type: {{ .Values.namesrv.service.type }}
+  type: {{ .Values.broker.service.type }}
   ports:
     - name: broker
-      port: 10911
+      port: {{ include "rocketmq.broker.listenPort" . }}
       protocol: TCP
       targetPort: broker
-      {{- if (or (eq .Values.namesrv.service.type "NodePort") (eq .Values.namesrv.service.type "LoadBalancer")) }}
+      {{- if (or (eq .Values.broker.service.type "NodePort") (eq .Values.broker.service.type "LoadBalancer")) }}
       nodePort: {{ include "rocketmq.broker.listenPort" . }}
       {{- end }}
     - name: ha
-      port: 10909
+      port: {{ include "rocketmq.broker.haListenPort" . }}
       protocol: TCP
       targetPort: ha
-      {{- if (or (eq .Values.namesrv.service.type "NodePort") (eq .Values.namesrv.service.type "LoadBalancer")) }}
+      {{- if (or (eq .Values.broker.service.type "NodePort") (eq .Values.broker.service.type "LoadBalancer")) }}
       nodePort: {{ include "rocketmq.broker.haListenPort" . }}
       {{- end }}
     - name: fast
-      port: 10912
+      port: {{ include "rocketmq.broker.fastListenPort" . }}
       protocol: TCP
       targetPort: fast
-      {{- if (or (eq .Values.namesrv.service.type "NodePort") (eq .Values.namesrv.service.type "LoadBalancer")) }}
+      {{- if (or (eq .Values.broker.service.type "NodePort") (eq .Values.broker.service.type "LoadBalancer")) }}
       nodePort: {{ include "rocketmq.broker.fastListenPort" . }}
       {{- end }}
     {{- if .Values.broker.service.extraPorts }}
