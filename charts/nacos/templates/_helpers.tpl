@@ -6,24 +6,12 @@
     {{ include "common.images.pullSecrets" (dict (list .Values.image) "global" .Values.global) }}
 {{- end -}}
 
-{{- define "nacos.mode" -}}
-    {{ .Values.mode | default "standalone" }}
-{{- end -}}
-
-{{- define "nacos.configMapNames.auth" -}}
-    {{ printf "%s-%s" (include "common.names.fullname" .) "auth" }}
-{{- end -}}
-
-{{- define "nacos.configMapNames.db" -}}
-    {{ printf "%s-%s" (include "common.names.fullname" .) "db" }}
-{{- end -}}
-
-{{- define "nacos.configMapNames.jvm" -}}
-    {{ printf "%s-%s" (include "common.names.fullname" .) "jvm" }}
-{{- end -}}
-
-{{- define "nacos.configMapNames.app" -}}
-    {{ printf "%s-%s" (include "common.names.fullname" .) "app" }}
+{{- define "nacos.functionMode" -}}
+    {{- $functionMode := .Values.functionMode | default "all" -}}
+    {{- if not (has $functionMode (list "all" "config" "naming" "microservice" "ai")) -}}
+        {{- fail (printf "functionMode: 不支持的取值 %q，可选 all/config/naming/microservice/ai" $functionMode) -}}
+    {{- end -}}
+    {{- $functionMode -}}
 {{- end -}}
 
 {{- define "nacos.ingress.tlsSecretName" -}}

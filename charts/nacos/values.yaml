@@ -51,7 +51,7 @@ commonAnnotations: {}
 image:
   registry: docker.io
   repository: nacos/nacos-server
-  tag: v3.2.1
+  tag: v3.3.0
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -66,10 +66,23 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-## @param mode Nacos server mode (`standalone` or `cluster`)
-## ref: https://nacos.io/zh-cn/docs/deployment.html
+## Nacos 仅支持 standalone（单机）模式，容器启动参数 MODE 固定为 standalone
+## @param functionMode Nacos 功能模式（`all`、`config`、`naming`、`microservice` 或 `ai`），对应镜像变量 FUNCTION_MODE
+## ref: https://nacos.io/docs/latest/manual/admin/system-configurations/
 ##
-mode: standalone
+functionMode: all
+
+## JVM 参数，留空表示不设置（使用镜像启动脚本默认行为）
+## @param jvm.xms JVM 初始堆大小，对应镜像变量 JVM_XMS
+## @param jvm.xmx JVM 最大堆大小，对应镜像变量 JVM_XMX
+## @param jvm.xmn JVM 新生代大小，对应镜像变量 JVM_XMN
+## @param jvm.javaOptExt 额外 JVM 参数，对应镜像变量 JAVA_OPT_EXT
+##
+jvm:
+  xms: ""
+  xmx: ""
+  xmn: ""
+  javaOptExt: ""
 
 ## Nacos authentication parameters
 ## ref: https://nacos.io/zh-cn/docs/next/v2/guide/user/auth
@@ -108,6 +121,16 @@ auth:
   ##
   existingConfigMap: ""
 
+## Nacos Tomcat parameters
+## ref: https://nacos.io/docs/latest/manual/admin/system-configurations/
+##
+tomcat:
+  ## Access log configuration
+  ## @param tomcat.accessLog.enabled Enable Tomcat access log (`server.tomcat.accesslog.enabled`)
+  ##
+  accessLog:
+    enabled: false
+
 ## @param storage Nacos storage configuration
 ##
 storage:
@@ -139,7 +162,7 @@ command: []
 ## @param args Default container args (useful when using custom images). Use array form
 ##
 args: []
-## @section Nacos deployment/statefulset parameters
+## @section Nacos deployment parameters
 
 ## @param schedulerName Specifies the schedulerName, if it's nil uses kube-scheduler
 ## https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
@@ -150,7 +173,6 @@ schedulerName: ""
 ##
 terminationGracePeriodSeconds: ""
 ## Nacos deployment parameters
-## Only when 'mode' is 'standalone'
 ##
 deployment:
   ## @param deployment.updateStrategy.type Deployment strategy type
@@ -164,112 +186,6 @@ deployment:
   ##
   updateStrategy:
     type: Recreate
-## Nacos statefulset parameters
-## Only when mode is 'distributed'
-##
-statefulset:
-  ## @param statefulset.updateStrategy.type StatefulSet strategy type
-  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
-  ## e.g:
-  ## updateStrategy:
-  ##  type: RollingUpdate
-  ##  rollingUpdate:
-  ##    maxSurge: 25%
-  ##    maxUnavailable: 25%
-  ##
-  updateStrategy:
-    type: RollingUpdate
-  ## @param statefulset.podManagementPolicy StatefulSet controller supports relax its ordering guarantees while preserving its uniqueness and identity guarantees. There are two valid pod management policies: OrderedReady and Parallel
-  ## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#pod-management-policy
-  ##
-  podManagementPolicy: Parallel
-  ## @param statefulset.replicaCount Number of pods per zone (only for Nacos distributed mode). Should be even and `>= 4`
-  ##
-  replicaCount: 2
-  podSecurityContext:
-    enabled: true
-    fsGroupChangePolicy: Always
-    sysctls: []
-    supplementalGroups: []
-    fsGroup: 1001
-  ## Nacos container Security Context
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  ## @param provisioning.containerSecurityContext.enabled Enabled containers' Security Context
-  ## @param provisioning.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
-  ## @param provisioning.containerSecurityContext.runAsUser Set containers' Security Context runAsUser
-  ## @param provisioning.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup
-  ## @param provisioning.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
-  ## @param provisioning.containerSecurityContext.privileged Set container's Security Context privileged
-  ## @param provisioning.containerSecurityContext.readOnlyRootFilesystem Set container's Security Context readOnlyRootFilesystem
-  ## @param provisioning.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
-  ## @param provisioning.containerSecurityContext.capabilities.drop List of capabilities to be dropped
-  ## @param provisioning.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
-  ##
-  containerSecurityContext:
-    enabled: true
-    seLinuxOptions: {}
-    runAsUser: 1001
-    runAsGroup: 1001
-    runAsNonRoot: true
-    privileged: false
-    readOnlyRootFilesystem: true
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop: [ "ALL" ]
-    seccompProfile:
-      type: "RuntimeDefault"
-  ## Automatic Cleanup for Finished Jobs
-  ## @param provisioning.cleanupAfterFinished.enabled Enables Cleanup for Finished Jobs
-  ## @param provisioning.cleanupAfterFinished.seconds Sets the value of ttlSecondsAfterFinished
-  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/
-  ##
-  cleanupAfterFinished:
-    enabled: false
-    seconds: 600
-  ## Network Policy configuration
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
-  ##
-  networkPolicy:
-    ## @param provisioning.networkPolicy.enabled Enable creation of NetworkPolicy resources
-    ##
-    enabled: true
-    ## @param provisioning.networkPolicy.allowExternalEgress Allow the pod to access any range of port and all destinations.
-    ##
-    allowExternalEgress: true
-    ## @param provisioning.networkPolicy.extraIngress [array] Add extra ingress rules to the NetworkPolicy
-    ## e.g:
-    ## extraIngress:
-    ##   - ports:
-    ##       - port: 1234
-    ##     from:
-    ##       - podSelector:
-    ##           - matchLabels:
-    ##               - role: frontend
-    ##       - podSelector:
-    ##           - matchExpressions:
-    ##               - key: role
-    ##                 operator: In
-    ##                 values:
-    ##                   - frontend
-    ##
-    extraIngress: []
-    ## @param provisioning.networkPolicy.extraEgress [array] Add extra ingress rules to the NetworkPolicy
-    ## e.g:
-    ## extraEgress:
-    ##   - ports:
-    ##       - port: 1234
-    ##     to:
-    ##       - podSelector:
-    ##           - matchLabels:
-    ##               - role: frontend
-    ##       - podSelector:
-    ##           - matchExpressions:
-    ##               - key: role
-    ##                 operator: In
-    ##                 values:
-    ##                   - frontend
-    ##
-    extraEgress: []
 ## @param automountServiceAccountToken Mount Service Account token in pod
 ##
 automountServiceAccountToken: false
