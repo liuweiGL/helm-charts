@@ -40,7 +40,7 @@ spec:
       nodePort: null
       {{- end }}
     - name: client-rpc
-      port: {{ add .Values.service.nodePorts.http 1000 }}
+      port: {{ add .Values.service.ports.http 1000 }}
       targetPort: client-rpc
       {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.http)) }}
       nodePort: {{ add .Values.service.nodePorts.http 1000 }}
