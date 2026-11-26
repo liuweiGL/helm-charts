@@ -59,7 +59,7 @@ data:
     nacos.plugin.auth.nacos.token.cache.enable=false
     nacos.plugin.auth.nacos.token.expire.seconds={{ .Values.auth.token.expireSeconds | default 1800 }}
     nacos.plugin.auth.nacos.token.secret.key=${NACOS_AUTH_TOKEN:}
-    nacos.core.auth.nacos.anonymous.ai.enabled=${NACOS_AUTH_ALLOW_ANONYMOUS_AI_ENABLED:false}
+    nacos.plugin.auth.nacos.anonymous.ai.enabled=${NACOS_AUTH_ALLOW_ANONYMOUS_AI_ENABLED:false}
 
     #*************** Metrics ***************#
     management.endpoints.web.exposure.include=prometheus
@@ -74,6 +74,8 @@ data:
     nacos.naming.empty-service.clean.period-time-ms=30000
 
     #*************** AI & Kubernetes ***************#
+    ## 3.3 起默认开启，依赖 ai_resource_search_document / ai_resource_search_chunk / ai_resource_task 三张表
+    nacos.ai.resource.search.enabled=${NACOS_AI_RESOURCE_SEARCH_ENABLED:true}
     nacos.ai.mcp.registry.enabled=${NACOS_AI_REGISTRY_ENABLED:false}
     nacos.ai.registry.port=${NACOS_AI_REGISTRY_PORT:9080}
     nacos.plugin.ai-pipeline.enabled=true
